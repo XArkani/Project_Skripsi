@@ -4,6 +4,7 @@ import { ArrowRight, Calendar, MapPin } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import type { Event } from "@/lib/types"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 interface EventPreviewProps {
   items: Event[]
@@ -53,11 +54,15 @@ export default function EventPreview({ items }: EventPreviewProps) {
               >
                 <div>
                   <div className="relative h-44 overflow-hidden">
-                    <img
-                      src={evt.image}
-                      alt={evt.title}
-                      className="w-full h-full object-cover"
-                    />
+                    {evt.image ? (
+                      <img
+                        src={evt.image}
+                        alt={evt.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <ImagePlaceholder label="Poster Acara" className="w-full h-full" />
+                    )}
                     <span
                       className={`absolute top-4 left-4 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest ${statusColor}`}
                     >

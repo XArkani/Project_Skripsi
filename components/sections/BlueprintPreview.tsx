@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import type { Blueprint } from "@/lib/types"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 interface BlueprintPreviewProps {
   items: Blueprint[]
@@ -46,11 +47,15 @@ export default function BlueprintPreview({ items }: BlueprintPreviewProps) {
             >
               <div>
                 <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <ImagePlaceholder label="Gambar Fasilitas" className="w-full h-full" />
+                  )}
                   <span className="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest">
                     {item.category}
                   </span>

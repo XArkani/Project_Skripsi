@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import type { Dosen } from "@/lib/types"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 interface DosenHighlightProps {
   items: Dosen[]
@@ -45,11 +46,15 @@ export default function DosenHighlight({ items }: DosenHighlightProps) {
             >
               <div>
                 <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border-4 border-white shadow-md mb-4">
-                  <img
-                    src={dosen.image}
-                    alt={dosen.name}
-                    className="w-full h-full object-cover"
-                  />
+                  {dosen.image ? (
+                    <img
+                      src={dosen.image}
+                      alt={dosen.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <ImagePlaceholder label="Foto" className="w-full h-full" />
+                  )}
                 </div>
                 <h3 className="font-bold text-slate-900 text-base leading-snug">{dosen.name}</h3>
                 <p className="text-emerald-700 text-xs font-semibold mt-1">{dosen.title}</p>

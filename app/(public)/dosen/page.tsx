@@ -1,6 +1,8 @@
 import { cacheTag } from "next/cache"
 import { getDosen } from "@/lib/faculty"
 import { Mail } from "lucide-react"
+import EmptyState from "@/components/shared/EmptyState"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 export default async function DosenPage() {
   "use cache"
@@ -16,12 +18,19 @@ export default async function DosenPage() {
         <p className="text-slate-500 text-sm sm:text-base mt-2">Direktori resmi akademisi dan peneliti di lingkungan Fakultas Teknik Universitas Hamzanwadi.</p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {dosenList.map((dosen) => (
-          <div key={dosen.id} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            <div className="w-28 h-28 rounded-xl overflow-hidden border border-slate-200 shadow-sm flex-shrink-0">
-              <img src={dosen.image} alt={dosen.name} className="w-full h-full object-cover" />
-            </div>
+      {dosenList.length === 0 ? (
+        <EmptyState title="Belum ada data dosen" description="Belum ada data dosen yang tersedia saat ini. Silakan kembali lagi nanti." />
+      ) : (
+        <div className="grid md:grid-cols-2 gap-8">
+          {dosenList.map((dosen) => (
+            <div key={dosen.id} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              <div className="w-28 h-28 rounded-xl overflow-hidden border border-slate-200 shadow-sm flex-shrink-0">
+                {dosen.image ? (
+                  <img src={dosen.image} alt={dosen.name} className="w-full h-full object-cover" />
+                ) : (
+                  <ImagePlaceholder label="Foto" className="w-full h-full" />
+                )}
+              </div>
 
             <div className="space-y-2 flex-grow text-center sm:text-left">
               <h3 className="font-extrabold text-lg text-slate-900 leading-snug">{dosen.name}</h3>
@@ -47,9 +56,10 @@ export default async function DosenPage() {
                 </span>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

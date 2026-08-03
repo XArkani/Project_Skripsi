@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useState, useEffect, startTransition } from "react"
-import { Phone } from "lucide-react"
+import { Phone, Mail, Clock } from "lucide-react"
 
 const quickLinks = [
   { href: "/blueprint", label: "Blueprint Kampus" },
@@ -74,8 +74,14 @@ export default function Footer() {
                 <Phone className="w-3.5 h-3.5" />
                 <span>+62 (376) 21377</span>
               </p>
-              <p>&#x1F4E7; teknik@hamzanwadi.ac.id</p>
-              <p>&#x23F0; Senin - Sabtu: 08:00 - 15:30 WITA</p>
+              <p className="flex items-center space-x-2">
+                <Mail className="w-3.5 h-3.5" />
+                <span>teknik@hamzanwadi.ac.id</span>
+              </p>
+              <p className="flex items-center space-x-2">
+                <Clock className="w-3.5 h-3.5" />
+                <span>Senin - Sabtu: 08:00 - 15:30 WITA</span>
+              </p>
             </div>
           </div>
 

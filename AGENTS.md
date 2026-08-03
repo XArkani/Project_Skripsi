@@ -23,3 +23,24 @@ shell commands, and other important information, read the implementation plan:
   be executed automatically. Use `migrate dev --create-only` (or a manual
   migration file) to add the column as nullable, backfill data, then `SET NOT NULL`.
 - Use `bunx prisma migrate deploy` for non-interactive application of pending migrations.
+
+# RSC boundary: data modules stay on the server
+
+- `"use client"` files MUST NEVER import modules that contain `"use cache"`,
+  `"use server"`, or Prisma (`lib/faculty.ts`, `lib/prisma.ts`, `lib/actions.ts`).
+  The whole module gets bundled into the client, and Next.js fails the build
+  with "It is not allowed to define inline 'use cache' annotated functions in
+  Client Components".
+- Pattern: Server Component fetches data (`getFAQs()` etc.), passes serializable
+  results as props to a Client Component child (`components/sections/FaqSearch.tsx`).
+
+# Build verification is mandatory (typecheck + lint are NOT enough)
+
+- RSC boundary violations and uncached-data-in-static-route errors ("Uncached
+  data was accessed outside of <Suspense>") only surface in `next build`,
+  never in `tsc`/`eslint`.
+- After touching any page that fetches data, run `bunx next build` and verify
+  it completes.
+- Dynamic data (`headers()`, `cookies()`, `searchParams`) accessed at the top
+  of a layout/page that otherwise renders `"use cache"` data must be wrapped
+  in a `<Suspense>` boundary (see `app/(dashboard)/layout.tsx` pattern).

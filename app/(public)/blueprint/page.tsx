@@ -1,6 +1,8 @@
 import { cacheTag } from "next/cache"
 import Link from "next/link"
 import { getBlueprints } from "@/lib/faculty"
+import EmptyState from "@/components/shared/EmptyState"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 export default async function BlueprintPage() {
   "use cache"
@@ -16,15 +18,22 @@ export default async function BlueprintPage() {
         <p className="text-slate-500 text-sm sm:text-base mt-2">Pengembangan tata ruang masa depan untuk menunjang kegiatan pembelajaran yang futuristik.</p>
       </div>
 
-      <div className="space-y-16">
-        {blueprints.map((bp, idx) => (
-          <div key={bp.id} className="grid md:grid-cols-12 gap-8 items-center">
-            <div className={`md:col-span-6 ${idx % 2 === 1 ? "md:order-2" : ""}`}>
-              <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-video">
-                <img src={bp.image} alt={bp.title} className="w-full h-full object-cover" />
-                <span className="absolute bottom-4 right-4 bg-emerald-900/90 text-white text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider backdrop-blur-sm">{bp.category}</span>
+      {blueprints.length === 0 ? (
+        <EmptyState title="Belum ada fasilitas" description="Belum ada data fasilitas kampus yang tersedia saat ini." />
+      ) : (
+        <div className="space-y-16">
+          {blueprints.map((bp, idx) => (
+            <div key={bp.id} className="grid md:grid-cols-12 gap-8 items-center">
+              <div className={`md:col-span-6 ${idx % 2 === 1 ? "md:order-2" : ""}`}>
+                <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-video">
+                  {bp.image ? (
+                    <img src={bp.image} alt={bp.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <ImagePlaceholder label="Gambar Fasilitas" className="w-full h-full" />
+                  )}
+                  <span className="absolute bottom-4 right-4 bg-emerald-900/90 text-white text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider backdrop-blur-sm">{bp.category}</span>
+                </div>
               </div>
-            </div>
 
             <div className="md:col-span-6 space-y-4">
               <h2 className="text-2xl font-bold text-slate-900">{bp.title}</h2>
@@ -41,7 +50,8 @@ export default async function BlueprintPage() {
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

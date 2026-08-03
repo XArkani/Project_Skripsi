@@ -58,16 +58,16 @@ export async function getMessages(): Promise<Message[]> {
   return data as Message[]
 }
 
-export async function getEventById(id: string): Promise<Event | null> {
+export async function getEventBySlug(slug: string): Promise<Event | null> {
   "use cache"
-  cacheTag(`event-${id}`)
-  const data = await prisma.event.findUnique({ where: { id } })
+  cacheTag(`event-${slug}`)
+  const data = await prisma.event.findUnique({ where: { slug } })
   return data as Event | null
 }
 
-export async function getNewsById(id: string): Promise<News | null> {
+export async function getNewsBySlug(slug: string): Promise<News | null> {
   "use cache"
-  cacheTag(`news-${id}`)
-  const data = await prisma.news.findUnique({ where: { id } })
+  cacheTag(`news-${slug}`)
+  const data = await prisma.news.findUnique({ where: { slug } })
   return data as News | null
 }

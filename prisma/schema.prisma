@@ -161,10 +161,13 @@ model message {
     senderName  String
     senderEmail String
     senderPhone String?
+    senderIp    String?
     subject     String
     message     String
     date        String
     isRead      Boolean  @default(false)
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
+
+    @@index([senderIp, createdAt])
 }

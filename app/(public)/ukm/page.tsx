@@ -1,6 +1,7 @@
 import { cacheTag } from "next/cache"
 import Link from "next/link"
 import { getUKM } from "@/lib/faculty"
+import EmptyState from "@/components/shared/EmptyState"
 
 export default async function UKMPage() {
   "use cache"
@@ -16,8 +17,11 @@ export default async function UKMPage() {
         <p className="text-slate-500 text-sm sm:text-base mt-2">Salurkan bakat, perluas jaringan perkawanan, dan kembangkan karya nyata keteknikan di luar perkuliahan.</p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {ukmList.map((ukm) => (
+      {ukmList.length === 0 ? (
+        <EmptyState title="Belum ada UKM" description="Belum ada unit kegiatan mahasiswa yang terdaftar saat ini." />
+      ) : (
+        <div className="grid md:grid-cols-3 gap-8">
+          {ukmList.map((ukm) => (
           <div key={ukm.id} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
             <div>
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-3xl mb-5 shadow-sm">
@@ -47,8 +51,9 @@ export default async function UKMPage() {
               </Link>
             </div>
           </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

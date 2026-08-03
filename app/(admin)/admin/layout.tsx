@@ -1,13 +1,10 @@
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
+import { Suspense } from "react"
 import { AdminSidebar } from "@/components/admin/AdminSidebar"
 
-export default async function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+async function SessionCheck({ children }: { children: React.ReactNode }) {
   const session = await auth.api.getSession({
     headers: await headers(),
   })
@@ -17,4 +14,16 @@ export default async function AdminLayout({
   }
 
   return <AdminSidebar>{children}</AdminSidebar>
+}
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-slate-400 text-sm">Memuat...</div>}>
+      <SessionCheck>{children}</SessionCheck>
+    </Suspense>
+  )
 }

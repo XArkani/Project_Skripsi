@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import type { News } from "@/lib/types"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 interface NewsPreviewProps {
   items: News[]
@@ -42,11 +43,15 @@ export default function NewsPreview({ items }: NewsPreviewProps) {
             <article key={article.id} className="group flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="h-48 rounded-xl overflow-hidden relative">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                  />
+                  {article.image ? (
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                    />
+                  ) : (
+                    <ImagePlaceholder label="Gambar Berita" className="w-full h-full" />
+                  )}
                 </div>
                 <span className="text-slate-400 text-xs font-semibold block">{article.date}</span>
                 <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-2">

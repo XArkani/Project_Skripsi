@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { submitContact } from "@/lib/actions"
 import Toast from "@/components/shared/Toast"
+import MapWithFallback from "@/components/shared/MapWithFallback"
 import { MapPin, Mail, Phone, Clock } from "lucide-react"
 
 export default function HubungiPage() {
@@ -36,6 +37,8 @@ export default function HubungiPage() {
       formData.set("senderPhone", form.senderPhone)
       formData.set("subject", form.subject)
       formData.set("message", form.message)
+      const websiteField = document.querySelector('input[name="website"]') as HTMLInputElement | null
+      if (websiteField) formData.set("website", websiteField.value)
 
       await submitContact(formData)
       showToast("Pesan Anda berhasil terkirim!", "success")
@@ -104,6 +107,10 @@ export default function HubungiPage() {
           <h3 className="font-extrabold text-xl text-slate-900 mb-6">Ajukan Pertanyaan / Kirim Aspirasi</h3>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="absolute left-[-9999px] top-auto" aria-hidden="true">
+              <label htmlFor="website">Jangan diisi</label>
+              <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+            </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Nama Lengkap *</label>
@@ -178,13 +185,7 @@ export default function HubungiPage() {
       </div>
 
       <div className="mt-12 rounded-3xl overflow-hidden border border-slate-200 shadow-sm h-80 relative">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.8344607736637!2d116.5317765!3d-8.6596489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcc4ee5abcb672f%3A0xe5a3c00c7104b281!2sUniversitas%20Hamzanwadi!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
-          className="w-full h-full border-0"
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+        <MapWithFallback />
       </div>
     </div>
   )

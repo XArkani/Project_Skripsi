@@ -1,7 +1,10 @@
 "use server"
 
 import { revalidateTag } from "next/cache"
+import { headers } from "next/headers"
 import { prisma } from "@/lib/prisma"
+
+const RATE_LIMIT_MS = 5 * 60 * 1000
 
 function slugify(text: string) {
   return text
@@ -46,16 +49,37 @@ export async function deleteNews(id: string) {
   revalidateTag("news", "max")
 }
 
+async function getClientIp() {
+  const headersList = await headers()
+  const forwarded = headersList.get("x-forwarded-for")
+  if (forwarded) return forwarded.split(",")[0]?.trim() ?? "unknown"
+  return headersList.get("x-real-ip") ?? "unknown"
+}
+
 export async function submitContact(formData: FormData) {
+  const honeypot = formData.get("website")
+  if (honeypot) return
+
   const senderName = formData.get("senderName") as string
   const senderEmail = formData.get("senderEmail") as string
   const senderPhone = formData.get("senderPhone") as string | null
   const subject = formData.get("subject") as string
   const message = formData.get("message") as string
   const date = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })
+  const ip = await getClientIp()
+
+  const recent = await prisma.message.count({
+    where: {
+      senderIp: ip,
+      createdAt: { gte: new Date(Date.now() - RATE_LIMIT_MS) },
+    },
+  })
+  if (recent > 0) {
+    throw new Error("Pesan sudah terkirim baru-baru ini. Silakan coba lagi dalam 5 menit.")
+  }
 
   await prisma.message.create({
-    data: { senderName, senderEmail, senderPhone, subject, message, date },
+    data: { senderName, senderEmail, senderPhone, senderIp: ip, subject, message, date },
   })
 
   revalidateTag("messages", "max")

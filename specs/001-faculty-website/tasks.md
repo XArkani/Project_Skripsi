@@ -35,18 +35,18 @@
 
 ### Implementation for User Story 1
 
-- [ ] T006 [P] [US1] Create data fetching function `getNewsBySlug` in `lib/faculty.ts`
-- [ ] T007 [P] [US1] Create data fetching function `getEventBySlug` in `lib/faculty.ts`
-- [ ] T008 [P] [US1] Update Berita listing page to link by slug in `app/(public)/berita/page.tsx`
-- [ ] T009 [P] [US1] Create Berita detail page with slug param in `app/(public)/berita/[slug]/page.tsx` (hero image, metadata, breadcrumb, body, related articles)
-- [ ] T010 [P] [US1] Update Event listing page to link by slug in `app/(public)/event/page.tsx`
-- [ ] T011 [P] [US1] Create Event detail page with slug param in `app/(public)/event/[slug]/page.tsx` (banner, description, schedule, location, related events)
+- [X] T006 [P] [US1] Create data fetching function `getNewsBySlug` in `lib/faculty.ts`
+- [X] T007 [P] [US1] Create data fetching function `getEventBySlug` in `lib/faculty.ts`
+- [X] T008 [P] [US1] Update Berita listing page to link by slug in `app/(public)/berita/page.tsx`
+- [X] T009 [P] [US1] Create Berita detail page with slug param in `app/(public)/berita/[slug]/page.tsx` (hero image, metadata, breadcrumb, body, related articles)
+- [X] T010 [P] [US1] Update Event listing page to link by slug in `app/(public)/event/page.tsx`
+- [X] T011 [P] [US1] Create Event detail page with slug param in `app/(public)/event/[slug]/page.tsx` (banner, description, schedule, location, related events)
 - [X] T012 Remove old `[id]` route groups for berita and event (`app/(public)/berita/[id]/` and `app/(public)/event/[id]/`)
-- [ ] T013 [P] [US1] Add honeypot hidden field to contact form in `app/(public)/hubungi/page.tsx`
-- [ ] T014 [P] [US1] Add rate limiting check (1 msg per IP per 5 min) in `lib/actions.ts` for `submitContact`
-- [ ] T015 [P] [US1] Add Google Maps fallback (static address card) in `app/(public)/hubungi/page.tsx`
-- [ ] T016 [P] [US1] Add empty state for all public listing pages using `EmptyState` component
-- [ ] T017 [P] [US1] Add image placeholder fallback for all image fields using `ImagePlaceholder`
+- [X] T013 [P] [US1] Add honeypot hidden field to contact form in `app/(public)/hubungi/page.tsx`
+- [X] T014 [P] [US1] Add rate limiting check (1 msg per IP per 5 min) in `lib/actions.ts` for `submitContact`
+- [X] T015 [P] [US1] Add Google Maps fallback (static address card) in `app/(public)/hubungi/page.tsx`
+- [X] T016 [P] [US1] Add empty state for all public listing pages using `EmptyState` component
+- [X] T017 [P] [US1] Add image placeholder fallback for all image fields using `ImagePlaceholder`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional — public pages display content, contact form has spam protection, empty/image states handled
 

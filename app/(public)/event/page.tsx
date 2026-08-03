@@ -2,6 +2,8 @@ import { cacheTag } from "next/cache"
 import Link from "next/link"
 import { getEvents } from "@/lib/faculty"
 import { Calendar, MapPin } from "lucide-react"
+import EmptyState from "@/components/shared/EmptyState"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 const statusColors: Record<string, string> = {
   "Akan Datang": "bg-blue-600",
@@ -24,7 +26,10 @@ export default async function EventPage() {
         <p className="text-slate-500 text-sm sm:text-base mt-2">Daftar lengkap program pelatihan, seminar, loka karya, dan konferensi yang kami selenggarakan.</p>
       </div>
 
-      {categories.map((categoryName) => {
+      {events.length === 0 ? (
+        <EmptyState title="Belum ada acara" description="Belum ada agenda atau acara yang dijadwalkan saat ini. Silakan kembali lagi nanti." />
+      ) : (
+        categories.map((categoryName) => {
         const matchedEvents = events.filter((e) => e.status === categoryName)
         return (
           <div key={categoryName} className="mb-12">
@@ -44,7 +49,11 @@ export default async function EventPage() {
                   <div key={evt.id} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
                     <div>
                       <div className="relative h-44 overflow-hidden">
-                        <img src={evt.image} alt={evt.title} className="w-full h-full object-cover" />
+                        {evt.image ? (
+                          <img src={evt.image} alt={evt.title} className="w-full h-full object-cover" />
+                        ) : (
+                          <ImagePlaceholder label="Poster Acara" className="w-full h-full" />
+                        )}
                         <span className={`absolute top-4 left-4 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest ${statusColors[evt.status] || "bg-slate-500"}`}>{evt.status}</span>
                       </div>
                       <div className="p-5">
@@ -78,9 +87,10 @@ export default async function EventPage() {
                 ))}
               </div>
             )}
-          </div>
-        )
-      })}
+            </div>
+          )
+        })
+      )}
     </div>
   )
 }

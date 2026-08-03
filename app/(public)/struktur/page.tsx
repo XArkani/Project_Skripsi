@@ -1,5 +1,6 @@
 import { cacheTag } from "next/cache"
 import { getStruktur } from "@/lib/faculty"
+import EmptyState from "@/components/shared/EmptyState"
 
 export default async function StrukturPage() {
   "use cache"
@@ -19,7 +20,10 @@ export default async function StrukturPage() {
         <p className="text-slate-500 text-sm sm:text-base mt-2">Bagan kepemimpinan, koordinasi struktural, dan penanggung jawab mutu Fakultas Teknik.</p>
       </div>
 
-      <div className="space-y-12">
+      {struktur.length === 0 ? (
+        <EmptyState title="Belum ada data struktur" description="Belum ada data struktur organisasi yang tersedia saat ini." />
+      ) : (
+        <div className="space-y-12">
         {dekan && (
           <div className="flex justify-center">
             <div className="bg-emerald-900 text-white p-6 rounded-2xl border border-emerald-700 shadow-md max-w-md w-full text-center">
@@ -68,6 +72,7 @@ export default async function StrukturPage() {
           </div>
         )}
       </div>
+      )}
     </div>
   )
 }

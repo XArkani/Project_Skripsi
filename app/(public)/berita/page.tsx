@@ -2,6 +2,8 @@ import { cacheTag } from "next/cache"
 import Link from "next/link"
 import { getNews } from "@/lib/faculty"
 import { Calendar } from "lucide-react"
+import EmptyState from "@/components/shared/EmptyState"
+import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 export default async function BeritaPage() {
   "use cache"
@@ -17,13 +19,20 @@ export default async function BeritaPage() {
         <p className="text-slate-500 text-sm sm:text-base mt-2">Dapatkan kabar pembaruan regulasi dekanat, prestasi mahasiswa, dan artikel sains terpopuler.</p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {news.map((article) => (
-          <article key={article.id} className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
-            <div>
-              <div className="relative h-48 overflow-hidden bg-slate-100">
-                <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              </div>
+      {news.length === 0 ? (
+        <EmptyState title="Belum ada berita" description="Belum ada berita yang dipublikasikan saat ini. Silakan kembali lagi nanti." />
+      ) : (
+        <div className="grid md:grid-cols-3 gap-8">
+          {news.map((article) => (
+            <article key={article.id} className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
+              <div>
+                <div className="relative h-48 overflow-hidden bg-slate-100">
+                  {article.image ? (
+                    <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  ) : (
+                    <ImagePlaceholder label="Gambar Berita" className="w-full h-full" />
+                  )}
+                </div>
               <div className="p-6">
                 <span className="text-slate-400 text-xs font-semibold block mb-2 inline-flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
@@ -47,14 +56,17 @@ export default async function BeritaPage() {
             </div>
           </article>
         ))}
-      </div>
+        </div>
+      )}
 
+      {news.length > 0 && (
       <div className="mt-12 flex items-center justify-center space-x-2">
         <span className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-bold text-slate-400 cursor-not-allowed">Sebelumnya</span>
         <span className="px-4 py-2 rounded-lg bg-emerald-600 text-white text-xs font-bold shadow-md">1</span>
         <span className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer">2</span>
         <span className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer">Selanjutnya</span>
       </div>
+      )}
     </div>
   )
 }
