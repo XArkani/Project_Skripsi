@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { NavLinks } from "./nav-links";
@@ -10,9 +10,10 @@ export function MobileSidebar({ email }: { email?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // Close the sidebar when the route changes
   useEffect(() => {
-    setIsOpen(false);
+    startTransition(() => {
+      setIsOpen(false);
+    });
   }, [pathname]);
 
   // Prevent body scroll when open
@@ -77,7 +78,7 @@ export function MobileSidebar({ email }: { email?: string }) {
               {email}
             </p>
             <div className="w-full">
-              <LogoutButton email={email} />
+              <LogoutButton />
             </div>
           </div>
         </div>

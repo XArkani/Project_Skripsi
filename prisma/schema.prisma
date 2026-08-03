@@ -75,3 +75,96 @@ model deviceSession {
     @@index([userId])
     @@index([sessionId])
 }
+
+model blueprint {
+    id          String   @id @default(cuid())
+    title       String
+    category    String
+    description String
+    details     String
+    image       String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model dosen {
+    id        String   @id @default(cuid())
+    name      String
+    title     String
+    position  String
+    expertise String
+    interest  String
+    email     String
+    image     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model ukm {
+    id          String   @id @default(cuid())
+    name        String
+    description String
+    activities  String
+    contact     String
+    logo        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model event {
+    id          String   @id @default(cuid())
+    title       String
+    slug        String   @unique
+    status      String
+    date        String
+    time        String
+    location    String
+    description String
+    details     String
+    image       String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model news {
+    id       String   @id @default(cuid())
+    title    String
+    slug     String   @unique
+    date     String
+    excerpt  String
+    content  String
+    image    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model faq {
+    id        String   @id @default(cuid())
+    question  String
+    answer    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model struktur {
+    id        String   @id @default(cuid())
+    parentId  String?
+    role      String
+    name      String
+    details   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model message {
+    id          String   @id @default(cuid())
+    senderName  String
+    senderEmail String
+    senderPhone String?
+    subject     String
+    message     String
+    date        String
+    isRead      Boolean  @default(false)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}

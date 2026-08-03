@@ -1,43 +1,38 @@
-import "dotenv/config";
-import { PrismaClient } from "../generated/prisma/client";
-import { PrismaNeon } from "@prisma/adapter-neon";
-import { auth } from "../lib/auth";
+import { PrismaClient } from "../generated/prisma/client"
+import { PrismaNeon } from "@prisma/adapter-neon"
 
-const adapter = new PrismaNeon({
-  connectionString: process.env.DATABASE_URL!,
-});
-const prisma = new PrismaClient({ adapter });
+const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
-  const email = process.env.ADMIN_EMAIL;
-  const password = process.env.ADMIN_PASSWORD;
+  const adminEmail = process.env.ADMIN_EMAIL
+  const adminPassword = process.env.ADMIN_PASSWORD
 
-  if (!email || !password) {
-    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD must be set in .env");
+  if (adminEmail && adminPassword) {
+    const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } })
+    if (!existingAdmin) {
+      const { auth } = await import("@/lib/auth")
+      await auth.api.signUpEmail({
+        body: {
+          email: adminEmail,
+          password: adminPassword,
+          name: "Admin",
+        },
+      })
+      console.log(`Admin user created: ${adminEmail}`)
+    } else {
+      console.log(`Admin user already exists: ${adminEmail}`)
+    }
   }
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    console.log("Admin user already exists, skipping seed.");
-    return;
-  }
-
-  const passwordHash = await auth.api.signUpEmail({
-    body: {
-      email,
-      password,
-      name: "Admin",
-    },
-  });
-
-  console.log(`Admin user created: ${passwordHash.user.email}`);
+  console.log("Database is clean and ready for manual data entry via admin panel.")
 }
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })

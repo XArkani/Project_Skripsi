@@ -1,148 +1,99 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
+import Toast from "@/components/shared/Toast"
+import { Lock } from "lucide-react"
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isShaking, setIsShaking] = useState(false);
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const [toastType, setToastType] = useState<"success" | "error" | "info">("error")
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  const showToast = (msg: string, type: "success" | "error" | "info" = "error") => {
+    setToastMessage(msg)
+    setToastType(type)
+    setTimeout(() => setToastMessage(null), 4000)
+  }
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
 
     try {
-      const result = await authClient.signIn.email({
-        email,
-        password,
-      });
+      const result = await authClient.signIn.email({ email, password })
 
       if (result.error) {
-        setError(result.error.message ?? "Login failed");
-        setIsShaking(true);
-        setTimeout(() => setIsShaking(false), 500);
-        return;
+        showToast(result.error.message ?? "Login gagal. Periksa kembali kredensial Anda.", "error")
+        return
       }
 
-      router.push("/dashboard");
+      showToast("Login berhasil! Selamat datang Admin FT.", "success")
+      router.push("/dashboard/admin")
     } catch {
-      setError("An unexpected error occurred");
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 500);
+      showToast("Terjadi kesalahan yang tidak terduga.", "error")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
   return (
-    <div className="grid min-h-[100dvh] lg:grid-cols-2 bg-background">
-      <div className="flex flex-col gap-4 p-6 md:p-10 relative">
-        <div className="flex justify-start items-center animate-in fade-in slide-in-from-top-4 duration-700">
-          <Button variant="ghost" size="sm" asChild className="text-muted-foreground hover:text-foreground rounded-full -ml-3">
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Link>
-          </Button>
-        </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-both">
-            <style dangerouslySetInnerHTML={{__html: `
-              @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                20%, 60% { transform: translateX(-4px); }
-                40%, 80% { transform: translateX(4px); }
-              }
-              .animate-shake {
-                animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
-              }
-            `}} />
-            <form className={cn("flex flex-col gap-6", isShaking && "animate-shake")} onSubmit={handleSubmit}>
-              <FieldGroup>
-                <div className="flex flex-col items-center gap-1 text-center">
-                  <h1 className="text-2xl font-bold">Login to your account</h1>
-                  <p className="text-sm text-balance text-muted-foreground">
-                    Enter your email below to login to your account
-                  </p>
-                </div>
-                <Field>
-                  <FieldLabel htmlFor="email">Email</FieldLabel>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    placeholder="you@example.com" 
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      if (error) setError("");
-                    }}
-                    className={cn(
-                      "focus-visible:ring-0 transition-colors",
-                      error ? "border-destructive/50 focus-visible:border-destructive/50" : "focus-visible:border-foreground/40"
-                    )}
-                    required 
-                  />
-                </Field>
-                <Field>
-                  <div className="flex items-center">
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <a
-                      href="#"
-                      className="ml-auto text-sm underline-offset-4 hover:underline text-muted-foreground"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
-                  <Input 
-                    id="password" 
-                    type="password" 
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      if (error) setError("");
-                    }}
-                    className={cn(
-                      "focus-visible:ring-0 transition-colors",
-                      error ? "border-destructive/50 focus-visible:border-destructive/50" : "focus-visible:border-foreground/40"
-                    )}
-                    required 
-                  />
-                </Field>
+    <div className="max-w-md mx-auto px-4">
+      {toastMessage && <Toast message={toastMessage} type={toastType} />}
 
-                <Field>
-                  <Button type="submit" disabled={loading}>
-                    {loading ? "Signing in..." : "Login"}
-                  </Button>
-                </Field>
-              </FieldGroup>
-            </form>
+      <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-lg text-center space-y-6">
+        <div>
+          <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto shadow-inner mb-4">
+            <Lock className="w-7 h-7 text-emerald-700" />
           </div>
+          <h1 className="text-2xl font-extrabold text-slate-900">Admin Portal FT</h1>
+          <p className="text-slate-500 text-xs mt-1">Otorisasi khusus pengelolaan data dekanat & berita kampus.</p>
         </div>
-      </div>
-      <div className="relative hidden lg:block overflow-hidden animate-in fade-in duration-1000 ease-out fill-mode-both border-l border-border/40">
-        <img
-          src="/image.png"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+
+        <form onSubmit={handleLogin} className="space-y-4 text-left">
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email Pengelola</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@hamzanwadi.ac.id"
+              className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Password</label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Masukkan password"
+              className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition-all disabled:opacity-50"
+          >
+            {loading ? "Memproses..." : "Masuk Sebagai Admin"}
+          </button>
+        </form>
+
+        <div className="pt-4 border-t border-slate-100">
+          <p className="text-[11px] text-slate-400">
+            Demo Kredensial:<br />
+            <b className="text-slate-600">email: admin | password: teknik2026</b>
+          </p>
+        </div>
       </div>
     </div>
-  );
+  )
 }

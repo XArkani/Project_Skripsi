@@ -46,6 +46,14 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
   --font-heading: var(--font-sans);
+  --color-emerald-750: oklch(0.45 0.14 145);
+  --color-slate-150: oklch(0.95 0.01 260);
+  --color-slate-750: oklch(0.30 0.02 260);
+  --color-slate-850: oklch(0.22 0.02 260);
+  --color-red-650: oklch(0.52 0.22 30);
+  --color-red-850: oklch(0.34 0.18 30);
+  --color-slate-355: oklch(0.62 0.01 260);
+  --color-slate-450: oklch(0.55 0.01 260);
 }
 
 :root {

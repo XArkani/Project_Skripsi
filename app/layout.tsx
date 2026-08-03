@@ -1,3 +1,4 @@
+import { Agentation } from "agentation";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
@@ -16,10 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CodeNight Starter",
-  description:
-    "A starter template for building a full-stack application with Next.js, Prisma, and UploadThing. It includes authentication, file uploads, and a dashboard layout.",
-};
+  title: "Fakultas Teknik Universitas Hamzanwadi",
+  description: "Portal resmi Fakultas Teknik Universitas Hamzanwadi. Informasi akademik, profil dosen, agenda event, berita, dan layanan mahasiswa.",
+}
 
 export default function RootLayout({
   children,
@@ -27,11 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
+    <html lang="id" className={cn("font-sans", inter.variable)}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        {process.env.NODE_ENV === "development" && <Agentation />}
       </body>
     </html>
   );
