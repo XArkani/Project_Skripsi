@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, ChevronDown, Lock, GraduationCap, Calendar, Newspaper, Landmark, Lightbulb, Zap } from "lucide-react"
+import { Menu, X, ChevronDown, GraduationCap, Calendar, Newspaper, Landmark, Lightbulb, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -139,31 +139,17 @@ export default function Header() {
           </nav>
 
           {/* Right Side Header Action */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-3">
             <Link
               href="/hubungi"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-bold shadow-md transition-all hover:scale-[1.02]"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition-colors"
             >
               Hubungi Kami
-            </Link>
-            <Link
-              href="/login"
-              className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition-all inline-flex items-center space-x-1.5"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>Admin Portal</span>
             </Link>
           </div>
 
           {/* Mobile Hamburger Trigger */}
-          <div className="lg:hidden flex items-center space-x-2">
-            <Link
-              href="/login"
-              className="p-2 text-slate-500 hover:text-emerald-600"
-              title="Admin Portal"
-            >
-              <Lock className="w-4 h-4" />
-            </Link>
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition-colors"
@@ -194,16 +180,7 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <div className="pt-4 border-t border-slate-100">
-            <Link
-              href="/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-center space-x-2 w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold transition-all"
-            >
-              <Lock className="w-4 h-4" />
-              <span>Pintu Masuk Administrator</span>
-            </Link>
-          </div>
+
         </div>
       )}
     </header>

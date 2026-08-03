@@ -1,8 +1,7 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useState, useEffect, startTransition } from "react"
-import { Phone, Mail, Clock } from "lucide-react"
 
 const quickLinks = [
   { href: "/blueprint", label: "Blueprint Kampus" },
@@ -12,36 +11,26 @@ const quickLinks = [
   { href: "/faq", label: "Tanya Jawab (FAQ)" },
 ]
 
-const socialLinks = [
-  { href: "#", label: "Facebook" },
-  { href: "#", label: "Instagram" },
-  { href: "#", label: "YouTube" },
-  { href: "#", label: "Twitter/X" },
-]
-
 export default function Footer() {
-  const [year, setYear] = useState(2026)
+  const [year, setYear] = useState("")
 
   useEffect(() => {
-    startTransition(() => {
-      setYear(new Date().getFullYear())
-    })
+    setYear(String(new Date().getFullYear()))
   }, [])
-
   return (
-    <footer className="bg-slate-900 text-slate-400 pt-16 pb-8 border-t border-slate-800">
+    <footer className="bg-slate-900 text-slate-400 pt-12 pb-8 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10">
 
           {/* Faculty Logo & Description */}
-          <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center space-x-3 text-white">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center font-extrabold text-xl shadow-lg">
+          <div className="md:col-span-5 space-y-3">
+            <div className="flex items-center gap-3 text-white">
+              <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center font-extrabold text-lg">
                 FT
               </div>
               <div>
-                <span className="block font-bold tracking-wider text-base">FAKULTAS TEKNIK</span>
-                <span className="block text-[11px] font-medium uppercase tracking-widest text-emerald-400 mt-0.5">Universitas Hamzanwadi</span>
+                <span className="block font-bold tracking-wider text-sm">FAKULTAS TEKNIK</span>
+                <span className="block text-sm font-medium text-emerald-400 mt-0.5">Universitas Hamzanwadi</span>
               </div>
             </div>
             <p className="text-sm leading-relaxed text-slate-400">
@@ -50,9 +39,9 @@ export default function Footer() {
           </div>
 
           {/* Quick Links Column */}
-          <div className="md:col-span-3 space-y-4">
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider">Akses Navigasi</h3>
-            <ul className="space-y-2.5 text-sm">
+          <div className="md:col-span-3 space-y-3">
+            <h3 className="font-bold text-white text-sm">Navigasi</h3>
+            <ul className="space-y-2 text-sm">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="hover:text-emerald-400 transition-colors">
@@ -64,45 +53,21 @@ export default function Footer() {
           </div>
 
           {/* Campus Contact Details */}
-          <div className="md:col-span-4 space-y-4">
-            <h3 className="font-bold text-white text-sm uppercase tracking-wider">Kontak Fakultas</h3>
+          <div className="md:col-span-4 space-y-3">
+            <h3 className="font-bold text-white text-sm">Kontak</h3>
             <p className="text-sm">
-              Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor, Selong, Lombok Timur, Nusa Tenggara Barat.
+              Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor, Selong, Lombok Timur, NTB.
             </p>
-            <div className="space-y-1.5 text-sm text-slate-400">
-              <p className="flex items-center space-x-2">
-                <Phone className="w-3.5 h-3.5" />
-                <span>+62 (376) 21377</span>
-              </p>
-              <p className="flex items-center space-x-2">
-                <Mail className="w-3.5 h-3.5" />
-                <span>teknik@hamzanwadi.ac.id</span>
-              </p>
-              <p className="flex items-center space-x-2">
-                <Clock className="w-3.5 h-3.5" />
-                <span>Senin - Sabtu: 08:00 - 15:30 WITA</span>
-              </p>
-            </div>
+            <p className="text-sm">+62 (376) 21377</p>
+            <p className="text-sm">teknik@hamzanwadi.ac.id</p>
+            <p className="text-sm">Senin – Sabtu, 08:00 – 15:30 WITA</p>
           </div>
 
         </div>
 
-        {/* Social Media and Legal Bar */}
-        <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-          <p className="text-slate-500">
-            &copy; {year} Fakultas Teknik Universitas Hamzanwadi. Seluruh Hak Cipta Dilindungi.
-          </p>
-          <div className="flex space-x-4">
-            {socialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="hover:text-emerald-400 transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
+        {/* Legal Bar */}
+        <div className="border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
+          &copy; {year} Fakultas Teknik Universitas Hamzanwadi. Seluruh Hak Cipta Dilindungi.
         </div>
       </div>
     </footer>

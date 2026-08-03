@@ -11,70 +11,47 @@ interface BlueprintPreviewProps {
 }
 
 export default function BlueprintPreview({ items }: BlueprintPreviewProps) {
+
   return (
     <motion.section
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="py-16 bg-slate-50"
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="py-12 sm:py-16 bg-slate-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-              Blueprint & Fasilitas Unggulan
-            </h2>
-            <p className="text-slate-500 text-sm sm:text-base mt-2">
-              Gambaran komitmen kami untuk memberikan fasilitas belajar mengajar dengan standar
-              industri.
-            </p>
-          </div>
-          <Link
-            href="/blueprint"
-            className="mt-4 md:mt-0 text-emerald-700 hover:text-emerald-800 font-bold text-sm inline-flex items-center space-x-1"
-          >
-            <span>Lihat Selengkapnya</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+        <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">Blueprint & Fasilitas</h2>
+        <p className="text-slate-500 text-sm mb-6">Standar industri untuk fasilitas belajar mengajar terbaik.</p>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {items.slice(0, 3).map((item) => (
-            <div
+            <Link
               key={item.id}
-              className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between"
+              href="/blueprint"
+              className="group bg-white rounded-xl overflow-hidden border border-slate-200 hover:shadow-md hover:border-emerald-200 transition-all"
             >
-              <div>
-                <div className="relative h-48 overflow-hidden">
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <ImagePlaceholder label="Gambar Fasilitas" className="w-full h-full" />
-                  )}
-                  <span className="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest">
+              <div className="relative h-48 overflow-hidden bg-slate-100">
+                <ImagePlaceholder label={item.title} className="w-full h-full" />
+                {item.category && (
+                  <span className="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">
                     {item.category}
                   </span>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-bold text-lg text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-slate-500 text-sm line-clamp-3">{item.description}</p>
-                </div>
+                )}
               </div>
-              <div className="px-6 pb-6 pt-2">
-                <Link
-                  href="/blueprint"
-                  className="block w-full text-center py-2.5 rounded-lg border border-slate-200 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-200 text-slate-700 text-xs font-bold transition-colors"
-                >
-                  Lihat Detail Fasilitas
-                </Link>
+              <div className="p-4">
+                <h3 className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">{item.title}</h3>
+                <p className="text-slate-500 text-sm mt-1 line-clamp-2">{item.description}</p>
               </div>
-            </div>
+            </Link>
           ))}
+        </div>
+
+        <div className="mt-6 text-center">
+          <Link href="/blueprint" className="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors">
+            <span>Lihat Semua Fasilitas</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
     </motion.section>
