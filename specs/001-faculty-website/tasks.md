@@ -60,10 +60,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T018 [P] [US2] Add alternating layout (kiri-kanan) to Blueprint page in `app/(public)/blueprint/page.tsx`
-- [ ] T019 [P] [US2] Add Framer Motion scroll-reveal animations to Blueprint page in `app/(public)/blueprint/page.tsx`
-- [ ] T020 [P] [US2] Add Framer Motion stagger animations to Dosen grid in `app/(public)/dosen/page.tsx`
-- [ ] T021 [P] [US2] Add Framer Motion entrance animations to UKM page in `app/(public)/ukm/page.tsx`
+- [X] T018 [P] [US2] Add alternating layout (kiri-kanan) to Blueprint page in `app/(public)/blueprint/page.tsx`
+- [X] T019 [P] [US2] Add Framer Motion scroll-reveal animations to Blueprint page in `app/(public)/blueprint/page.tsx`
+- [X] T020 [P] [US2] Add Framer Motion stagger animations to Dosen grid in `app/(public)/dosen/page.tsx`
+- [X] T021 [P] [US2] Add Framer Motion entrance animations to UKM page in `app/(public)/ukm/page.tsx`
 
 **Checkpoint**: User Story 2 works — Blueprint has alternating layout with animations, Dosen and UKM have animated entry
 
