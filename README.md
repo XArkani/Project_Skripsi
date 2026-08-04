@@ -1,4 +1,4 @@
-# 🚀 CodeNight Starter
+# 🚀 CodeNight Starters
 
 <img src="public/codenight-starter.png" alt="CodeNight Starter Thumbnail" width="800" style="display:block;margin-bottom:24px;" />
 
