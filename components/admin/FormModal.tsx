@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { ImageUpload } from "./ImageUpload"
+import { slugify } from "@/lib/utils"
 import type { FieldConfig } from "@/lib/types"
 
 interface FormModalProps {
@@ -26,7 +27,16 @@ export function FormModal({ open, onOpenChange, fields, initialData, onSubmit }:
   const [error, setError] = useState<string | null>(null)
 
   function handleChange(name: string, value: unknown) {
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData((prev) => {
+      const next = { ...prev, [name]: value }
+      if (name === "title") {
+        const slugField = fields.find((f) => f.type === "slug")
+        if (slugField) {
+          next[slugField.name] = slugify(String(value ?? ""))
+        }
+      }
+      return next
+    })
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -64,7 +74,14 @@ export function FormModal({ open, onOpenChange, fields, initialData, onSubmit }:
                   {field.label}
                   {field.required && <span className="text-destructive ml-0.5">*</span>}
                 </label>
-                {field.type === "textarea" ? (
+                {field.type === "slug" ? (
+                  <Input
+                    type="text"
+                    value={String(formData[field.name] ?? "")}
+                    onChange={(e) => handleChange(field.name, e.target.value)}
+                    placeholder="Otomatis dari judul"
+                  />
+                ) : field.type === "textarea" ? (
                   <Textarea
                     value={String(formData[field.name] ?? "")}
                     onChange={(e) => handleChange(field.name, e.target.value)}

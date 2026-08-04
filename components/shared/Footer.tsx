@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 
 const quickLinks = [
@@ -12,11 +12,8 @@ const quickLinks = [
 ]
 
 export default function Footer() {
-  const [year, setYear] = useState("")
+  const [year] = useState(() => String(new Date().getFullYear()))
 
-  useEffect(() => {
-    setYear(String(new Date().getFullYear()))
-  }, [])
   return (
     <footer className="bg-slate-900 text-slate-400 pt-12 pb-8 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -42,7 +42,7 @@ export default function DosenHighlight({ items }: DosenHighlightProps) {
           ))}
         </div>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 flex justify-end">
           <Link href="/dosen" className="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors">
             <span>Lihat Seluruh Dosen</span>
             <ArrowRight className="w-3.5 h-3.5" />

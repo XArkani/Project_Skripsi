@@ -78,7 +78,7 @@ export interface Message {
 export interface FieldConfig {
   name: string
   label: string
-  type: "text" | "textarea" | "number" | "image" | "select" | "checkbox" | "date"
+  type: "text" | "textarea" | "number" | "image" | "select" | "checkbox" | "date" | "slug"
   required?: boolean
   options?: string[]
 }

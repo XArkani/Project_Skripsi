@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-950 text-white min-h-[50vh] sm:min-h-[60vh] flex items-center pt-24 pb-12 sm:pt-28 sm:pb-20">
+    <section className="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-950 text-white min-h-[65vh] sm:min-h-[75vh] lg:min-h-[85vh] flex items-center mt-16 sm:mt-20 lg:mt-24 pt-16 pb-12 sm:pt-20 sm:pb-20">
       <div className="absolute inset-0 overflow-hidden select-none pointer-events-none" aria-hidden="true">
         <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full border-[32px] border-emerald-800/20 opacity-50" />
         <div className="absolute bottom-4 right-0 w-56 h-56 rounded-full border-[24px] border-emerald-700/15 opacity-40 translate-x-1/4 translate-y-1/4" />
@@ -20,7 +20,7 @@ export default function HeroSection() {
         className="motion-safe:opacity-100 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full"
       >
         <div className="max-w-2xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-emerald-800/50 border border-emerald-500/25 px-3 py-1 rounded-full text-white/90 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-5">
+          <div className="inline-flex items-center gap-2 bg-emerald-800/50 border border-emerald-500/25 px-3 py-1 rounded-full text-white/90 text-xs font-semibold uppercase tracking-wider mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             <span>Maju Berinovasi, Kokoh Berkualitas</span>
           </div>

@@ -4,13 +4,42 @@ import { revalidateTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
+import { slugify } from "@/lib/utils"
 
 export type ModelName = "blueprint" | "dosen" | "ukm" | "event" | "news" | "faq" | "struktur" | "message"
+
+const modelTags: Record<ModelName, string> = {
+  blueprint: "blueprint",
+  dosen: "dosen",
+  ukm: "ukm",
+  event: "event",
+  news: "news",
+  faq: "faq",
+  struktur: "struktur",
+  message: "messages",
+}
 
 async function checkAdmin() {
   const session = await auth.api.getSession({ headers: await headers() })
   if (!session || session.user.email !== process.env.ADMIN_EMAIL) {
     throw new Error("Unauthorized")
+  }
+}
+
+async function resolveSlug(modelName: "event" | "news", base: string, current?: string, excludeId?: string) {
+  const fallback = modelName === "event" ? "event" : "berita"
+  const clean = slugify(base) || fallback
+  if (current && slugify(current) === clean && excludeId) return current
+  let candidate = clean
+  let suffix = 2
+  while (true) {
+    const existing =
+      modelName === "event"
+        ? await prisma.event.findUnique({ where: { slug: candidate } })
+        : await prisma.news.findUnique({ where: { slug: candidate } })
+    if (!existing || existing.id === excludeId) return candidate
+    candidate = `${clean}-${suffix}`
+    suffix += 1
   }
 }
 
@@ -55,21 +84,40 @@ async function deleteOnModel(modelName: ModelName, id: string) {
 
 export async function createRecord(modelName: ModelName, data: Record<string, unknown>) {
   await checkAdmin()
+  if (modelName === "event" || modelName === "news") {
+    const title = String(data.title ?? "")
+    data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title)
+  }
   const record = await createOnModel(modelName, data)
-  revalidateTag(modelName, "max")
+  revalidateTag(modelTags[modelName], "max")
   return { success: true, data: JSON.parse(JSON.stringify(record)) }
 }
 
 export async function updateRecord(modelName: ModelName, id: string, data: Record<string, unknown>) {
   await checkAdmin()
+  if (modelName === "event" || modelName === "news") {
+    const previous =
+      modelName === "event"
+        ? await prisma.event.findUnique({ where: { id } })
+        : await prisma.news.findUnique({ where: { id } })
+    if (previous) {
+      revalidateTag(`${modelName}-${previous.slug}`, "max")
+    }
+    const title = String(data.title ?? "")
+    data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title, undefined, id)
+  }
   const record = await updateOnModel(modelName, id, data)
-  revalidateTag(modelName, "max")
+  revalidateTag(modelTags[modelName], "max")
+  if (modelName === "event" || modelName === "news") {
+    const slug = (record as { slug: string }).slug
+    revalidateTag(`${modelName}-${slug}`, "max")
+  }
   return { success: true, data: JSON.parse(JSON.stringify(record)) }
 }
 
 export async function deleteRecord(modelName: ModelName, id: string) {
   await checkAdmin()
   await deleteOnModel(modelName, id)
-  revalidateTag(modelName, "max")
+  revalidateTag(modelTags[modelName], "max")
   return { success: true }
 }

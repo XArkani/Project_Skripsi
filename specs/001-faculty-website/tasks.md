@@ -77,11 +77,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T022 [P] [US3] Add Dashboard stats page with real counts from DB in `app/(dashboard)/dashboard/page.tsx`
-- [ ] T023 [P] [US3] Update Berita CRUD to support slug auto-generation in `app/(admin)/admin/berita/page.tsx`
-- [ ] T024 [P] [US3] Update Event CRUD to support slug auto-generation in `app/(admin)/admin/event/page.tsx`
-- [ ] T025 [P] [US3] Verify all CRUD pages read and write correctly via CrudManager components
-- [ ] T026 [P] [US3] Create detail view modal for Pesan Masuk in `app/(admin)/admin/messages/page.tsx`
+- [X] T022 [P] [US3] Add Dashboard stats page with real counts from DB in `app/(dashboard)/dashboard/page.tsx`
+- [X] T023 [P] [US3] Update Berita CRUD to support slug auto-generation in `app/(admin)/admin/berita/page.tsx`
+- [X] T024 [P] [US3] Update Event CRUD to support slug auto-generation in `app/(admin)/admin/event/page.tsx`
+- [X] T025 [P] [US3] Verify all CRUD pages read and write correctly via CrudManager components
+- [X] T026 [P] [US3] Create detail view modal for Pesan Masuk in `app/(admin)/admin/messages/page.tsx`
 
 **Checkpoint**: Admin CMS fully functional — CRUD works for all entities, messages can be read and deleted
 

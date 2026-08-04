@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import Header from "@/components/shared/Header"
 import Footer from "@/components/shared/Footer"
 
@@ -8,7 +9,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <main className="flex-grow">
         {children}
       </main>
-      <Footer />
+      <Suspense>
+        <Footer />
+      </Suspense>
     </div>
   )
 }

@@ -28,6 +28,7 @@ export const ukmFields: FieldConfig[] = [
 
 export const eventFields: FieldConfig[] = [
   { name: "title", label: "Judul Acara", type: "text", required: true },
+  { name: "slug", label: "Slug URL", type: "slug" },
   { name: "status", label: "Status", type: "select", options: ["Akan Datang", "Sedang Berlangsung", "Selesai"] },
   { name: "date", label: "Tanggal", type: "text" },
   { name: "time", label: "Waktu", type: "text" },
@@ -39,6 +40,7 @@ export const eventFields: FieldConfig[] = [
 
 export const newsFields: FieldConfig[] = [
   { name: "title", label: "Judul Berita", type: "text", required: true },
+  { name: "slug", label: "Slug URL", type: "slug" },
   { name: "date", label: "Tanggal", type: "text" },
   { name: "excerpt", label: "Ringkasan", type: "textarea", required: true },
   { name: "content", label: "Konten", type: "textarea", required: true },
