@@ -34,7 +34,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
   const related = news.filter((n) => n.slug !== article.slug).slice(0, 2)
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28">
       <div className="text-xs text-slate-400 mb-6 flex items-center space-x-2">
         <Link href="/" className="hover:text-emerald-700">Beranda</Link>
         <span>/</span>

@@ -19,7 +19,7 @@ export default async function EventPage() {
   const categories = ["Akan Datang", "Sedang Berlangsung", "Selesai"]
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28">
       <div className="border-b border-slate-200 pb-6 mb-10 text-center md:text-left">
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">Kalender Akademik</span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-1">Agenda & Event Teknik</h1>

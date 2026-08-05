@@ -21,9 +21,10 @@ export default function Toast({ message, type = "info" }: ToastProps) {
     <AnimatePresence>
       {message && (
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 50, scale: 0.95 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           className={cn(
             "fixed bottom-6 right-6 z-50 px-6 py-3 rounded-xl text-white text-sm font-semibold shadow-2xl",
             typeStyles[type]

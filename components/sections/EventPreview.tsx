@@ -21,8 +21,16 @@ export default function EventPreview({ items }: EventPreviewProps) {
       className="py-12 sm:py-16 bg-slate-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">Agenda & Event</h2>
-        <p className="text-slate-500 text-sm mb-6">Kolaborasi ilmiah, webinar, kompetisi, dan program kemitraan.</p>
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">Agenda & Event</h2>
+            <p className="text-slate-500 text-sm">Kolaborasi ilmiah, webinar, kompetisi, dan program kemitraan.</p>
+          </div>
+          <Link href="/event" className="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors mb-1">
+            <span>Lihat Semua Agenda</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {items.slice(0, 3).map((evt) => {
@@ -57,13 +65,6 @@ export default function EventPreview({ items }: EventPreviewProps) {
               </Link>
             )
           })}
-        </div>
-
-        <div className="mt-6 flex justify-end">
-          <Link href="/event" className="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors">
-            <span>Lihat Semua Agenda</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
         </div>
       </div>
     </motion.section>

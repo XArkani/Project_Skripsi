@@ -42,8 +42,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto px-4">
-      {toastMessage && <Toast message={toastMessage} type={toastType} />}
+    <div className="max-w-md mx-auto px-4 pt-24 sm:pt-28">
+      <Toast message={toastMessage} type={toastType} />
 
       <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-lg text-center space-y-6">
         <div>

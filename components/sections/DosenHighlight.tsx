@@ -21,8 +21,16 @@ export default function DosenHighlight({ items }: DosenHighlightProps) {
       className="py-12 sm:py-16 bg-white"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">Tenaga Pendidik</h2>
-        <p className="text-slate-500 text-sm mb-6">Dosen ahli dengan riset nasional dan komitmen pengajaran tinggi.</p>
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">Tenaga Pendidik</h2>
+            <p className="text-slate-500 text-sm">Dosen ahli dengan riset nasional dan komitmen pengajaran tinggi.</p>
+          </div>
+          <Link href="/dosen" className="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors mb-1">
+            <span>Lihat Seluruh Dosen</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
           {items.slice(0, 8).map((dosen) => (
@@ -40,13 +48,6 @@ export default function DosenHighlight({ items }: DosenHighlightProps) {
               )}
             </div>
           ))}
-        </div>
-
-        <div className="mt-6 flex justify-end">
-          <Link href="/dosen" className="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors">
-            <span>Lihat Seluruh Dosen</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
         </div>
       </div>
     </motion.section>

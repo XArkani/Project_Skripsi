@@ -47,13 +47,33 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setIsNavDropdownOpen(false)
+      setIsMobileMenuOpen(false)
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsNavDropdownOpen(false)
+        setIsMobileMenuOpen(false)
+      }
+    }
+    document.addEventListener("click", handleClickOutside)
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [])
+
   const isInfoActive = infoPaths.some((p) => pathname.startsWith(p))
+  const isSolid = scrolled || pathname !== "/"
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
-        scrolled
+        isSolid
           ? "bg-white/95 backdrop-blur-md shadow-md py-3"
           : "bg-transparent py-5"
       )}
@@ -94,10 +114,17 @@ export default function Header() {
             ))}
 
             {/* Mega Dropdown Menu */}
-            <div className="relative">
+            <div
+              className="relative"
+              onMouseEnter={() => setIsNavDropdownOpen(true)}
+              onMouseLeave={() => setIsNavDropdownOpen(false)}
+            >
               <button
-                onMouseEnter={() => setIsNavDropdownOpen(true)}
-                onClick={() => setIsNavDropdownOpen(!isNavDropdownOpen)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsNavDropdownOpen(!isNavDropdownOpen)
+                }}
+                aria-expanded={isNavDropdownOpen}
                 className={cn(
                   "px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-1.5 transition-colors",
                   isInfoActive
@@ -106,13 +133,12 @@ export default function Header() {
                 )}
               >
                 <span>Informasi</span>
-                <ChevronDown className="w-3 h-3" />
+                <ChevronDown className={cn("w-3 h-3 transition-transform", isNavDropdownOpen && "rotate-180")} />
               </button>
 
               {isNavDropdownOpen && (
                 <div
                   className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50"
-                  onMouseLeave={() => setIsNavDropdownOpen(false)}
                 >
                   {dropdownItems.map((item) => {
                     const Icon = item.icon
@@ -151,7 +177,10 @@ export default function Header() {
           {/* Mobile Hamburger Trigger */}
           <div className="lg:hidden flex items-center">
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsMobileMenuOpen(!isMobileMenuOpen)
+              }}
               className="p-2.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition-colors"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >

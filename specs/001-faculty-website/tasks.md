@@ -91,12 +91,12 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T027 [P] Add Framer Motion `AnimatePresence` page transitions in `app/(public)/layout.tsx`
-- [ ] T028 [P] Add Framer Motion exit animations to Toast component in `components/shared/Toast.tsx`
-- [ ] T029 Run `bun run lint` and fix any lint errors
-- [ ] T030 Run `bun run typecheck` and fix any type errors
-- [ ] T031 Update seed script with sample faculty data in `prisma/seed.ts`
-- [ ] T032 Final end-to-end verification of all public and admin pages
+- [X] T027 [P] Add Framer Motion `AnimatePresence` page transitions in `app/(public)/layout.tsx`
+- [X] T028 [P] Add Framer Motion exit animations to Toast component in `components/shared/Toast.tsx`
+- [X] T029 Run `bun run lint` and fix any lint errors
+- [X] T030 Run `bun run typecheck` and fix any type errors
+- [X] T031 Update seed script with sample faculty data in `prisma/seed.ts`
+- [X] T032 Final end-to-end verification of all public and admin pages
 
 ---
 
