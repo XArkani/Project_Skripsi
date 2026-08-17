@@ -90,10 +90,11 @@ model blueprint {
 model dosen {
     id        String   @id @default(cuid())
     name      String
+    prodi     String
     title     String
     position  String
     expertise String
-    interest  String
+    doi        String
     email     String
     image     String
     createdAt DateTime @default(now())
@@ -117,6 +118,7 @@ model event {
     slug        String   @unique
     status      String
     date        String
+    dateTime    DateTime?
     time        String
     location    String
     description String
@@ -124,6 +126,8 @@ model event {
     image       String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
+
+    @@index([dateTime])
 }
 
 model news {

@@ -1,4 +1,5 @@
 import type { FieldConfig } from "@/lib/types"
+import { PRODI_LIST } from "@/lib/prodi"
 
 export const blueprintFields: FieldConfig[] = [
   { name: "title", label: "Judul", type: "text", required: true },
@@ -10,11 +11,9 @@ export const blueprintFields: FieldConfig[] = [
 
 export const dosenFields: FieldConfig[] = [
   { name: "name", label: "Nama Lengkap", type: "text", required: true },
-  { name: "title", label: "Jabatan Akademik", type: "text", required: true },
+  { name: "prodi", label: "Program Studi", type: "select", options: [...PRODI_LIST], required: true },
   { name: "position", label: "Posisi", type: "text" },
-  { name: "expertise", label: "Bidang Keahlian", type: "text" },
-  { name: "interest", label: "Topik Riset", type: "textarea" },
-  { name: "email", label: "Email", type: "text" },
+  { name: "doi", label: "URL DOI Riset", type: "text" },
   { name: "image", label: "Foto", type: "image" },
 ]
 
@@ -31,6 +30,7 @@ export const eventFields: FieldConfig[] = [
   { name: "slug", label: "Slug URL", type: "slug" },
   { name: "status", label: "Status", type: "select", options: ["Akan Datang", "Sedang Berlangsung", "Selesai"] },
   { name: "date", label: "Tanggal", type: "text" },
+  { name: "dateTime", label: "Tanggal (ISO, untuk urutan)", type: "date" },
   { name: "time", label: "Waktu", type: "text" },
   { name: "location", label: "Lokasi", type: "text" },
   { name: "description", label: "Deskripsi", type: "textarea", required: true },
@@ -78,4 +78,25 @@ export const fieldConfigMap: Record<string, FieldConfig[]> = {
   faq: faqFields,
   struktur: strukturFields,
   message: messageFields,
+}
+
+export const modelLabels: Record<string, { singular: string; plural: string }> = {
+  blueprint: { singular: "Blueprint & Sarana", plural: "Kelola Blueprint & Sarana" },
+  dosen: { singular: "Dosen", plural: "Kelola Profil Dosen" },
+  ukm: { singular: "UKM", plural: "Kelola Unit Kegiatan Mahasiswa" },
+  event: { singular: "Event", plural: "Kelola Agenda & Acara" },
+  news: { singular: "Berita", plural: "Kelola Berita" },
+  faq: { singular: "FAQ", plural: "Kelola FAQ" },
+  struktur: { singular: "Struktur", plural: "Kelola Struktur Organisasi" },
+  message: { singular: "Pesan", plural: "Pesan Masuk" },
+}
+
+// URL segments that differ from the internal model name (e.g. /dashboard/berita -> "news")
+const MODEL_ALIASES: Record<string, string> = {
+  berita: "news",
+}
+
+export function resolveModel(model: string): string | undefined {
+  const canonical = MODEL_ALIASES[model] ?? model
+  return fieldConfigMap[canonical] ? canonical : undefined
 }

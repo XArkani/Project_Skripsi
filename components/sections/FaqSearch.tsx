@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import Link from "next/link"
 import { Search, HelpCircle } from "lucide-react"
 import type { FAQ } from "@/lib/types"
 import EmptyState from "@/components/shared/EmptyState"
@@ -67,19 +66,6 @@ export default function FaqSearch({ faqs }: FaqSearchProps) {
         ) : (
           filteredFaqs.map((faq) => <FAQCard key={faq.id} faq={faq} />)
         )}
-      </div>
-
-      <div className="mt-12 p-6 rounded-2xl bg-emerald-50 border border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <div>
-          <h4 className="font-bold text-emerald-900 text-base">Punya pertanyaan spesifik lainnya?</h4>
-          <p className="text-slate-500 text-xs sm:text-sm mt-1">Kami siap merespon pertanyaan Anda secara personal dalam 1x24 jam kerja.</p>
-        </div>
-        <Link
-          href="/hubungi"
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-lg shadow-md transition-all"
-        >
-          Kirim Pesan Personil
-        </Link>
       </div>
     </>
   )

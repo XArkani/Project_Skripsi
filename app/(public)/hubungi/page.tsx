@@ -4,7 +4,35 @@ import { useState } from "react"
 import { submitContact } from "@/lib/actions"
 import Toast from "@/components/shared/Toast"
 import MapWithFallback from "@/components/shared/MapWithFallback"
-import { MapPin, Mail, Phone, Clock } from "lucide-react"
+import { MapPin, Mail, Phone, Clock, Send, Loader2, ExternalLink } from "lucide-react"
+
+const contactInfo = [
+  {
+    icon: MapPin,
+    title: "Alamat Kampus",
+    value: "Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor, Selong, Kabupaten Lombok Timur, Nusa Tenggara Barat.",
+  },
+  {
+    icon: Mail,
+    title: "Surat Elektronik",
+    value: "teknik@hamzanwadi.ac.id",
+  },
+  {
+    icon: Phone,
+    title: "Nomor Layanan",
+    value: "+62 (376) 21377 / 0812-3456-7890",
+  },
+  {
+    icon: Clock,
+    title: "Jam Kerja Kantor",
+    value: "Senin - Sabtu: 08:00 - 15:30 WITA",
+  },
+]
+
+const inputClass =
+  "w-full border border-slate-200 rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-colors"
+
+const labelClass = "block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5"
 
 export default function HubungiPage() {
   const [form, setForm] = useState({
@@ -16,6 +44,7 @@ export default function HubungiPage() {
   })
   const [toastMessage, setToastMessage] = useState<string | null>(null)
   const [toastType, setToastType] = useState<"success" | "error" | "info">("success")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const showToast = (msg: string, type: "success" | "error" | "info" = "success") => {
     setToastMessage(msg)
@@ -30,6 +59,7 @@ export default function HubungiPage() {
       return
     }
 
+    setIsSubmitting(true)
     try {
       const formData = new FormData()
       formData.set("senderName", form.senderName)
@@ -45,147 +75,192 @@ export default function HubungiPage() {
       setForm({ senderName: "", senderEmail: "", senderPhone: "", subject: "", message: "" })
     } catch {
       showToast("Gagal mengirim pesan. Silakan coba lagi.", "error")
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 sm:pb-20">
       <Toast message={toastMessage} type={toastType} />
 
-      <div className="border-b border-slate-200 pb-6 mb-10 text-center md:text-left">
+      <div className="text-center md:text-left mb-12">
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">Hubungi Kami</span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-1">Layanan Pertanyaan Terpadu</h1>
-        <p className="text-slate-500 text-sm sm:text-base mt-2">Dapatkan info terakreditasi mengenai penerimaan mahasiswa baru, magang, kerja sama industri, dan layanan perkuliahan.</p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-2 tracking-tight">
+          Layanan Pertanyaan Terpadu
+        </h1>
+        <p className="text-slate-500 text-sm sm:text-base mt-3 max-w-2xl md:mx-0 mx-auto">
+          Dapatkan info terakreditasi mengenai penerimaan mahasiswa baru, magang, kerja sama industri, dan layanan
+          perkuliahan.
+        </p>
       </div>
 
-      <div className="grid lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-5 space-y-8 bg-emerald-900 text-white p-8 rounded-3xl shadow-sm">
-          <div className="space-y-4">
-            <span className="text-emerald-300 font-bold text-xs uppercase tracking-widest block">Informasi Kontak</span>
-            <h2 className="text-2xl font-extrabold">Fakultas Teknik Universitas Hamzanwadi</h2>
+      <div className="grid lg:grid-cols-12 gap-8 lg:gap-10">
+        <div className="lg:col-span-5 space-y-8 bg-emerald-900 text-white p-7 sm:p-8 rounded-3xl shadow-sm flex flex-col">
+          <div className="space-y-3">
+            <span className="text-emerald-300 font-bold text-xs uppercase tracking-widest block">
+              Informasi Kontak
+            </span>
+            <h2 className="text-xl sm:text-2xl font-extrabold leading-snug">
+              Fakultas Teknik Universitas Hamzanwadi
+            </h2>
             <p className="text-emerald-200 text-sm leading-relaxed">
-              Kami senantiasa terbuka menerima kunjungan akademik, diskusi kolaboratif riset, dan rekrutmen magang industri.
+              Kami senantiasa terbuka menerima kunjungan akademik, diskusi kolaboratif riset, dan rekrutmen magang
+              industri.
             </p>
           </div>
 
-          <div className="space-y-4 pt-4 border-t border-emerald-800">
-            <div className="flex items-start space-x-3">
-              <MapPin className="w-5 h-5 mt-0.5 text-emerald-300" />
-              <div>
-                <h4 className="font-bold text-xs text-emerald-300 uppercase">Alamat Kampus</h4>
-                <p className="text-xs sm:text-sm text-slate-100 mt-1">Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor, Selong, Kabupaten Lombok Timur, Nusa Tenggara Barat.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3">
-              <Mail className="w-5 h-5 mt-0.5 text-emerald-300" />
-              <div>
-                <h4 className="font-bold text-xs text-emerald-300 uppercase">Surat Elektronik</h4>
-                <p className="text-xs sm:text-sm text-emerald-300 mt-1">teknik@hamzanwadi.ac.id</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3">
-              <Phone className="w-5 h-5 mt-0.5 text-emerald-300" />
-              <div>
-                <h4 className="font-bold text-xs text-emerald-300 uppercase">Nomor Layanan</h4>
-                <p className="text-xs sm:text-sm text-slate-100 mt-1">+62 (376) 21377 / 0812-3456-7890</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3">
-              <Clock className="w-5 h-5 mt-0.5 text-emerald-300" />
-              <div>
-                <h4 className="font-bold text-xs text-emerald-300 uppercase">Jam Kerja Kantor</h4>
-                <p className="text-xs sm:text-sm text-slate-100 mt-1">Senin - Sabtu: 08:00 - 15:30 WITA</p>
-              </div>
-            </div>
+          <div className="flex-1 flex flex-col justify-center gap-6 pt-6 border-t border-emerald-800">
+            {contactInfo.map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.title} className="flex items-start gap-4">
+                  <div className="w-11 h-11 shrink-0 rounded-2xl bg-emerald-800 flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-emerald-300" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-bold text-xs text-emerald-300 uppercase tracking-wide">{item.title}</h4>
+                    <p className="text-sm text-slate-100 mt-1 leading-relaxed break-words">{item.value}</p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
 
-        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200">
-          <h3 className="font-extrabold text-xl text-slate-900 mb-6">Ajukan Pertanyaan / Kirim Aspirasi</h3>
+        <div className="lg:col-span-7 flex">
+          <div className="w-full bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
+            <h3 className="font-extrabold text-xl text-slate-900 mb-6">Ajukan Pertanyaan / Kirim Aspirasi</h3>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="absolute left-[-9999px] top-auto" aria-hidden="true">
-              <label htmlFor="website">Jangan diisi</label>
-              <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-5 flex flex-col flex-1">
+              <div className="absolute left-[-9999px] top-auto" aria-hidden="true">
+                <label htmlFor="website">Jangan diisi</label>
+                <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="senderName" className={labelClass}>
+                    Nama Lengkap <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="senderName"
+                    type="text"
+                    required
+                    value={form.senderName}
+                    onChange={(e) => setForm({ ...form, senderName: e.target.value })}
+                    placeholder="Contoh: Muhammad Yusuf"
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="senderEmail" className={labelClass}>
+                    Email Aktif <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="senderEmail"
+                    type="email"
+                    required
+                    value={form.senderEmail}
+                    onChange={(e) => setForm({ ...form, senderEmail: e.target.value })}
+                    placeholder="Contoh: yusuf@gmail.com"
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="senderPhone" className={labelClass}>
+                    Nomor Telepon/WA
+                  </label>
+                  <input
+                    id="senderPhone"
+                    type="tel"
+                    value={form.senderPhone}
+                    onChange={(e) => setForm({ ...form, senderPhone: e.target.value })}
+                    placeholder="Contoh: 0812345..."
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="subject" className={labelClass}>
+                    Subjek Pesan <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="subject"
+                    type="text"
+                    required
+                    value={form.subject}
+                    onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                    placeholder="Contoh: PMB 2026"
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Nama Lengkap *</label>
-                <input
-                  type="text"
+                <label htmlFor="message" className={labelClass}>
+                  Isi Pesan / Pertanyaan <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  rows={8}
                   required
-                  value={form.senderName}
-                  onChange={(e) => setForm({ ...form, senderName: e.target.value })}
-                  placeholder="Contoh: Muhammad Yusuf"
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  placeholder="Tulis pesan lengkap Anda..."
+                  className={`${inputClass} resize-none`}
                 />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email Aktif *</label>
-                <input
-                  type="email"
-                  required
-                  value={form.senderEmail}
-                  onChange={(e) => setForm({ ...form, senderEmail: e.target.value })}
-                  placeholder="Contoh: yusuf@gmail.com"
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Nomor Telepon/WA</label>
-                <input
-                  type="tel"
-                  value={form.senderPhone}
-                  onChange={(e) => setForm({ ...form, senderPhone: e.target.value })}
-                  placeholder="Contoh: 0812345..."
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
+              <div className="mt-auto pt-5">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 disabled:cursor-not-allowed text-white font-bold text-sm shadow-md transition-colors cursor-pointer inline-flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Mengirim Pesan...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Kirim Pesan Resmi Anda
+                    </>
+                  )}
+                </button>
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Subjek Pesan *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.subject}
-                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  placeholder="Contoh: PMB 2026"
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Isi Pesan / Pertanyaan *</label>
-              <textarea
-                rows={4}
-                required
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                placeholder="Tulis pesan lengkap Anda..."
-                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              />
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all hover:scale-[1.01]"
-              >
-                Kirim Pesan Resmi Anda
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
 
-      <div className="mt-12 rounded-3xl overflow-hidden border border-slate-200 shadow-sm h-80 relative">
-        <MapWithFallback />
+      <div className="mt-10 rounded-3xl overflow-hidden border border-slate-200 shadow-sm bg-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white px-6 sm:px-8 py-4 sm:py-5 border-b border-slate-100">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+              <MapPin className="w-5 h-5 text-emerald-700" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm sm:text-base text-slate-900">Lokasi Kampus</h3>
+              <p className="text-xs sm:text-sm text-slate-500">Universitas Hamzanwadi, Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor</p>
+            </div>
+          </div>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Universitas+Hamzanwadi"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer shrink-0"
+          >
+            Buka di Google Maps
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+        <div className="h-96 sm:h-[480px] relative">
+          <MapWithFallback />
+        </div>
       </div>
     </div>
   )

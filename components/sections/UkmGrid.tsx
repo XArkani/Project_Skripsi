@@ -1,76 +1,442 @@
 "use client"
 
+import { useMemo, useState, createElement } from "react"
+import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
+import {
+  Search,
+  X,
+  Zap,
+  Users,
+  RotateCcw,
+  Bot,
+  Monitor,
+  Palette,
+  Dumbbell,
+  Music,
+  Rocket,
+  Map as MapIcon,
+  Gamepad2,
+  Newspaper,
+  Flag,
+  Instagram,
+  Mail,
+  Phone,
+  Globe,
+  MessageCircle,
+  Link2,
+  Tag,
+} from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import type { UKM } from "@/lib/types"
+import { cn } from "@/lib/utils"
 
 interface UkmGridProps {
   items: UKM[]
 }
 
-const gridVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
+const EASE = [0.22, 1, 0.36, 1] as const
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.97 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: "easeOut" as const },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
+}
+
+const CATEGORY_RULES: { category: string; keywords: string[] }[] = [
+  {
+    category: "Robotika",
+    keywords: ["robot", "robo", "mikro", "arduino", "iot", "mekatronika", "erc", "dron"],
   },
+  {
+    category: "Seni & Media",
+    keywords: ["art", "media", "design", "seni", "musik", "foto", "film", "video", "podcast", "kreatif", "suara", "band", "teater", "fotografi"],
+  },
+  {
+    category: "Olahraga",
+    keywords: ["olahraga", "futsal", "basket", "sepak", "voli", "badminton", "bulutangkis", "renang", "panjat", "tenis", "lari"],
+  },
+  {
+    category: "Teknologi & Informatika",
+    keywords: ["informatika", "komputer", "coding", "program", "software", "hmif", "tech", "teknologi", "data", "game", "e-sport", "esport", "kecerdasan"],
+  },
+  {
+    category: "Sosial & Minat",
+    keywords: ["bakti", "sosial", "relawan", "agama", "keagamaan", "pecinta alam", "lingkungan", "menulis", "literasi", "jurnalistik", "kepustakaan", "pramuka"],
+  },
+]
+
+const UKM_ICONS: { keywords: string[]; icon: LucideIcon }[] = [
+  { keywords: ["robot", "erc", "robotics", "mikro"], icon: Bot },
+  { keywords: ["informatika", "komputer", "program", "coding", "hmif", "software"], icon: Monitor },
+  { keywords: ["art", "media", "design", "seni", "kreatif", "foto", "video", "film", "fotografi", "podcast"], icon: Palette },
+  { keywords: ["olahraga", "futsal", "basket", "sepak", "voli", "badminton", "bulutangkis", "renang", "panjat"], icon: Dumbbell },
+  { keywords: ["musik", "band", "suara", "gitar", "paduan"], icon: Music },
+  { keywords: ["wirausaha", "bisnis", "entrepreneur", "startup", "kewirausahaan"], icon: Rocket },
+  { keywords: ["geografis", "gis", "peta", "sig", "mapping"], icon: MapIcon },
+  { keywords: ["game", "e-sport", "esport"], icon: Gamepad2 },
+  { keywords: ["jurnalistik", "menulis", "literasi", "kepustakaan", "pustaka"], icon: Newspaper },
+]
+
+const IMAGE_URL_PATTERN = /^(https?:\/\/|\/)/i
+
+const CONTACT_ICONS: Record<string, LucideIcon> = {
+  instagram: Instagram,
+  email: Mail,
+  whatsapp: MessageCircle,
+  phone: Phone,
+  website: Globe,
+  other: Link2,
+}
+
+const PRIMARY_LABELS: Record<string, string> = {
+  instagram: "Ikuti di Instagram",
+  email: "Kirim Email",
+  whatsapp: "Chat WhatsApp",
+  phone: "Hubungi Telepon",
+  website: "Kunjungi Situs",
+  other: "Hubungi UKM",
+}
+
+interface ContactLink {
+  type: "instagram" | "email" | "whatsapp" | "phone" | "website" | "other"
+  href: string
+  label: string
+}
+
+function parseContact(contact: string): ContactLink[] {
+  const links: ContactLink[] = []
+  const segments = contact
+    .split(/[,;\n]/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+
+  for (const seg of segments) {
+    const lower = seg.toLowerCase()
+
+    const instaMatch = lower.match(/instagram\s*[:@]?\s*@?([a-z0-9_.]{1,30})/)
+    if (instaMatch) {
+      links.push({ type: "instagram", href: `https://instagram.com/${instaMatch[1]}`, label: `@${instaMatch[1]}` })
+      continue
+    }
+
+    const emailMatch = seg.match(/[\w.+-]+@[\w-]+\.[\w.]+/)
+    if (emailMatch) {
+      links.push({ type: "email", href: `mailto:${emailMatch[0]}`, label: emailMatch[0] })
+      continue
+    }
+
+    const rawInstaMatch = seg.match(/@([a-z0-9_.]{1,30})/i)
+    if (rawInstaMatch) {
+      links.push({ type: "instagram", href: `https://instagram.com/${rawInstaMatch[1]}`, label: `@${rawInstaMatch[1]}` })
+      continue
+    }
+
+    const urlMatch = seg.match(/https?:\/\/[^\s]+/)
+    if (urlMatch) {
+      links.push({ type: "website", href: urlMatch[0], label: urlMatch[0].replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") })
+      continue
+    }
+
+    const phoneMatch = seg.match(/\+?[\d][\d\s()-]{7,}/)
+    if (phoneMatch) {
+      const digits = phoneMatch[0].replace(/\D/g, "")
+      const isWa = /whatsapp|wa\b/i.test(seg)
+      links.push({
+        type: isWa ? "whatsapp" : "phone",
+        href: isWa ? `https://wa.me/${digits}` : `tel:+${digits}`,
+        label: phoneMatch[0].trim(),
+      })
+      continue
+    }
+  }
+
+  if (links.length === 0 && contact.trim()) {
+    links.push({ type: "other", href: "", label: contact.trim() })
+  }
+  return links
+}
+
+function isStockImage(src: string) {
+  try {
+    return new URL(src).hostname.includes("unsplash")
+  } catch {
+    return false
+  }
+}
+
+function getUkmIcon(ukm: UKM): LucideIcon {
+  const haystack = `${ukm.name} ${ukm.description}`.toLowerCase()
+  const match = UKM_ICONS.find((entry) => entry.keywords.some((kw) => haystack.includes(kw)))
+  return match?.icon ?? Flag
+}
+
+function getCategory(ukm: UKM): string {
+  const haystack = `${ukm.name} ${ukm.description}`.toLowerCase()
+  const match = CATEGORY_RULES.find((rule) => rule.keywords.some((kw) => haystack.includes(kw)))
+  return match?.category ?? "Lainnya"
+}
+
+function UkmLogo({ ukm }: { ukm: UKM }) {
+  const src = ukm.logo
+  if (src && IMAGE_URL_PATTERN.test(src) && !isStockImage(src)) {
+    return <Image src={src} alt={`Logo ${ukm.name}`} fill sizes="56px" className="object-contain" />
+  }
+  return createElement(getUkmIcon(ukm), { className: "w-6 h-6 text-emerald-600", "aria-hidden": true })
+}
+
+function UkmMedia({ ukm }: { ukm: UKM }) {
+  return (
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100">
+      {createElement(getUkmIcon(ukm), { className: "w-12 h-12 text-emerald-600", "aria-hidden": true })}
+    </div>
+  )
+}
+
+interface CardProps {
+  ukm: UKM
+  animate: boolean
+}
+
+function UkmCard({ ukm, animate }: CardProps) {
+  const links = useMemo(() => parseContact(ukm.contact), [ukm.contact])
+  const category = getCategory(ukm)
+
+  const primary = links[0]
+
+  return (
+    <motion.div
+      variants={animate ? cardVariants : undefined}
+      initial={animate ? "hidden" : false}
+      whileInView={animate ? "visible" : undefined}
+      viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
+      className="group bg-white overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
+    >
+      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-100">
+        <UkmMedia ukm={ukm} />
+        <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/95 backdrop-blur border border-emerald-100 px-2.5 py-1 rounded-full shadow-sm">
+          <Tag className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+          {category}
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-3 p-5">
+        <div className="flex items-center gap-3">
+          <div className="relative w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-100 flex items-center justify-center shadow-sm">
+            <UkmLogo ukm={ukm} />
+          </div>
+          <h2 className="min-w-0 flex-1 font-bold text-base text-slate-900 leading-snug line-clamp-2">{ukm.name}</h2>
+        </div>
+
+        <p className="text-sm text-slate-600 leading-relaxed">{ukm.description}</p>
+
+        {ukm.activities && (
+          <div className="flex items-start gap-2.5">
+            <Zap className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" aria-hidden="true" />
+            <p className="text-sm text-slate-700 leading-relaxed">
+              <span className="font-bold text-slate-800">Kegiatan:</span> {ukm.activities}
+            </p>
+          </div>
+        )}
+
+        {links.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
+            {links.map((link, i) => {
+              const Icon = CONTACT_ICONS[link.type]
+              return (
+                <a
+                  key={`${link.href}-${i}`}
+                  href={link.href}
+                  {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="inline-flex items-center gap-1.5 min-h-11 px-3.5 py-2 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:border-emerald-300 hover:text-emerald-700 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                >
+                  <Icon className="w-4 h-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                  <span className="truncate max-w-[180px]">{link.label}</span>
+                </a>
+              )
+            })}
+          </div>
+        )}
+
+        <div className="mt-auto pt-2">
+          {primary && primary.href ? (
+            <a
+              href={primary.href}
+              {...(primary.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors cursor-pointer"
+            >
+              <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+              {PRIMARY_LABELS[primary.type] ?? "Hubungi UKM"}
+            </a>
+          ) : (
+            <Link
+              href="/hubungi"
+              className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-sm font-bold transition-colors cursor-pointer"
+            >
+              <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
+              Hubungi Selengkapnya
+            </Link>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  )
 }
 
 export default function UkmGrid({ items }: UkmGridProps) {
+  const reduceMotion = useReducedMotion()
+  const [query, setQuery] = useState("")
+
+  const categoryOf = useMemo(() => new Map(items.map((ukm) => [ukm.id, getCategory(ukm)])), [items])
+
+  const categories = useMemo(() => {
+    const present = new Set(items.map((ukm) => categoryOf.get(ukm.id) ?? "Lainnya"))
+    return ["Semua", ...CATEGORY_RULES.map((r) => r.category).filter((c) => present.has(c)), ...(present.has("Lainnya") ? ["Lainnya"] : [])]
+  }, [items, categoryOf])
+
+  const [activeCategory, setActiveCategory] = useState("Semua")
+
+  const counts = useMemo(() => {
+    const map = new Map<string, number>()
+    map.set("Semua", items.length)
+    for (const ukm of items) {
+      const cat = categoryOf.get(ukm.id) ?? "Lainnya"
+      map.set(cat, (map.get(cat) ?? 0) + 1)
+    }
+    return map
+  }, [items, categoryOf])
+
+  const normalizedQuery = query.trim().toLowerCase()
+
+  const filteredItems = useMemo(
+    () =>
+      items.filter((ukm) => {
+        const matchesCategory = activeCategory === "Semua" || (categoryOf.get(ukm.id) ?? "Lainnya") === activeCategory
+        const matchesQuery =
+          normalizedQuery === "" ||
+          [ukm.name, ukm.description, ukm.activities, ukm.contact, categoryOf.get(ukm.id)].join(" ").toLowerCase().includes(normalizedQuery)
+        return matchesCategory && matchesQuery
+      }),
+    [items, normalizedQuery, activeCategory, categoryOf]
+  )
+
+  const hasFilter = query.trim() !== "" || activeCategory !== "Semua"
+
+  const resetFilters = () => {
+    setQuery("")
+    setActiveCategory("Semua")
+  }
+
   return (
-    <motion.div
-      className="grid md:grid-cols-3 gap-8"
-      variants={gridVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-    >
-      {items.map((ukm) => (
-        <motion.div
-          key={ukm.id}
-          variants={cardVariants}
-          className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between"
-        >
-          <div>
-            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-3xl mb-5 shadow-sm">
-              <span>{ukm.logo}</span>
-            </div>
-            <h2 className="font-extrabold text-xl text-slate-900 mb-3">{ukm.name}</h2>
-            <p className="text-slate-600 text-sm mb-4 leading-relaxed">{ukm.description}</p>
-
-            <div className="space-y-3 pt-3 border-t border-slate-100">
-              <div>
-                <span className="block text-[10px] uppercase font-bold text-slate-400">Ragam Kegiatan</span>
-                <p className="text-xs text-slate-700 mt-1">{ukm.activities}</p>
-              </div>
-              <div>
-                <span className="block text-[10px] uppercase font-bold text-slate-400">Kontak Resmi</span>
-                <p className="text-xs text-emerald-800 font-semibold mt-1">{ukm.contact}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-6 mt-4">
-            <Link
-              href="/hubungi"
-              className="block w-full text-center py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all"
+    <div className="space-y-6">
+      <div className="sticky top-16 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-slate-50/95 backdrop-blur-sm space-y-3">
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Cari nama UKM, kegiatan, atau kategori..."
+            aria-label="Cari UKM"
+            className="w-full pl-11 pr-10 py-3 rounded-xl border border-slate-200 bg-white focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-slate-400"
+          />
+          {query !== "" && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              aria-label="Bersihkan pencarian"
+              className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-11 h-11 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
             >
-              Daftar Ormawa Ini
-            </Link>
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {categories.map((category) => {
+            const isActive = activeCategory === category
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setActiveCategory(category)}
+                aria-pressed={isActive}
+                className={cn(
+                  "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                  isActive
+                    ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:text-emerald-700"
+                )}
+              >
+                {category}
+                <span
+                  className={cn(
+                    "text-xs font-bold rounded-full px-1.5 py-0.5",
+                    isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                  )}
+                >
+                  {counts.get(category) ?? 0}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <p aria-live="polite" className="text-sm text-slate-500">
+          Menampilkan <span className="font-bold text-slate-800">{filteredItems.length}</span> dari{" "}
+          <span className="font-bold text-slate-800">{items.length}</span> UKM
+        </p>
+        {hasFilter && (
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
+            <RotateCcw className="w-4 h-4" aria-hidden="true" />
+            Reset
+          </button>
+        )}
+      </div>
+
+      {filteredItems.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400 mx-auto">
+            <Users className="h-7 w-7" />
           </div>
-        </motion.div>
-      ))}
-    </motion.div>
+          <h3 className="text-base font-bold text-slate-700 mt-4">UKM tidak ditemukan</h3>
+          <p className="max-w-sm mx-auto text-sm text-slate-500 mt-1.5">
+            Tidak ada unit kegiatan yang cocok{query.trim() !== "" && (
+              <>
+                {" "}
+                untuk pencarian <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>
+              </>
+            )}
+            {activeCategory !== "Semua" && (
+              <>
+                {" "}
+                pada kategori <span className="font-bold text-emerald-700">{activeCategory}</span>
+              </>
+            )}
+            .
+          </p>
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="inline-flex items-center gap-2 mt-5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
+            <RotateCcw className="w-4 h-4" aria-hidden="true" />
+            Tampilkan Semua UKM
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+          {filteredItems.map((ukm) => (
+            <UkmCard key={ukm.id} ukm={ukm} animate={!reduceMotion} />
+          ))}
+        </div>
+      )}
+    </div>
   )
 }

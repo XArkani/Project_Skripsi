@@ -1,6 +1,11 @@
 import { cacheTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
 import type { Blueprint, Dosen, UKM, Event, News, FAQ, Struktur, Message } from "@/lib/types"
+import type { EventStatus } from "@/lib/status"
+
+function toEvent(e: { status: string; dateTime: Date | null } & Omit<Event, "status" | "dateTime">): Event {
+  return { ...e, status: e.status as EventStatus, dateTime: e.dateTime ? e.dateTime.toISOString() : null }
+}
 
 export async function getBlueprints(): Promise<Blueprint[]> {
   "use cache"
@@ -26,8 +31,10 @@ export async function getUKM(): Promise<UKM[]> {
 export async function getEvents(): Promise<Event[]> {
   "use cache"
   cacheTag("event")
-  const data = await prisma.event.findMany({ orderBy: { createdAt: "asc" } })
-  return data as Event[]
+  const data = await prisma.event.findMany({
+    orderBy: [{ dateTime: { sort: "asc", nulls: "last" } }, { createdAt: "asc" }],
+  })
+  return data.map(toEvent)
 }
 
 export async function getNews(): Promise<News[]> {
@@ -62,7 +69,7 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
   "use cache"
   cacheTag(`event-${slug}`)
   const data = await prisma.event.findUnique({ where: { slug } })
-  return data as Event | null
+  return data ? toEvent(data) : null
 }
 
 export async function getNewsBySlug(slug: string): Promise<News | null> {

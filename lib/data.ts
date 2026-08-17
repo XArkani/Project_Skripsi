@@ -31,42 +31,57 @@ export const INITIAL_DOSEN: Dosen[] = [
   {
     id: "dos1",
     name: "Dr. Ir. H. Muhammad Halqi, M.Pd.",
+    prodi: "Sistem Informasi",
     title: "Dekan & Lektor Kepala",
     position: "Dekan Fakultas Teknik",
     expertise: "Manajemen Sistem Pendidikan & Rekayasa Nilai",
-    interest: "Sistem Informasi Pendidikan, Perencanaan Wilayah, Kurikulum Teknik berbasis OBE",
+    doi: "https://doi.org/10.1000/xj.2024.007",
     email: "muhammad.halqi@hamzanwadi.ac.id",
     image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=500"
   },
   {
     id: "dos2",
     name: "Ir. Ahmad Zulhalim, M.Kom.",
+    prodi: "Informatika",
     title: "Ketua Program Studi Informatika",
     position: "Kaprodi Teknik Informatika",
     expertise: "Kecerdasan Buatan & Sistem Pakar",
-    interest: "Machine Learning, Deep Learning, Image Processing, Big Data Analytics",
+    doi: "https://doi.org/10.1016/j.ml.2024.03.021",
     email: "ahmad.zulhalim@hamzanwadi.ac.id",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=500"
   },
   {
     id: "dos3",
     name: "Baiq Rika Ayu Febrilia, M.T.",
+    prodi: "Informatika",
     title: "Dosen Tetap & Peneliti Senior",
     position: "Sekretaris Program Studi",
     expertise: "Keamanan Siber & Jaringan Komputer",
-    interest: "Cryptography, IoT Security, Cloud Architecture, Digital Forensic",
+    doi: "https://doi.org/10.1109/iotsec.2024.77112",
     email: "rika.ayu@hamzanwadi.ac.id",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=500"
   },
   {
     id: "dos4",
     name: "Ir. Khairul Hadi, M.Eng.",
+    prodi: "Teknik Komputer",
     title: "Dosen Tetap & Kepala Lab Sistem Tertanam",
     position: "Kepala Laboratorium Robotika",
     expertise: "Mikrokontroler & Internet of Things (IoT)",
-    interest: "Smart Home, Robotika Industri, Embedded Control Systems, Automasi Pertanian",
+    doi: "https://doi.org/10.1109/rob.2024.12890",
     email: "khairul.hadi@hamzanwadi.ac.id",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=500"
+  },
+  {
+    id: "dos5",
+    name: "Nurul Hidayah, S.T., M.T.",
+    prodi: "Teknik Lingkungan",
+    title: "Dosen Tetap",
+    position: "Dosen Teknik Lingkungan",
+    expertise: "Pengelolaan Sumber Daya Air & Lingkungan",
+    doi: "https://doi.org/10.4236/jwarp.2024.1605",
+    email: "nurul.hidayah@hamzanwadi.ac.id",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=500"
   }
 ]
 
@@ -104,6 +119,7 @@ export const INITIAL_EVENTS: Event[] = [
     slug: "seminar-nasional-teknologi-transformasi-digital-snttd-2026",
     status: "Akan Datang",
     date: "25 Agustus 2026",
+    dateTime: "2026-08-25T00:00:00.000Z",
     time: "08:00 - 13:00 WITA",
     location: "Auditorium Utama Universitas Hamzanwadi",
     description: "Seminar akbar tahunan yang mengundang para ahli industri IT dan akademisi nasional untuk membahas revolusi Generative AI di Indonesia.",
@@ -116,6 +132,7 @@ export const INITIAL_EVENTS: Event[] = [
     slug: "workshop-iot-terapan-menuju-smart-agriculture-di-ntb",
     status: "Sedang Berlangsung",
     date: "17 Juli 2026",
+    dateTime: "2026-07-17T00:00:00.000Z",
     time: "09:00 - 16:00 WITA",
     location: "Laboratorium Sistem Tertanam",
     description: "Pelatihan pembuatan perangkat monitoring kelembaban tanah dan otomasi penyiraman berbasis mikrokontroler NodeMCU.",
@@ -128,6 +145,7 @@ export const INITIAL_EVENTS: Event[] = [
     slug: "hackathon-internal-fakultas-teknik-solusi-untuk-desa",
     status: "Selesai",
     date: "10 Mei 2026",
+    dateTime: "2026-05-10T00:00:00.000Z",
     time: "08:00 - selesai",
     location: "Gedung Rektorat Lt. 3",
     description: "Kompetisi coding intensif selama 24 jam untuk merancang aplikasi pemecah masalah pelayanan administrasi desa.",
@@ -193,6 +211,8 @@ export const INITIAL_STRUKTUR: Struktur[] = [
   { id: "st1", parentId: null, role: "Dekan Fakultas Teknik", name: "Dr. Ir. H. Muhammad Halqi, M.Pd.", details: "Penanggung jawab utama seluruh kebijakan akademik & manajerial FT." },
   { id: "st2", parentId: "st1", role: "Wakil Dekan Bidang Akademik & Keuangan", name: "Baiq Rika Ayu Febrilia, M.T.", details: "Mengoordinasikan perancangan kurikulum & pengawasan anggaran operasional." },
   { id: "st3", parentId: "st1", role: "Wakil Dekan Bidang Kemahasiswaan & Kerjasama", name: "Ir. Khairul Hadi, M.Eng.", details: "Menangani kemitraan industri, kegiatan ormawa/UKM, serta prestasi mahasiswa." },
+  { id: "st6", parentId: "st1", role: "Wakil Dekan Bidang Riset & Pengabdian Masyarakat", name: "Dr. Siti Rahayu, S.T., M.T.", details: "Mengelola program riset, publikasi ilmiah, dan pengabdian kepada masyarakat." },
+  { id: "st7", parentId: "st1", role: "Wakil Dekan Bidang Perencanaan, SDM & Sarana", name: "Lalu Muhamad Syamsir, S.T., M.Eng.", details: "Menyusun perencanaan program, pengelolaan SDM, dan sarana prasarana." },
   { id: "st4", parentId: "st2", role: "Ketua Program Studi Informatika", name: "Ir. Ahmad Zulhalim, M.Kom.", details: "Mengepalai kurikulum, dosen pengampu, & penjaminan mutu program studi IT." },
   { id: "st5", parentId: "st2", role: "Ketua Program Studi Teknik Industri (Rencana)", name: "Siti Rohana, M.T.", details: "Persiapan pengembangan kurikulum rekayasa manufaktur & optimasi sistem." }
 ]

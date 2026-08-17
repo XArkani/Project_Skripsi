@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
         hostname: "*.ufs.sh",
         pathname: "/f/*",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
     ],
   },
 
@@ -56,7 +61,7 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' blob: data: https://*.ufs.sh",
+              "img-src 'self' blob: data: https://*.ufs.sh https://images.unsplash.com",
               "font-src 'self'",
               "connect-src 'self' https://*.ufs.sh",
               "object-src 'none'",

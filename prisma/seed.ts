@@ -55,37 +55,51 @@ const blueprintSamples = [
 const dosenSamples = [
   {
     name: "Dr. Ir. H. Ahmad Fauzi, M.T.",
+    prodi: "Sistem Informasi",
     title: "S.T., M.T.",
     position: "Dekan Fakultas Teknik",
-    expertise: "Teknik Sipil",
-    interest: "Struktur Beton, Manajemen Konstruksi",
+    expertise: "Manajemen Sistem Informasi & Rekayasa Nilai",
+    doi: "https://doi.org/10.1000/xj.2024.001",
     email: "ahmadfauzi@hamzanwadi.ac.id",
     image: "",
   },
   {
     name: "Rina Kartika, S.Kom., M.Kom.",
+    prodi: "Informatika",
     title: "S.Kom., M.Kom.",
     position: "Ketua Program Studi Teknik Informatika",
     expertise: "Rekayasa Perangkat Lunak",
-    interest: "Artificial Intelligence, Sistem Cerdas",
+    doi: "https://doi.org/10.1016/j.ai.2024.02.104",
     email: "rinakartika@hamzanwadi.ac.id",
     image: "",
   },
   {
-    name: "Budi Santoso, S.T., M.T.",
+    name: "Hendra Gunawan, S.T., M.T.",
+    prodi: "Teknik Komputer",
     title: "S.T., M.T.",
-    position: "Ketua Program Studi Teknik Industri",
-    expertise: "Manajemen Operasi",
-    interest: "Optimasi Proses, Supply Chain",
-    email: "budisantoso@hamzanwadi.ac.id",
+    position: "Dosen Teknik Komputer",
+    expertise: "Jaringan Komputer & Sistem Tertanam",
+    doi: "https://doi.org/10.1109/iot.2024.8710",
+    email: "hendra.gunawan@hamzanwadi.ac.id",
+    image: "",
+  },
+  {
+    name: "Nurul Aini, S.T., M.Sc.",
+    prodi: "Teknik Lingkungan",
+    title: "S.T., M.Sc.",
+    position: "Dosen Teknik Lingkungan",
+    expertise: "Pengelolaan Sumber Daya Air",
+    doi: "https://doi.org/10.4236/jwarp.2024.1603",
+    email: "nurul.aini@hamzanwadi.ac.id",
     image: "",
   },
   {
     name: "Dewi Lestari, S.Si., M.Cs.",
+    prodi: "Informatika",
     title: "S.Si., M.Cs.",
     position: "Dosen Teknik Informatika",
     expertise: "Data Science",
-    interest: "Machine Learning, Data Mining",
+    doi: "https://doi.org/10.1007/s10618-024-0100",
     email: "dewilestari@hamzanwadi.ac.id",
     image: "",
   },
@@ -121,6 +135,7 @@ const eventSamples = [
     slug: "seminar-nasional-teknologi-2026",
     status: "Akan Datang",
     date: "2026-09-15",
+    dateTime: "2026-09-15T00:00:00.000Z",
     time: "09:00 - 15:00 WITA",
     location: "Aula Fakultas Teknik",
     description:
@@ -134,6 +149,7 @@ const eventSamples = [
     slug: "workshop-internet-of-things",
     status: "Sedang Berlangsung",
     date: "2026-08-12",
+    dateTime: "2026-08-12T00:00:00.000Z",
     time: "08:30 - 16:00 WITA",
     location: "Laboratorium Robotika & IoT",
     description: "Pelatihan praktis merancang perangkat IoT untuk pemantauan lingkungan pertanian.",
@@ -146,6 +162,7 @@ const eventSamples = [
     slug: "konferensi-mahasiswa-teknik",
     status: "Selesai",
     date: "2026-05-20",
+    dateTime: "2026-05-20T00:00:00.000Z",
     time: "08:00 - 17:00 WITA",
     location: "Gedung Kuliah Bersama",
     description: "Forum presentasi hasil penelitian dan karya mahasiswa antar program studi.",
@@ -325,6 +342,18 @@ async function seedStruktur() {
       },
       {
         parentId: dekan.id,
+        role: "Wakil Dekan Bidang Riset & Pengabdian Masyarakat",
+        name: "Dr. Siti Rahayu, S.T., M.T.",
+        details: "Mengelola program riset, publikasi ilmiah, dan pengabdian kepada masyarakat.",
+      },
+      {
+        parentId: dekan.id,
+        role: "Wakil Dekan Bidang Perencanaan, SDM & Sarana",
+        name: "Lalu Muhamad Syamsir, S.T., M.Eng.",
+        details: "Menyusun perencanaan program, pengelolaan SDM, dan sarana prasarana.",
+      },
+      {
+        parentId: dekan.id,
         role: "Ketua Program Studi Teknik Informatika",
         name: "Dewi Lestari, S.Si., M.Cs.",
         details: "Memimpin pengelolaan program studi Teknik Informatika.",
@@ -338,7 +367,7 @@ async function seedStruktur() {
     ],
   })
 
-  console.log(`Struktur organisasi: 5 data dibuat.`)
+  console.log(`Struktur organisasi: 7 data dibuat.`)
 }
 
 async function main() {

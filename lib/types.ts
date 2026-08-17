@@ -1,3 +1,5 @@
+import type { EventStatus } from "@/lib/status"
+
 export interface Blueprint {
   id: string
   title: string
@@ -10,10 +12,11 @@ export interface Blueprint {
 export interface Dosen {
   id: string
   name: string
+  prodi: string
   title: string
   position: string
   expertise: string
-  interest: string
+  doi: string
   email: string
   image: string
 }
@@ -31,8 +34,9 @@ export interface Event {
   id: string
   title: string
   slug: string
-  status: string
+  status: EventStatus
   date: string
+  dateTime: string | null
   time: string
   location: string
   description: string

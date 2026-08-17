@@ -6,7 +6,6 @@ import { LogoutButton } from "./logout-button";
 import { DashboardLoadingSkeleton } from "./loading-skeleton";
 import { NavLinks } from "./nav-links";
 import { MobileSidebar } from "./mobile-sidebar";
-import { Hexagon } from "lucide-react";
 
 async function SessionCheck({ children }: { children: React.ReactNode }) {
   const session = await auth.api.getSession({
@@ -28,9 +27,13 @@ async function SessionCheck({ children }: { children: React.ReactNode }) {
         
         {/* Clean Logo without bottom border */}
         <div className="flex h-16 items-center px-6 mt-2">
-          <div className="flex items-center gap-2">
-            <Hexagon className="h-5 w-5 text-primary fill-primary/10" />
-            <p className="font-bold tracking-tight text-lg">CodeNight</p>
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/LOGO FAKULTAS TEKNIK.webp"
+              alt="Logo Fakultas Teknik"
+              className="h-9 w-9 rounded-md object-contain"
+            />
+            <p className="font-bold tracking-tight text-sm">Fakultas Teknik</p>
           </div>
         </div>
         

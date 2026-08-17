@@ -39,7 +39,7 @@ export function MobileSidebar({ email }: { email?: string }) {
         >
           <Menu className="h-5 w-5" />
         </button>
-        <p className="font-bold tracking-tight">CodeNight</p>
+        <p className="font-bold tracking-tight">Fakultas Teknik</p>
       </div>
 
       {/* Backdrop */}

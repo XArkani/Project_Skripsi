@@ -1,7 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useMemo, useRef, useState, useCallback, useEffect } from "react"
+import Image from "next/image"
+import { useRouter, usePathname, useSearchParams } from "next/navigation"
+import { motion, useReducedMotion } from "framer-motion"
+import { Dialog as DialogPrimitive } from "radix-ui"
+import { Search, X, Building2, RotateCcw, ArrowRight, Maximize2, MapPin } from "lucide-react"
 import type { Blueprint } from "@/lib/types"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 import { cn } from "@/lib/utils"
@@ -10,58 +14,318 @@ interface BlueprintListProps {
   items: Blueprint[]
 }
 
+const EASE = [0.22, 1, 0.36, 1] as const
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
+}
+
+function isStockImage(src: string) {
+  try {
+    return new URL(src).hostname.includes("unsplash")
+  } catch {
+    return false
+  }
+}
+
+function FacilityMedia({ src, alt }: { src: string; alt: string }) {
+  if (src && !isStockImage(src)) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(min-width: 768px) 50vw, 100vw"
+        className="object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    )
+  }
+  return <ImagePlaceholder label="Foto belum tersedia" className="w-full h-full" />
+}
+
+interface RowProps {
+  bp: Blueprint
+  index: number
+  animate: boolean
+  onOpen: () => void
+}
+
+function FacilityRow({ bp, index, animate, onOpen }: RowProps) {
+  const isEven = index % 2 === 0
+  return (
+    <motion.div
+      variants={animate ? cardVariants : undefined}
+      initial={animate ? "hidden" : false}
+      whileInView={animate ? "visible" : undefined}
+      viewport={animate ? { once: true, margin: "-40px", amount: 0.15 } : undefined}
+      className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center"
+    >
+      <div className={cn("group", isEven ? "" : "md:order-2")}>
+        <button
+          type="button"
+          onClick={onOpen}
+          aria-haspopup="dialog"
+          className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-lg bg-slate-100 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+        >
+          <FacilityMedia src={bp.image} alt={bp.title} />
+          <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
+            <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+            {bp.category}
+          </span>
+          <span className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+            <span className="inline-flex items-center gap-1.5 text-white text-sm font-bold">
+              <Maximize2 className="w-4 h-4" aria-hidden="true" />
+              Lihat Detail
+            </span>
+          </span>
+        </button>
+      </div>
+
+      <div className={cn("space-y-4", isEven ? "" : "md:order-1")}>
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">{bp.title}</h2>
+        <p className="text-slate-600 leading-relaxed">{bp.description}</p>
+        {bp.details && <p className="text-slate-500 text-sm leading-relaxed">{bp.details}</p>}
+        <button
+          type="button"
+          onClick={onOpen}
+          aria-haspopup="dialog"
+          className="inline-flex items-center gap-2 min-h-11 py-2 text-sm font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+        >
+          Selengkapnya
+          <ArrowRight className="w-4 h-4" aria-hidden="true" />
+        </button>
+      </div>
+    </motion.div>
+  )
+}
+
 export default function BlueprintList({ items }: BlueprintListProps) {
-  const categories = ["Semua", ...Array.from(new Set(items.map((item) => item.category)))]
-  const [activeCategory, setActiveCategory] = useState("Semua")
-  const filteredItems = activeCategory === "Semua" ? items : items.filter((item) => item.category === activeCategory)
+  const reduceMotion = useReducedMotion()
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const [selected, setSelected] = useState<Blueprint | null>(null)
+
+  const categories = useMemo(() => ["Semua", ...Array.from(new Set(items.map((item) => item.category)))], [items])
+
+  const counts = useMemo(() => {
+    const map = new Map<string, number>()
+    map.set("Semua", items.length)
+    items.forEach((item) => map.set(item.category, (map.get(item.category) ?? 0) + 1))
+    return map
+  }, [items])
+
+  const validCategories = useMemo(() => new Set(categories), [categories])
+
+  const urlQuery = searchParams.get("q") ?? ""
+  const urlCategory = searchParams.get("kategori") ?? "Semua"
+  const activeCategory = validCategories.has(urlCategory) ? urlCategory : "Semua"
+
+  const [query, setQuery] = useState(urlQuery)
+  const [lastSynced, setLastSynced] = useState(urlQuery)
+  if (lastSynced !== urlQuery) {
+    setLastSynced(urlQuery)
+    setQuery(urlQuery)
+  }
+
+  const normalizedQuery = query.trim().toLowerCase()
+
+  const filteredItems = useMemo(
+    () =>
+      items.filter((item) => {
+        const matchCategory = activeCategory === "Semua" || item.category === activeCategory
+        const matchQuery =
+          !normalizedQuery ||
+          [item.title, item.description, item.details, item.category].join(" ").toLowerCase().includes(normalizedQuery)
+        return matchCategory && matchQuery
+      }),
+    [items, activeCategory, normalizedQuery]
+  )
+
+  const hasFilter = query.trim() !== "" || activeCategory !== "Semua"
+
+  const updateUrl = useCallback(
+    (nextQuery: string, nextCategory: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      if (nextQuery.trim()) params.set("q", nextQuery.trim())
+      else params.delete("q")
+      if (nextCategory !== "Semua") params.set("kategori", nextCategory)
+      else params.delete("kategori")
+      const qs = params.toString()
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+    },
+    [pathname, router, searchParams]
+  )
+
+  const activeCategoryRef = useRef(activeCategory)
+  useEffect(() => {
+    activeCategoryRef.current = activeCategory
+  }, [activeCategory])
+
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const handleQueryChange = (value: string) => {
+    setQuery(value)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => updateUrl(value, activeCategoryRef.current), 300)
+  }
+
+  const resetFilters = () => {
+    setQuery("")
+    updateUrl("", "Semua")
+  }
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap gap-2">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setActiveCategory(category)}
-            className={cn(
-              "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-colors",
-              activeCategory === category
-                ? "bg-emerald-600 text-white shadow-md"
-                : "bg-white text-slate-600 border border-slate-200 hover:border-emerald-300 hover:text-emerald-700"
-            )}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+      <div className="sticky top-16 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-slate-50/95 backdrop-blur-sm space-y-3">
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => handleQueryChange(e.target.value)}
+            placeholder="Cari fasilitas, gedung, atau laboratorium..."
+            aria-label="Cari fasilitas"
+            className="w-full pl-11 pr-10 py-3 rounded-xl border border-slate-200 bg-white focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-slate-400"
+          />
+          {query !== "" && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              aria-label="Bersihkan pencarian"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
 
-      <div className="space-y-16">
-        {filteredItems.map((bp, idx) => (
-          <motion.div
-            key={bp.id}
-            className="grid md:grid-cols-12 gap-8 items-center"
-            initial={{ opacity: 0, y: 60, x: idx % 2 === 1 ? 40 : -40 }}
-            whileInView={{ opacity: 1, y: 0, x: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            <div className={cn("md:col-span-6", idx % 2 === 1 && "md:order-2")}>
-              <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-video group">
-                <ImagePlaceholder label="Gambar Fasilitas" className="w-full h-full" />
-                <span className="absolute top-4 left-4 bg-emerald-900/90 text-white text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider backdrop-blur-sm">{bp.category}</span>
-                <span className="absolute bottom-4 right-4 bg-white/90 text-emerald-900 text-sm font-extrabold px-3 py-1 rounded-lg">
-                  {String(idx + 1).padStart(2, "0")}
+        <div className="flex items-center gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {categories.map((category) => {
+            const isActive = activeCategory === category
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => updateUrl(query, category)}
+                aria-pressed={isActive}
+                className={cn(
+                  "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                  isActive
+                    ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:text-emerald-700"
+                )}
+              >
+                {category}
+                <span
+                  className={cn(
+                    "text-xs font-bold rounded-full px-1.5 py-0.5",
+                    isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                  )}
+                >
+                  {counts.get(category) ?? 0}
                 </span>
-              </div>
-            </div>
-
-            <div className="md:col-span-6 space-y-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">{bp.title}</h2>
-              <p className="text-slate-600 font-medium leading-relaxed">{bp.description}</p>
-              <p className="text-slate-500 text-sm leading-relaxed">{bp.details}</p>
-            </div>
-          </motion.div>
-        ))}
+              </button>
+            )
+          })}
+        </div>
       </div>
+
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <p aria-live="polite" className="text-sm text-slate-500">
+          Menampilkan <span className="font-bold text-slate-800">{filteredItems.length}</span> dari{" "}
+          <span className="font-bold text-slate-800">{items.length}</span> fasilitas
+        </p>
+        {hasFilter && (
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
+            <RotateCcw className="w-4 h-4" aria-hidden="true" />
+            Reset
+          </button>
+        )}
+      </div>
+
+      {filteredItems.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400 mx-auto">
+            <Building2 className="h-7 w-7" />
+          </div>
+          <h3 className="text-base font-bold text-slate-700 mt-4">Fasilitas tidak ditemukan</h3>
+          <p className="max-w-sm mx-auto text-sm text-slate-500 mt-1.5">
+            Tidak ada fasilitas yang cocok{query.trim() !== "" && (
+              <>
+                {" "}
+                untuk pencarian <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>
+              </>
+            )}
+            {activeCategory !== "Semua" && (
+              <>
+                {" "}
+                pada kategori <span className="font-bold text-emerald-700">{activeCategory}</span>
+              </>
+            )}
+            .
+          </p>
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="inline-flex items-center gap-2 mt-5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
+            <RotateCcw className="w-4 h-4" aria-hidden="true" />
+            Tampilkan Semua Fasilitas
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-12 sm:space-y-16">
+          {filteredItems.map((bp, index) => (
+            <FacilityRow key={bp.id} bp={bp} index={index} animate={!reduceMotion} onOpen={() => setSelected(bp)} />
+          ))}
+        </div>
+      )}
+
+      <DialogPrimitive.Root open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
+          <DialogPrimitive.Content className="fixed top-1/2 left-1/2 z-50 w-full max-w-2xl max-h-[85vh] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-white shadow-2xl border border-slate-200 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
+            {selected && (
+              <>
+                <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+                  <FacilityMedia src={selected.image} alt={selected.title} />
+                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                    <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                    {selected.category}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setSelected(null)}
+                    aria-label="Tutup detail"
+                    className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="p-6 sm:p-8">
+                  <DialogPrimitive.Title className="text-xl sm:text-2xl font-extrabold text-slate-900 pr-8">
+                    {selected.title}
+                  </DialogPrimitive.Title>
+                  <DialogPrimitive.Description className="mt-3 text-slate-600 leading-relaxed">
+                    {selected.description}
+                  </DialogPrimitive.Description>
+                  {selected.details && (
+                    <p className="mt-4 text-sm text-slate-500 leading-relaxed border-t border-slate-100 pt-4">
+                      {selected.details}
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </div>
   )
 }

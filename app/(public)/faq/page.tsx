@@ -9,7 +9,7 @@ export default async function FAQPage() {
   const faqs = await getFAQs()
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-20 sm:pb-24">
       <div className="border-b border-slate-200 pb-6 mb-10 text-center">
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">Pusat Bantuan</span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-1">Frequently Asked Questions (FAQ)</h1>
