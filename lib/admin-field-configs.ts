@@ -13,6 +13,7 @@ export const dosenFields: FieldConfig[] = [
   { name: "name", label: "Nama Lengkap", type: "text", required: true },
   { name: "prodi", label: "Program Studi", type: "select", options: [...PRODI_LIST], required: true },
   { name: "position", label: "Posisi", type: "text" },
+  { name: "nuptk", label: "NUPTK", type: "text" },
   { name: "doi", label: "URL DOI Riset", type: "text" },
   { name: "image", label: "Foto", type: "image" },
 ]

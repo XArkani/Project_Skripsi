@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Search, Mail, Trash2, Phone, User, Calendar, ArrowLeft, CheckCircle2 } from "lucide-react"
-import { updateRecord, deleteRecord } from "@/lib/admin-actions"
+import { markMessageRead, deleteRecord } from "@/lib/admin-actions"
 import type { Message } from "@/lib/types"
 
 interface MessagesManagerProps {
@@ -31,7 +31,7 @@ export function MessagesManager({ initialData }: MessagesManagerProps) {
     setSelected(item)
     setDetailOpen(true)
     if (!item.isRead) {
-      const result = await updateRecord("message", item.id, { isRead: true })
+      const result = await markMessageRead(item.id)
       if (result.success) {
         setData((prev) => prev.map((m) => (m.id === item.id ? result.data : m)))
         setSelected(() => result.data)

@@ -4,7 +4,9 @@ import { revalidateTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
+import { redirect } from "next/navigation"
 import { slugify } from "@/lib/utils"
+import { fieldConfigMap } from "@/lib/admin-field-configs"
 
 export type ModelName = "blueprint" | "dosen" | "ukm" | "event" | "news" | "faq" | "struktur" | "message"
 
@@ -17,6 +19,24 @@ const modelTags: Record<ModelName, string> = {
   faq: "faq",
   struktur: "struktur",
   message: "messages",
+}
+
+const STRING_FIELD_TYPES = new Set(["text", "textarea", "slug", "select", "image"])
+const NULLABLE_UNIQUE_FIELDS = new Set(["nuptk"])
+
+function normalizeEmptyStrings(modelName: ModelName, data: Record<string, unknown>) {
+  const fields = fieldConfigMap[modelName] ?? []
+  const next: Record<string, unknown> = { ...data }
+  for (const f of fields) {
+    if (STRING_FIELD_TYPES.has(f.type)) {
+      if (NULLABLE_UNIQUE_FIELDS.has(f.name)) {
+        if (next[f.name] == null || next[f.name] === "") next[f.name] = null
+      } else if (next[f.name] == null) {
+        next[f.name] = ""
+      }
+    }
+  }
+  return next
 }
 
 async function checkAdmin() {
@@ -82,18 +102,24 @@ async function deleteOnModel(modelName: ModelName, id: string) {
   }
 }
 
-export async function createRecord(modelName: ModelName, data: Record<string, unknown>) {
+export async function createRecord(modelName: ModelName, base: string, data: Record<string, unknown>) {
   await checkAdmin()
   if (modelName === "event" || modelName === "news") {
     const title = String(data.title ?? "")
     data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title)
   }
-  const record = await createOnModel(modelName, data)
+  const normalized = normalizeEmptyStrings(modelName, data)
+  await createOnModel(modelName, normalized)
   revalidateTag(modelTags[modelName], "max")
-  return { success: true, data: JSON.parse(JSON.stringify(record)) }
+  redirect(base)
 }
 
-export async function updateRecord(modelName: ModelName, id: string, data: Record<string, unknown>) {
+export async function updateRecord(
+  modelName: ModelName,
+  id: string,
+  base: string,
+  data: Record<string, unknown>
+) {
   await checkAdmin()
   if (modelName === "event" || modelName === "news") {
     const previous =
@@ -106,12 +132,20 @@ export async function updateRecord(modelName: ModelName, id: string, data: Recor
     const title = String(data.title ?? "")
     data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title, undefined, id)
   }
-  const record = await updateOnModel(modelName, id, data)
+  const normalized = normalizeEmptyStrings(modelName, data)
+  const record = await updateOnModel(modelName, id, normalized)
   revalidateTag(modelTags[modelName], "max")
   if (modelName === "event" || modelName === "news") {
     const slug = (record as { slug: string }).slug
     revalidateTag(`${modelName}-${slug}`, "max")
   }
+  redirect(base)
+}
+
+export async function markMessageRead(id: string) {
+  await checkAdmin()
+  const record = await prisma.message.update({ where: { id }, data: { isRead: true } })
+  revalidateTag(modelTags.message, "max")
   return { success: true, data: JSON.parse(JSON.stringify(record)) }
 }
 

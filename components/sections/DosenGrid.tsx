@@ -69,6 +69,11 @@ function DosenCard({ dosen, animate }: { dosen: Dosen; animate: boolean }) {
               <span className="min-w-0">{dosen.position}</span>
             </p>
           )}
+          {dosen.nuptk && (
+            <p className="mt-2 text-xs text-slate-500">
+              NUPTK: <span className="font-semibold text-slate-700">{dosen.nuptk}</span>
+            </p>
+          )}
         </div>
       </div>
 
@@ -109,7 +114,7 @@ export default function DosenGrid({ items }: DosenGridProps) {
       items.filter((d) => {
         const matchesQuery =
           normalizedQuery === "" ||
-          [d.name, d.prodi, d.position, d.doi].join(" ").toLowerCase().includes(normalizedQuery)
+          [d.name, d.prodi, d.position, d.doi, d.nuptk].join(" ").toLowerCase().includes(normalizedQuery)
         const matchesProdi = activeProdi === "Semua" || d.prodi === activeProdi
         return matchesQuery && matchesProdi
       }),

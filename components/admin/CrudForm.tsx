@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { unstable_rethrow } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -24,7 +24,6 @@ interface CrudFormProps {
 }
 
 export function CrudForm({ title, modelName, baseUrl, fields, mode, id, initialData = {} }: CrudFormProps) {
-  const router = useRouter()
   const [formData, setFormData] = useState<Record<string, unknown>>(initialData)
   const [error, setError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
@@ -62,14 +61,12 @@ export function CrudForm({ title, modelName, baseUrl, fields, mode, id, initialD
     startTransition(async () => {
       try {
         if (mode === "edit" && id) {
-          const result = await updateRecord(modelName, id, formData)
-          if (result.success) router.push(base)
+          await updateRecord(modelName, id, base, formData)
         } else {
-          const result = await createRecord(modelName, formData)
-          if (result.success) router.push(base)
+          await createRecord(modelName, base, formData)
         }
-        router.refresh()
       } catch (err) {
+        unstable_rethrow(err)
         setError(err instanceof Error ? err.message : "Gagal menyimpan.")
       }
     })

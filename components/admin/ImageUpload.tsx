@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { UploadButton } from "@/lib/uploadthing-client"
 import { ImagePlus, X } from "lucide-react"
 
@@ -9,6 +10,8 @@ interface ImageUploadProps {
 }
 
 export function ImageUpload({ value, onChange }: ImageUploadProps) {
+  const [error, setError] = useState<string | null>(null)
+
   return (
     <div className="space-y-2">
       {value ? (
@@ -31,8 +34,10 @@ export function ImageUpload({ value, onChange }: ImageUploadProps) {
           <UploadButton
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
+              setError(null)
               if (res?.[0]?.ufsUrl) onChange(res[0].ufsUrl)
             }}
+            onUploadError={(err) => setError(err.message)}
             appearance={{
               button:
                 "flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer",
@@ -44,6 +49,7 @@ export function ImageUpload({ value, onChange }: ImageUploadProps) {
           </span>
         </div>
       )}
+      {error && <p className="text-xs font-medium text-destructive" role="alert">{error}</p>}
     </div>
   )
 }

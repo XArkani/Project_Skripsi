@@ -13,12 +13,13 @@ export interface Dosen {
   id: string
   name: string
   prodi: string
-  title: string
-  position: string
-  expertise: string
-  doi: string
-  email: string
-  image: string
+  title: string | null
+  position: string | null
+  expertise: string | null
+  doi: string | null
+  email: string | null
+  image: string | null
+  nuptk: string | null
 }
 
 export interface UKM {

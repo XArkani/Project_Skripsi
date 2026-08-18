@@ -37,7 +37,8 @@ export const INITIAL_DOSEN: Dosen[] = [
     expertise: "Manajemen Sistem Pendidikan & Rekayasa Nilai",
     doi: "https://doi.org/10.1000/xj.2024.007",
     email: "muhammad.halqi@hamzanwadi.ac.id",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=500"
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=500",
+    nuptk: null
   },
   {
     id: "dos2",
@@ -48,7 +49,8 @@ export const INITIAL_DOSEN: Dosen[] = [
     expertise: "Kecerdasan Buatan & Sistem Pakar",
     doi: "https://doi.org/10.1016/j.ml.2024.03.021",
     email: "ahmad.zulhalim@hamzanwadi.ac.id",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=500"
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=500",
+    nuptk: null
   },
   {
     id: "dos3",
@@ -59,7 +61,8 @@ export const INITIAL_DOSEN: Dosen[] = [
     expertise: "Keamanan Siber & Jaringan Komputer",
     doi: "https://doi.org/10.1109/iotsec.2024.77112",
     email: "rika.ayu@hamzanwadi.ac.id",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=500"
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=500",
+    nuptk: null
   },
   {
     id: "dos4",
@@ -70,7 +73,8 @@ export const INITIAL_DOSEN: Dosen[] = [
     expertise: "Mikrokontroler & Internet of Things (IoT)",
     doi: "https://doi.org/10.1109/rob.2024.12890",
     email: "khairul.hadi@hamzanwadi.ac.id",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=500"
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=500",
+    nuptk: null
   },
   {
     id: "dos5",
@@ -81,7 +85,8 @@ export const INITIAL_DOSEN: Dosen[] = [
     expertise: "Pengelolaan Sumber Daya Air & Lingkungan",
     doi: "https://doi.org/10.4236/jwarp.2024.1605",
     email: "nurul.hidayah@hamzanwadi.ac.id",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=500"
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=500",
+    nuptk: null
   }
 ]
 

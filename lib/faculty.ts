@@ -3,8 +3,27 @@ import { prisma } from "@/lib/prisma"
 import type { Blueprint, Dosen, UKM, Event, News, FAQ, Struktur, Message } from "@/lib/types"
 import type { EventStatus } from "@/lib/status"
 
-function toEvent(e: { status: string; dateTime: Date | null } & Omit<Event, "status" | "dateTime">): Event {
-  return { ...e, status: e.status as EventStatus, dateTime: e.dateTime ? e.dateTime.toISOString() : null }
+type EventRecord = {
+  status: string | null
+  date: string | null
+  time: string | null
+  location: string | null
+  details: string | null
+  image: string | null
+  dateTime: Date | null
+} & Pick<Event, "id" | "title" | "slug" | "description">
+
+function toEvent(e: EventRecord): Event {
+  return {
+    ...e,
+    status: (e.status ?? "") as EventStatus,
+    dateTime: e.dateTime ? e.dateTime.toISOString() : null,
+    date: e.date ?? "",
+    time: e.time ?? "",
+    location: e.location ?? "",
+    details: e.details ?? "",
+    image: e.image ?? "",
+  }
 }
 
 export async function getBlueprints(): Promise<Blueprint[]> {

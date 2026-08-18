@@ -63,7 +63,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' blob: data: https://*.ufs.sh https://images.unsplash.com",
               "font-src 'self'",
-              "connect-src 'self' https://*.ufs.sh",
+              "connect-src 'self' https://*.ufs.sh https://*.uploadthing.com",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

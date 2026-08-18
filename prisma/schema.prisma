@@ -81,63 +81,64 @@ model blueprint {
     title       String
     category    String
     description String
-    details     String
-    image       String
+    details     String?
+    image       String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }
 
 model dosen {
-    id        String   @id @default(cuid())
+    id        String    @id @default(cuid())
     name      String
     prodi     String
-    title     String
-    position  String
-    expertise String
-    doi        String
-    email     String
-    image     String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    title     String?
+    position  String?
+    expertise String?
+    doi       String?
+    email     String?
+    image     String?
+    nuptk     String?   @unique
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
 }
 
 model ukm {
     id          String   @id @default(cuid())
     name        String
     description String
-    activities  String
-    contact     String
-    logo        String
+    activities  String?
+    contact     String?
+    logo        String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }
 
 model event {
-    id          String   @id @default(cuid())
+    id          String     @id @default(cuid())
     title       String
-    slug        String   @unique
-    status      String
-    date        String
+    slug        String     @unique
+    status      String?
+    date        String?
     dateTime    DateTime?
-    time        String
-    location    String
+    time        String?
+    location    String?
     description String
-    details     String
-    image       String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    details     String?
+    image       String?
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
 
     @@index([dateTime])
 }
 
 model news {
-    id       String   @id @default(cuid())
-    title    String
-    slug     String   @unique
-    date     String
-    excerpt  String
-    content  String
-    image    String
+    id        String   @id @default(cuid())
+    title     String
+    slug      String   @unique
+    date      String?
+    excerpt   String
+    content   String
+    image     String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -155,20 +156,20 @@ model struktur {
     parentId  String?
     role      String
     name      String
-    details   String
+    details   String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model message {
     id          String   @id @default(cuid())
-    senderName  String
-    senderEmail String
+    senderName  String?
+    senderEmail String?
     senderPhone String?
     senderIp    String?
-    subject     String
-    message     String
-    date        String
+    subject     String?
+    message     String?
+    date        String?
     isRead      Boolean  @default(false)
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt

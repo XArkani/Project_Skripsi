@@ -80,7 +80,7 @@ export function CrudList({ title, modelName, baseUrl, fields, initialData }: Cru
         </Button>
       </CardHeader>
       <CardContent>
-        <div className="relative mb-4 max-w-sm">
+        <div className="relative mb-4 w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
           <Input
             placeholder="Cari..."
