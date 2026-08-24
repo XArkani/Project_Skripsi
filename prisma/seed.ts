@@ -6,48 +6,150 @@ const prisma = new PrismaClient({ adapter })
 
 const blueprintSamples = [
   {
-    title: "Gedung Kuliah Bersama",
-    category: "Gedung",
-    description:
-      "Gedung utama tempat berlangsungnya perkuliahan teori seluruh program studi di lingkungan Fakultas Teknik.",
-    details:
-      "Terdiri dari 3 lantai dengan 24 ruang kelas berkapasitas 40-60 mahasiswa, dilengkapi AC, proyektor, dan akses Wi-Fi.",
+    title: "Ruangan A1",
+    category: "Ruang Kelas",
+    description: "Ruang kuliah 36 kursi di lantai 1, sisi lorong utara dekat pintu masuk.",
+    details: "Papan tulis putih 4m, proyektor Epson, AC 2 unit, colokan lantai tiap baris. Dipakai untuk mata kuliah teori angkatan awal.",
     image: "",
   },
   {
-    title: "Laboratorium Komputer",
+    title: "Ruangan A2",
+    category: "Ruang Kelas",
+    description: "Ruang 40 kursi lantai 1, sebelah A1, jendela menghadap taman.",
+    details: "Meja lipat individu, sound kecil untuk presentasi, papan tulis geser. Jadwal padat pagi sampai jam 15.00.",
+    image: "",
+  },
+  {
+    title: "Ruangan A3",
+    category: "Ruang Kelas",
+    description: "Ruang 32 kursi lantai 1, paling ujung timur, lebih senyap.",
+    details: "Sering dipakai ujian dan bimbingan kelompok kecil. AC 1 unit besar, tirai blackout, stopkontak dinding penuh.",
+    image: "",
+  },
+  {
+    title: "Ruangan A4",
+    category: "Ruang Kelas",
+    description: "Ruang 38 kursi lantai 1, dekat tangga ke lantai 2.",
+    details: "Dua pintu akses, sirkulasi cepat saat pergantian jam. Papan tulis kaca, proyektor ceiling mount.",
+    image: "",
+  },
+  {
+    title: "Ruangan B1",
+    category: "Ruang Kelas",
+    description: "Ruang 40 kursi lantai 2, atas A1, akses tangga utama.",
+    details: "Jendela tinggi, cahaya pagi terang. Dipakai kelas reguler dan rapat himpunan sore hari.",
+    image: "",
+  },
+  {
+    title: "Ruangan B2",
+    category: "Ruang Kelas",
+    description: "Ruang 36 kursi lantai 2, sebelah B1, menghadap selasar.",
+    details: "Kursi plastik besi, meja setengah lingkaran untuk diskusi. Whiteboard dan proyektor portabel.",
+    image: "",
+  },
+  {
+    title: "Ruangan C1",
+    category: "Ruang Kelas",
+    description: "Ruang 30 kursi lantai 3, sudut barat, angin paling kencang.",
+    details: "Plafon tinggi, kipas + AC. Dipakai kelas sore dan pelatihan singkat.",
+    image: "",
+  },
+  {
+    title: "Ruangan C2",
+    category: "Ruang Kelas",
+    description: "Ruang 34 kursi lantai 3, tengah, dekat Aula.",
+    details: "Dinding kedap tipis, sering jadi ruang cadangan saat Aula dipakai. Proyektor 4000 lumen.",
+    image: "",
+  },
+  {
+    title: "Ruangan C3",
+    category: "Ruang Kelas",
+    description: "Ruang 32 kursi lantai 3, sebelah C2, view lapangan.",
+    details: "Meja panjang 4 orang, cocok untuk kerja kelompok. Colokan di tengah meja.",
+    image: "",
+  },
+  {
+    title: "Ruangan C4",
+    category: "Ruang Kelas",
+    description: "Ruang 28 kursi lantai 3, paling ujung, paling sepi.",
+    details: "Dipakai bimbingan skripsi dan kelas kecil. Karpet tipis, papan tulis kecil 2m.",
+    image: "",
+  },
+  {
+    title: "Lab 1",
     category: "Laboratorium",
-    description:
-      "Fasilitas praktikum pemrograman, basis data, jaringan komputer, dan mata kuliah berbasis komputasi lainnya.",
-    details:
-      "60 unit komputer berspesifikasi tinggi, software berlisensi resmi, dan koneksi internet fiber optik.",
+    description: "Lab komputer dasar lantai 1, 30 PC untuk praktikum semester 1-2.",
+    details: "PC i5, RAM 16GB, VS Code dan MySQL terpasang. Jadwal praktikum Senin–Kamis, Jumat perawatan.",
     image: "",
   },
   {
-    title: "Laboratorium Robotika & IoT",
+    title: "Lab 2",
     category: "Laboratorium",
-    description:
-      "Ruang riset dan pengembangan robotika, sistem tertanam, dan Internet of Things untuk mahasiswa dan dosen.",
-    details:
-      "Dilengkapi kit robotika, mikroprosesor, sensor suite, 3D printer, dan alat ukur elektronika lengkap.",
+    description: "Lab jaringan lantai 2, 20 PC + rak mikrotik dan switch.",
+    details: "Kabel crimping, access point, dan server mini. Dipakai konfigurasi jaringan dan keamanan.",
     image: "",
   },
   {
-    title: "Perpustakaan Fakultas",
-    category: "Fasilitas",
-    description:
-      "Perpustakaan dengan koleksi buku teknik, jurnal nasional dan internasional, serta ruang baca yang nyaman.",
-    details:
-      "Koleksi lebih dari 10.000 judul buku, akses e-journal, ruang diskusi kelompok, dan layanan peminjaman daring.",
+    title: "Lab 3",
+    category: "Laboratorium",
+    description: "Lab IoT & robotika lantai 3, meja kerja tinggi dan solder station.",
+    details: "Arduino, ESP32, sensor suhu dan kelembapan, 3D printer kecil. Proyek mahasiswa dipajang di rak kaca.",
     image: "",
   },
   {
-    title: "Ruang Studio & Desain",
+    title: "Lab 4 - Lab TK",
+    category: "Laboratorium",
+    description: "Lab khusus TK lantai 1, meja rendah dan karpet, untuk simulasi pembelajaran anak.",
+    details: "APE warna-warni, papan magnetik, cermin observasi. Akses terpisah agar tidak terganggu lalu lalang kuliah.",
+    image: "",
+  },
+  {
+    title: "Lab 5",
+    category: "Laboratorium",
+    description: "Lab riset lantai 3, 12 workstation untuk tugas akhir.",
+    details: "Monitor dual, lisensi MATLAB dan AutoCAD. Booking via admin lab, maksimal 4 jam per sesi.",
+    image: "",
+  },
+  {
+    title: "Kantin",
     category: "Fasilitas",
-    description:
-      "Studio untuk kegiatan menggambar teknik, desain produk, dan proyek akhir mahasiswa.",
-    details:
-      "Meja gambar profesional, perangkat desain CAD, printer A3, dan ruang presentasi proyek.",
+    description: "Kantin lantai 1, 8 lapak, kapasitas 80 duduk, buka 07.00–16.00.",
+    details: "Menu harian nasi campur, gorengan, kopi. Meja besi panjang, wastafel dua titik, dekat musholla.",
+    image: "",
+  },
+  {
+    title: "Musholla",
+    category: "Fasilitas",
+    description: "Musholla lantai 1, muat 40 jamaah, tempat wudu terpisah putra-putri.",
+    details: "Karpet hijau, kipas plafon, lemari mukena dan sarung. Dibersihkan tiap selesai Dzuhur.",
+    image: "",
+  },
+  {
+    title: "Pos Security",
+    category: "Fasilitas",
+    description: "Pos jaga di gerbang masuk, petugas 2 shift 24 jam.",
+    details: "Buku tamu, CCTV monitor 4 channel, kunci cadangan gedung. Tamu wajib lapor sebelum naik lantai.",
+    image: "",
+  },
+  {
+    title: "Ruangan Dosen",
+    category: "Fasilitas",
+    description: "Ruang dosen lantai 2, 10 meja sekat, untuk konsultasi dan kerja.",
+    details: "Jam konsultasi tempel di pintu, sofa tamu kecil. AC sentral, loker arsip per prodi.",
+    image: "",
+  },
+  {
+    title: "Lobby",
+    category: "Fasilitas",
+    description: "Lobby lantai 1, meja resepsionis dan papan pengumuman.",
+    details: "Kursi tunggu 12, dispenser, brosur prodi. Tempat tanya jadwal dan pengambilan surat.",
+    image: "",
+  },
+  {
+    title: "Aula Fakultas Teknik",
+    category: "Fasilitas",
+    description: "Aula lantai 3, kapasitas 200 kursi lipat, panggung 6x4 meter.",
+    details: "Sound system 4 speaker, mic wireless 4, proyektor 5000 lumen. Dipakai seminar, yudisium, dan pameran tugas akhir.",
     image: "",
   },
 ]
@@ -251,13 +353,9 @@ async function seedAdmin() {
 }
 
 async function seedBlueprints() {
-  const count = await prisma.blueprint.count()
-  if (count > 0) {
-    console.log("Blueprint: data sudah ada, dilewati.")
-    return
-  }
+  await prisma.blueprint.deleteMany({})
   await prisma.blueprint.createMany({ data: blueprintSamples })
-  console.log(`Blueprint: ${blueprintSamples.length} data dibuat.`)
+  console.log(`Blueprint: reset & ${blueprintSamples.length} data baru dibuat.`)
 }
 
 async function seedDosen() {
