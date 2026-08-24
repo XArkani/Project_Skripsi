@@ -134,6 +134,8 @@
   }
   html {
     @apply font-sans;
+    scroll-padding-top: 72px;
+    scrollbar-gutter: stable;
   }
 }
 
