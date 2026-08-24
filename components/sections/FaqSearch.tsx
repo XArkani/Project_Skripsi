@@ -1,18 +1,35 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Search, HelpCircle } from "lucide-react"
+import { Search, HelpCircle, ChevronDown } from "lucide-react"
 import type { FAQ } from "@/lib/types"
 import EmptyState from "@/components/shared/EmptyState"
+import { cn } from "@/lib/utils"
 
-function FAQCard({ faq }: { faq: FAQ }) {
+function FAQItem({ faq, isOpen, onToggle }: { faq: FAQ; isOpen: boolean; onToggle: () => void }) {
   return (
-    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-      <h3 className="font-extrabold text-slate-800 text-sm sm:text-base flex items-start gap-2">
-        <HelpCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-        {faq.question}
-      </h3>
-      <p className="text-slate-600 text-xs sm:text-sm mt-3 pl-6 border-l-2 border-emerald-500 leading-relaxed">{faq.answer}</p>
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={`faq-answer-${faq.id}`}
+        className="w-full flex items-start justify-between gap-3 p-5 text-left cursor-pointer hover:bg-slate-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-inset"
+      >
+        <span className="flex items-start gap-2 flex-1">
+          <HelpCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+          <span className="font-extrabold text-slate-800 text-sm sm:text-base">{faq.question}</span>
+        </span>
+        <ChevronDown className={cn("w-4 h-4 text-slate-400 shrink-0 mt-1 transition-transform duration-200", isOpen && "rotate-180")} />
+      </button>
+      <div
+        id={`faq-answer-${faq.id}`}
+        role="region"
+        hidden={!isOpen}
+        className={cn(!isOpen && "hidden")}
+      >
+        <p className="text-slate-600 text-xs sm:text-sm px-5 pb-5 pl-11 leading-relaxed">{faq.answer}</p>
+      </div>
     </div>
   )
 }
@@ -23,6 +40,7 @@ interface FaqSearchProps {
 
 export default function FaqSearch({ faqs }: FaqSearchProps) {
   const [searchQuery, setSearchQuery] = useState("")
+  const [openId, setOpenId] = useState<string | null>(null)
 
   const filteredFaqs = useMemo(() => {
     if (!searchQuery) return faqs
@@ -64,7 +82,9 @@ export default function FaqSearch({ faqs }: FaqSearchProps) {
             Tidak ditemukan jawaban untuk pencarian &ldquo;{searchQuery}&rdquo;. Silakan coba kata kunci lain.
           </div>
         ) : (
-          filteredFaqs.map((faq) => <FAQCard key={faq.id} faq={faq} />)
+          filteredFaqs.map((faq) => (
+            <FAQItem key={faq.id} faq={faq} isOpen={openId === faq.id} onToggle={() => setOpenId((prev) => (prev === faq.id ? null : faq.id))} />
+          ))
         )}
       </div>
     </>

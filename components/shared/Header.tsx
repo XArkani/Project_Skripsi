@@ -147,9 +147,10 @@ export default function Header() {
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation()
-                  setIsNavDropdownOpen(!isNavDropdownOpen)
+                  setIsNavDropdownOpen((v) => !v)
                 }}
                 aria-expanded={isNavDropdownOpen}
+                aria-controls="desktop-informasi-menu"
                 className={cn(
                   "px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-1.5 transition-colors",
                   isInfoActive
@@ -163,6 +164,7 @@ export default function Header() {
 
               {isNavDropdownOpen && (
                 <div
+                  id="desktop-informasi-menu"
                   className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50"
                 >
                   {dropdownItems.map((item) => {
@@ -205,11 +207,12 @@ export default function Header() {
               type="button"
               onClick={(e) => {
                 e.stopPropagation()
-                setIsMobileMenuOpen(!isMobileMenuOpen)
+                setIsMobileMenuOpen((v) => !v)
               }}
               className="p-2.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition-colors"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav-panel"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -235,6 +238,9 @@ export default function Header() {
                 document.body
               )}
             <motion.div
+              id="mobile-nav-panel"
+              role="dialog"
+              aria-modal="true"
               className="lg:hidden absolute top-full left-3 right-3 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}

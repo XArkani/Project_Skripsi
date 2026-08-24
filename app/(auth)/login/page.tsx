@@ -25,10 +25,19 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    const trimmedEmail = email.trim()
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      showToast("Format email tidak valid. Contoh: admin@hamzanwadi.ac.id", "error")
+      return
+    }
+    if (!password) {
+      showToast("Password wajib diisi.", "error")
+      return
+    }
     setLoading(true)
 
     try {
-      const result = await authClient.signIn.email({ email, password })
+      const result = await authClient.signIn.email({ email: trimmedEmail, password })
 
       if (result.error) {
         showToast(result.error.message ?? "Login gagal. Periksa kembali kredensial Anda.", "error")
@@ -81,7 +90,7 @@ export default function LoginPage() {
                 <p className="text-slate-500 text-xs mt-1">Otorisasi khusus pengelolaan data dekanat & berita kampus.</p>
               </div>
 
-              <form onSubmit={handleLogin} className="space-y-4 text-left">
+              <form onSubmit={handleLogin} noValidate className="space-y-4 text-left">
                 <div>
                   <label htmlFor="login-email" className="block text-xs font-bold text-slate-500 uppercase mb-1.5">
                     Email Pengelola

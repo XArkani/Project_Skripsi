@@ -64,6 +64,8 @@ const nextConfig: NextConfig = {
               "img-src 'self' blob: data: https://*.ufs.sh https://images.unsplash.com",
               "font-src 'self'",
               "connect-src 'self' https://*.ufs.sh https://*.uploadthing.com",
+              "frame-src https://www.google.com https://maps.google.com https://*.google.com",
+              "child-src https://www.google.com https://maps.google.com https://*.google.com",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

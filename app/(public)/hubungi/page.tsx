@@ -73,8 +73,10 @@ export default function HubungiPage() {
       await submitContact(formData)
       showToast("Pesan Anda berhasil terkirim!", "success")
       setForm({ senderName: "", senderEmail: "", senderPhone: "", subject: "", message: "" })
-    } catch {
-      showToast("Gagal mengirim pesan. Silakan coba lagi.", "error")
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : ""
+      if (msg.includes("5 menit")) showToast(msg, "info")
+      else showToast(msg || "Gagal mengirim pesan. Silakan coba lagi.", "error")
     } finally {
       setIsSubmitting(false)
     }
