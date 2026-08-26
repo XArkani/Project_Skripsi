@@ -38,7 +38,7 @@ export default function Footer() {
                   alt="Logo Fakultas Teknik"
                   fill
                   sizes="40px"
-                  className="rounded-xl object-cover"
+                   className="rounded-xl object-contain bg-transparent"
                 />
               </div>
               <div>

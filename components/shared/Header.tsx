@@ -121,7 +121,7 @@ export default function Header() {
                   fill
                   sizes="40px"
                   priority
-                  className="rounded-xl object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="rounded-xl object-contain bg-transparent group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="min-w-0">
