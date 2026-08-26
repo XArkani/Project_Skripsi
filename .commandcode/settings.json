@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Shell(bun:*)"
+      "Shell(bun:*)",
+      "Shell(node -e console.log(require('child_process').execSync('magick --version 2>&1 || identify --version 2>&1').toString().split('\\n')[0]) 2 >& 1)",
+      "Shell(node -e try{const b=require('child_process').execSync('ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 \"public/LOGO FAKULTAS TEKNIK.webp\" 2>&1');console.log('dims:',b.toString())}catch(e){console.log('no ffprobe')})",
+      "Shell(node -e const {execSync}=require('child_process'); for (const t of ['magick','convert','ffmpeg','ffprobe','sharp','npx']) { try { execSync(t+' --version',{stdio:'pipe'}); console.log(t+': YES'); } catch(e){ console.log(t+': no'); } })",
+      "Shell(node -e try { const sharp=require('sharp'); console.log('sharp loads OK'); } catch(e){ console.log('sharp FAIL:', e.message.slice(0,200)); })",
+      "Shell(node C:\\Users\\ROG\\AppData\\Local\\Temp\\commandcode\\D--Project-Website-Project-Skripsi\\c6c8fd97-d844-4275-8de4-b86bfcf6888c\\scratchpad\\gen-icons.js)",
+      "Shell(node -e  const sharp=require('sharp'); const path=require('path'); (async()=>{ const SRC=path.resolve('public/LOGO FAKULTAS TEKNIK.webp'); const meta=await sharp(SRC).metadata(); console.log('source dims:', meta.width,'x',meta.height, meta.format); for (const t of [{n:'icon-192x192.png',s:192},{n:'icon-512x512.png',s:512},{n:'apple-icon.png',s:180}]){ const out=await sharp(SRC).resize(t.s,t.s,{fit:'contain',background:{r:255,g:255,b:255,alpha:1}}).png().toBuffer(); await sharp(out).toFile(path.resolve('public/'+t.n)); console.log('wrote',t.n,t.s); } })().catch(e=>{console.error(e);process.exit(1);}); )",
+      "Shell(dir:*)",
+      "Shell(node gen-icons.tmp.cjs)",
+      "Shell(del:*)"
     ],
     "deny": [],
     "defaultMode": "default"

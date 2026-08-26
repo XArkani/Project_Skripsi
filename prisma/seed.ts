@@ -156,53 +156,47 @@ const blueprintSamples = [
 
 const dosenSamples = [
   {
-    name: "Dr. Ir. H. Ahmad Fauzi, M.T.",
-    prodi: "Sistem Informasi",
-    title: "S.T., M.T.",
+    name: "DR. H. Muhammad Djamaluddin, B.E.,M.Kom.",
+    prodi: "Informatika",
+    title: "B.E., M.Kom.",
     position: "Dekan Fakultas Teknik",
-    expertise: "Manajemen Sistem Informasi & Rekayasa Nilai",
-    doi: "https://doi.org/10.1000/xj.2024.001",
-    email: "ahmadfauzi@hamzanwadi.ac.id",
+    expertise: "Sistem Informasi & Tata Kelola Jurnal Ilmiah",
+    doi: "https://doi.org/10.29408/jit.v6i1.7511",
+    email: "muhammad.djamaluddin@hamzanwadi.ac.id",
+    nuptk: "7447751652130110",
     image: "",
   },
   {
-    name: "Rina Kartika, S.Kom., M.Kom.",
+    name: "Aris Sudianto, M.Kom.",
     prodi: "Informatika",
-    title: "S.Kom., M.Kom.",
-    position: "Ketua Program Studi Teknik Informatika",
-    expertise: "Rekayasa Perangkat Lunak",
-    doi: "https://doi.org/10.1016/j.ai.2024.02.104",
-    email: "rinakartika@hamzanwadi.ac.id",
+    title: "M.Kom.",
+    position: "Kaprodi Informatika",
+    expertise: "Rekayasa Perangkat Lunak & Evaluasi Pembelajaran",
+    doi: "https://doi.org/10.29408/jit.v3i2.2289",
+    email: "aris.sudianto@hamzanwadi.ac.id",
+    nuptk: "7943764665110050",
     image: "",
   },
   {
-    name: "Hendra Gunawan, S.T., M.T.",
-    prodi: "Teknik Komputer",
-    title: "S.T., M.T.",
-    position: "Dosen Teknik Komputer",
-    expertise: "Jaringan Komputer & Sistem Tertanam",
-    doi: "https://doi.org/10.1109/iot.2024.8710",
-    email: "hendra.gunawan@hamzanwadi.ac.id",
-    image: "",
-  },
-  {
-    name: "Nurul Aini, S.T., M.Sc.",
-    prodi: "Teknik Lingkungan",
-    title: "S.T., M.Sc.",
-    position: "Dosen Teknik Lingkungan",
-    expertise: "Pengelolaan Sumber Daya Air",
-    doi: "https://doi.org/10.4236/jwarp.2024.1603",
-    email: "nurul.aini@hamzanwadi.ac.id",
-    image: "",
-  },
-  {
-    name: "Dewi Lestari, S.Si., M.Cs.",
+    name: "Indra Gunawan, S.T.,M.Pd.,M.Kom.",
     prodi: "Informatika",
-    title: "S.Si., M.Cs.",
-    position: "Dosen Teknik Informatika",
-    expertise: "Data Science",
-    doi: "https://doi.org/10.1007/s10618-024-0100",
-    email: "dewilestari@hamzanwadi.ac.id",
+    title: "S.T., M.Pd., M.Kom.",
+    position: "Dosen Informatika",
+    expertise: "Media Pembelajaran & Sistem Cerdas",
+    doi: "https://doi.org/10.29408/jit.v4i2.3562",
+    email: "indra.gunawan@hamzanwadi.ac.id",
+    nuptk: "8857762663130350",
+    image: "",
+  },
+  {
+    name: "Baiq Andriska Candra Permana, M.Kom",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    expertise: "Fisika Terapan & Pemodelan Komputasi",
+    doi: "https://doi.org/10.1088/1742-6596/1869/1/012082",
+    email: "baiq.andriska@hamzanwadi.ac.id",
+    nuptk: "4141763664230240",
     image: "",
   },
 ]
@@ -359,13 +353,9 @@ async function seedBlueprints() {
 }
 
 async function seedDosen() {
-  const count = await prisma.dosen.count()
-  if (count > 0) {
-    console.log("Dosen: data sudah ada, dilewati.")
-    return
-  }
+  await prisma.dosen.deleteMany({})
   await prisma.dosen.createMany({ data: dosenSamples })
-  console.log(`Dosen: ${dosenSamples.length} data dibuat.`)
+  console.log(`Dosen: reset & ${dosenSamples.length} data baru dibuat.`)
 }
 
 async function seedUkm() {

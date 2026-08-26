@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { MapPin, Phone, Mail, Clock, ChevronRight } from "lucide-react"
+import { CONTACT_INFO } from "@/lib/contact"
 
 const quickLinks = [
   { href: "/blueprint", label: "Blueprint Kampus" },
@@ -14,14 +15,10 @@ const quickLinks = [
 ]
 
 const contactItems = [
-  {
-    icon: MapPin,
-    label: "Alamat Kampus",
-    value: "Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor, Selong, Lombok Timur, NTB.",
-  },
-  { icon: Phone, label: "Telepon", value: "+62 (376) 21377" },
-  { icon: Mail, label: "Email", value: "teknik@hamzanwadi.ac.id" },
-  { icon: Clock, label: "Jam Operasional", value: "Senin – Sabtu, 08:00 – 15:30 WITA" },
+  { icon: MapPin, label: "Alamat Kampus", value: CONTACT_INFO.address },
+  { icon: Phone, label: "Nomor Layanan", value: CONTACT_INFO.phone },
+  { icon: Mail, label: "Surat Elektronik", value: CONTACT_INFO.email },
+  { icon: Clock, label: "Jam Kerja Kantor", value: CONTACT_INFO.hours },
 ]
 
 export default function Footer() {

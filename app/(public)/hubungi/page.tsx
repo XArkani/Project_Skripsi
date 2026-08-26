@@ -5,28 +5,13 @@ import { submitContact } from "@/lib/actions"
 import Toast from "@/components/shared/Toast"
 import MapWithFallback from "@/components/shared/MapWithFallback"
 import { MapPin, Mail, Phone, Clock, Send, Loader2, ExternalLink } from "lucide-react"
+import { CONTACT_INFO } from "@/lib/contact"
 
 const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Alamat Kampus",
-    value: "Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor, Selong, Kabupaten Lombok Timur, Nusa Tenggara Barat.",
-  },
-  {
-    icon: Mail,
-    title: "Surat Elektronik",
-    value: "teknik@hamzanwadi.ac.id",
-  },
-  {
-    icon: Phone,
-    title: "Nomor Layanan",
-    value: "+62 (376) 21377 / 0812-3456-7890",
-  },
-  {
-    icon: Clock,
-    title: "Jam Kerja Kantor",
-    value: "Senin - Sabtu: 08:00 - 15:30 WITA",
-  },
+  { icon: MapPin, title: "Alamat Kampus", value: CONTACT_INFO.address },
+  { icon: Mail, title: "Surat Elektronik", value: CONTACT_INFO.email },
+  { icon: Phone, title: "Nomor Layanan", value: CONTACT_INFO.phone },
+  { icon: Clock, title: "Jam Kerja Kantor", value: CONTACT_INFO.hours },
 ]
 
 const inputClass =
@@ -247,11 +232,11 @@ export default function HubungiPage() {
             </div>
             <div>
               <h3 className="font-bold text-sm sm:text-base text-slate-900">Lokasi Kampus</h3>
-              <p className="text-xs sm:text-sm text-slate-500">Universitas Hamzanwadi, Jl. TGKH. M. Zainuddin Abdul Madjid No. 132, Pancor</p>
+              <p className="text-xs sm:text-sm text-slate-500">{CONTACT_INFO.mapsAddressShort}</p>
             </div>
           </div>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=Universitas+Hamzanwadi"
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT_INFO.mapsQuery)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer shrink-0"
