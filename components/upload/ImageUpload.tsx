@@ -34,7 +34,7 @@ export function ImageUpload() {
     const file = files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      setError("Please upload an image file");
+      setError("Silakan pilih file gambar.");
       return;
     }
 
@@ -58,7 +58,7 @@ export function ImageUpload() {
         <div className="relative group w-full flex-1 min-h-[250px] rounded-xl overflow-hidden border border-border/50 bg-muted/20">
           <Image
             src={imageUrl}
-            alt="Uploaded image"
+            alt="Gambar terunggah"
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -72,7 +72,7 @@ export function ImageUpload() {
               setImageUrl(null);
             }}
             className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-destructive text-white rounded-full opacity-0 transition-all duration-300 group-hover:opacity-100 transform translate-y-[-10px] group-hover:translate-y-0"
-            title="Remove image"
+            title="Hapus gambar"
           >
             <X className="w-4 h-4" />
           </button>
@@ -119,11 +119,11 @@ export function ImageUpload() {
 
             <div className="text-center space-y-1">
               <p className="text-sm font-normal text-foreground/80">
-                {uploading ? "Uploading..." : "Click or drag image here"}
+                {uploading ? "Mengunggah..." : "Klik atau seret gambar ke sini"}
               </p>
               {!uploading && (
                 <p className="text-[11px] text-muted-foreground/70">
-                  SVG, PNG, JPG or GIF (max. 4MB)
+                  SVG, PNG, JPG, atau GIF (maks. 4MB)
                 </p>
               )}
             </div>

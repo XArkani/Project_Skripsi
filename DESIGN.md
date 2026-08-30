@@ -80,3 +80,22 @@ menggunakan gradasi hijau-hitam; slot aset foto siap diganti saat tersedia.
 Public homepage — mode **Persuade**. Aksi utama: eksplorasi (Blueprint / Dosen / Berita / Event)
 dan kontak (`/hubungi`). Konten = data fakultas riil. Konstrain: tanpa foto (gradasi), bahasa
 Indonesia sederhana, hijau strategis, tombol/target sentuh ≥44px.
+
+## Dashboard admin — Minimal Institutional Dashboard (mode Operate)
+
+- **Token**: `--primary` global = hijau `#008f5a` (tombol/checkbox); netral zinc/slate; merah hanya
+  untuk destructive (delete/error); icon menu **netral** (hijau hanya saat aktif).
+- **Shell**: sidebar `w-64` netral + footer admin/sign-out; main fluid `min-w-0` (`PageContainer`,
+  max 1400px); mobile pakai drawer kiri (`MobileSidebar` — focus, Escape, aria-modal) + top bar.
+- **Halaman**: satu `PageHeader` (judul + deskripsi + aksi); tanpa judul ganda.
+- **DataTable** (custom, tanpa dependency baru): search 300–400px, filter kontekstual (Select),
+  sort header, pagination `10/h`, dropdown aksi `[…]` (Lihat Detail / Edit / Hapus), **DeleteDialog**
+  konfirmasi, **DetailSheet** sisi kanan (radix Dialog), mobile → **list-card** (<md).
+- **Konfigurasi per model** di `lib/admin-columns.tsx` (client): kolom terpilih, status badge
+  (Info/`Akan Datang`, Sukses/`Berlangsung`, Netral/`Selesai`), tanggal eksplisit, avatar dosen,
+  info panjang hanya di detail sheet.
+- **Pesan**: mental model inbox (filter belum/sudah dibaca, dot unread, relative time, Sheet detail,
+  tandai dibaca, delete dialog).
+- **Dashboard home**: 4 KPI utama (StatCard) + status event + Aktivitas Terbaru / Pesan Terbaru.
+- **State**: `LoadingTable` (skeleton), `EmptyState`, `ErrorState` + `error.tsx` (retry), `loading.tsx`.
+- PWA prompt compact, z-index di bawah sheet/dialog, dismiss persisten.

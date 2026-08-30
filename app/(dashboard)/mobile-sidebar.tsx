@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, startTransition } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { NavLinks } from "./nav-links";
@@ -8,18 +9,19 @@ import { LogoutButton } from "./logout-button";
 
 export function MobileSidebar({ email }: { email?: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
-    startTransition(() => {
-      setIsOpen(false);
-    });
+    // Tutup drawer saat berpindah halaman (sync dengan perubahan eksternal route).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsOpen(false);
   }, [pathname]);
 
-  // Prevent body scroll when open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      requestAnimationFrame(() => closeRef.current?.focus())
     } else {
       document.body.style.overflow = "";
     }
@@ -28,59 +30,91 @@ export function MobileSidebar({ email }: { email?: string }) {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isOpen]);
+
   return (
     <>
-      {/* Top Header Trigger */}
-      <div className="md:hidden flex h-14 items-center gap-3 px-4 border-b border-border/40 bg-background/95 backdrop-blur z-40 sticky top-0">
+      {/* Top header (mobile only) */}
+      <div className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-border/50 bg-background/95 px-4 backdrop-blur md:hidden">
         <button
+          type="button"
           onClick={() => setIsOpen(true)}
-          className="p-2 -ml-2 rounded-md hover:bg-muted transition-colors"
-          aria-label="Open menu"
+          className="-ml-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          aria-label="Buka menu"
+          aria-expanded={isOpen}
+          aria-controls="mobile-drawer"
         >
           <Menu className="h-5 w-5" />
         </button>
-        <p className="font-bold tracking-tight">Fakultas Teknik</p>
+        <span className="relative h-8 w-8">
+          <Image
+            src="/LOGO FAKULTAS TEKNIK.webp"
+            alt="Logo Fakultas Teknik"
+            fill
+            sizes="32px"
+            className="object-contain"
+          />
+        </span>
+        <p className="text-sm font-bold tracking-tight text-emerald-800">Fakultas Teknik</p>
       </div>
 
       {/* Backdrop */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm md:hidden"
+        <div
+          className="fixed inset-0 z-40 bg-slate-950/50 md:hidden"
           onClick={() => setIsOpen(false)}
+          aria-hidden="true"
         />
       )}
 
-      {/* Sliding Sidebar */}
-      <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-background border-r border-border/40 shadow-2xl transform transition-transform duration-300 ease-out flex flex-col md:hidden ${
+      {/* Sliding drawer */}
+      <aside
+        id="mobile-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu navigasi"
+        className={`fixed inset-y-0 left-0 z-40 flex w-72 max-w-[85vw] transform flex-col border-r border-border bg-background shadow-2xl transition-transform duration-200 ease-out md:hidden ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-14 items-center justify-between px-6 border-b border-border/40">
-          <p className="font-bold tracking-tight">Menu</p>
+        <div className="flex h-14 shrink-0 items-center justify-between border-b border-border/50 px-4">
+          <div className="flex items-center gap-2.5">
+            <span className="relative h-8 w-8">
+              <Image
+                src="/LOGO FAKULTAS TEKNIK.webp"
+                alt="Logo Fakultas Teknik"
+                fill
+                sizes="32px"
+                className="object-contain"
+              />
+            </span>
+            <p className="text-sm font-bold tracking-tight text-emerald-800">Menu</p>
+          </div>
           <button
+            ref={closeRef}
+            type="button"
             onClick={() => setIsOpen(false)}
-            className="p-2 -mr-2 rounded-md hover:bg-muted transition-colors text-muted-foreground"
-            aria-label="Close menu"
+            className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            aria-label="Tutup menu"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
-        
-        <nav className="flex-1 px-4 py-6 overflow-y-auto">
+
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
           <NavLinks />
         </nav>
 
-        {/* Sidebar Footer */}
-        <div className="mt-auto border-t border-border/40 p-4">
-          <div className="flex flex-col gap-3">
-            <p className="text-xs font-medium text-muted-foreground px-2 truncate">
-              {email}
-            </p>
-            <div className="w-full">
-              <LogoutButton />
-            </div>
-          </div>
+        <div className="shrink-0 border-t border-border/50 p-3">
+          <p className="truncate px-2 pb-2 text-xs font-medium text-muted-foreground">{email}</p>
+          <LogoutButton />
         </div>
       </aside>
     </>

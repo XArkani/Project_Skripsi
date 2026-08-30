@@ -86,4 +86,5 @@ export interface FieldConfig {
   type: "text" | "textarea" | "number" | "image" | "select" | "checkbox" | "date" | "slug"
   required?: boolean
   options?: string[]
+  group?: string
 }

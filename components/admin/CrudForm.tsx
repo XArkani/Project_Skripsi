@@ -6,7 +6,13 @@ import { unstable_rethrow } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { ImageUpload } from "./ImageUpload"
 import { createRecord, updateRecord, type ModelName } from "@/lib/admin-actions"
 import { slugify } from "@/lib/utils"
@@ -14,7 +20,6 @@ import { ArrowLeft, Loader2 } from "lucide-react"
 import type { FieldConfig } from "@/lib/types"
 
 interface CrudFormProps {
-  title: string
   modelName: ModelName
   baseUrl: string
   fields: FieldConfig[]
@@ -23,21 +28,26 @@ interface CrudFormProps {
   initialData?: Record<string, unknown>
 }
 
-export function CrudForm({ title, modelName, baseUrl, fields, mode, id, initialData = {} }: CrudFormProps) {
+export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {} }: CrudFormProps) {
   const [formData, setFormData] = useState<Record<string, unknown>>(initialData)
   const [error, setError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
 
   const base = baseUrl
   const editableFields = fields.filter((f) => f.name !== "id")
-  const orderedFields = [...editableFields].sort((a, b) => Number(b.type === "image") - Number(a.type === "image"))
+
+  const groups = editableFields.reduce<string[]>((acc, f) => {
+    const g = f.group ?? "Informasi Utama"
+    if (!acc.includes(g)) acc.push(g)
+    return acc
+  }, [])
 
   function handleChange(name: string, value: unknown) {
     setFormData((prev) => {
       const next = { ...prev, [name]: value }
       if (name === "title") {
         const slugField = fields.find((f) => f.type === "slug")
-        if (slugField) {
+        if (slugField && (prev[slugField.name] == null || prev[slugField.name] === "")) {
           next[slugField.name] = slugify(String(value ?? ""))
         }
       }
@@ -72,102 +82,158 @@ export function CrudForm({ title, modelName, baseUrl, fields, mode, id, initialD
     })
   }
 
+  function renderField(field: FieldConfig) {
+    const value = String(formData[field.name] ?? "")
+    const inputId = field.name
+
+    if (field.type === "slug") {
+      return (
+        <Input
+          id={inputId}
+          type="text"
+          value={value}
+          onChange={(e) => handleChange(field.name, e.target.value)}
+          placeholder="Otomatis dari judul, bisa diedit"
+        />
+      )
+    }
+    if (field.type === "textarea") {
+      return (
+        <Textarea
+          id={inputId}
+          value={value}
+          onChange={(e) => handleChange(field.name, e.target.value)}
+          rows={4}
+        />
+      )
+    }
+    if (field.type === "select") {
+      return (
+        <Select
+          value={value}
+          onValueChange={(v) => handleChange(field.name, v)}
+        >
+          <SelectTrigger id={inputId} className="w-full" aria-label={field.label}>
+            <SelectValue placeholder="Pilih..." />
+          </SelectTrigger>
+          <SelectContent>
+            {field.options?.map((opt) => (
+              <SelectItem key={opt} value={opt}>
+                {opt}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )
+    }
+    if (field.type === "image") {
+      return (
+        <ImageUpload
+          value={value}
+          onChange={(url) => handleChange(field.name, url)}
+        />
+      )
+    }
+    if (field.type === "checkbox") {
+      return (
+        <label className="flex items-center gap-2 text-sm text-foreground">
+          <input
+            type="checkbox"
+            checked={Boolean(formData[field.name])}
+            onChange={(e) => handleChange(field.name, e.target.checked)}
+            className="size-4 rounded border-input accent-[#008f5a]"
+          />
+          {formData[field.name] ? "Ya" : "Tidak"}
+        </label>
+      )
+    }
+    if (field.type === "date") {
+      return (
+        <Input
+          id={inputId}
+          type="date"
+          value={value}
+          onChange={(e) => handleChange(field.name, e.target.value)}
+        />
+      )
+    }
+    return (
+      <Input
+        id={inputId}
+        type={field.type === "number" ? "number" : "text"}
+        value={value}
+        onChange={(e) => handleChange(field.name, e.target.value)}
+      />
+    )
+  }
+
   return (
     <div className="mx-auto max-w-2xl">
       <Link
         href={base}
-        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
       >
         <ArrowLeft className="h-4 w-4" />
         Kembali ke daftar
       </Link>
 
-      <Card>
-        <CardHeader className="border-b border-border/50">
-          <CardTitle className="text-lg font-semibold tracking-tight">{title}</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {orderedFields.map((field) => (
-              <div key={field.name}>
-                <label className="mb-1.5 block text-sm font-medium text-foreground">
-                  {field.label}
-                  {field.required && <span className="ml-0.5 text-destructive">*</span>}
-                </label>
-
-                {field.type === "slug" ? (
-                  <Input
-                    type="text"
-                    value={String(formData[field.name] ?? "")}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                    placeholder="Otomatis dari judul"
-                  />
-                ) : field.type === "textarea" ? (
-                  <Textarea
-                    value={String(formData[field.name] ?? "")}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                    rows={4}
-                  />
-                ) : field.type === "select" ? (
-                  <select
-                    value={String(formData[field.name] ?? "")}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-2.5 py-1 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    <option value="">Pilih...</option>
-                    {field.options?.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                ) : field.type === "image" ? (
-                  <ImageUpload
-                    value={String(formData[field.name] ?? "")}
-                    onChange={(url) => handleChange(field.name, url)}
-                  />
-                ) : field.type === "checkbox" ? (
-                  <label className="flex items-center gap-2 text-sm text-foreground">
-                    <input
-                      type="checkbox"
-                      checked={Boolean(formData[field.name])}
-                      onChange={(e) => handleChange(field.name, e.target.checked)}
-                      className="size-4 rounded border-input accent-primary"
-                    />
-                    {formData[field.name] ? "Ya" : "Tidak"}
-                  </label>
-                ) : (
-                  <Input
-                    type={field.type === "number" ? "number" : "text"}
-                    value={String(formData[field.name] ?? "")}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                  />
-                )}
+      <form onSubmit={handleSubmit} className="rounded-xl border border-border bg-card p-5 sm:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {groups.map((group) => (
+            <fieldset
+              key={group}
+              className={group.includes("Gambar") || group.includes("Poster") || group.includes("Logo") || group === "Detail" ? "sm:col-span-2" : "sm:col-span-2"}
+            >
+              <legend className="mb-4 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                {group}
+              </legend>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {editableFields
+                  .filter((f) => (f.group ?? "Informasi Utama") === group)
+                  .map((field) => (
+                    <div
+                      key={field.name}
+                      className={
+                        field.type === "textarea" ||
+                        field.type === "select" ||
+                        field.type === "image" ||
+                        field.type === "checkbox"
+                          ? "sm:col-span-2"
+                          : ""
+                      }
+                    >
+                      <label className="mb-1.5 block text-sm font-medium text-foreground" htmlFor={field.name}>
+                        {field.label}
+                        {field.required && <span className="ml-0.5 text-destructive">*</span>}
+                      </label>
+                      <div id={field.name}>{renderField(field)}</div>
+                    </div>
+                  ))}
               </div>
-            ))}
+            </fieldset>
+          ))}
+        </div>
 
-            {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+        {error && <p className="mt-5 text-sm font-medium text-destructive" role="alert">{error}</p>}
 
-            <div className="flex items-center justify-end gap-3 border-t border-border/50 pt-5">
-              <Button type="button" variant="ghost" asChild className="cursor-pointer">
-                <Link href={base}>Batal</Link>
-              </Button>
-              <Button type="submit" disabled={pending} className="min-w-28 cursor-pointer">
-                {pending ? (
-                  <>
-                    <Loader2 className="size-4 animate-spin" />
-                    Menyimpan...
-                  </>
-                ) : mode === "edit" ? (
-                  "Simpan Perubahan"
-                ) : (
-                  "Simpan"
-                )}
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+        <div className="mt-6 flex flex-col-reverse gap-2 border-t border-border/50 pt-5 sm:flex-row sm:justify-end">
+          <Button type="button" variant="ghost" asChild className="cursor-pointer">
+            <Link href={base}>Batal</Link>
+          </Button>
+          <Button type="submit" disabled={pending} className="min-h-11 w-full cursor-pointer sm:w-auto">
+            {pending ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Menyimpan...
+              </>
+            ) : mode === "edit" ? (
+              "Simpan Perubahan"
+            ) : (
+              "Simpan"
+            )}
+          </Button>
+        </div>
+      </form>
     </div>
   )
 }

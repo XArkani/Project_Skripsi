@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { getModelById } from "@/lib/admin-data"
 import { fieldConfigMap, modelLabels, resolveModel } from "@/lib/admin-field-configs"
 import { CrudForm } from "@/components/admin/CrudForm"
+import PageHeader from "@/components/dashboard/page-header"
 import type { ModelName } from "@/lib/admin-actions"
 
 export default async function ModelEditPage({
@@ -11,7 +12,7 @@ export default async function ModelEditPage({
 }) {
   const { model, id } = await params
   const modelName = resolveModel(model)
-  if (!modelName) return notFound()
+  if (!modelName || modelName === "message") return notFound()
 
   const fields = fieldConfigMap[modelName]
   const meta = modelLabels[modelName]
@@ -21,13 +22,13 @@ export default async function ModelEditPage({
   if (!record) return notFound()
 
   return (
-    <div className="w-full">
-      <header className="mb-8">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Edit {singular}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Perbarui informasi {singular} di bawah ini.</p>
-      </header>
-      <CrudForm
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="Kelola Konten"
         title={`Edit ${meta.singular}`}
+        description={`Perbarui informasi ${singular} di bawah ini.`}
+      />
+      <CrudForm
         modelName={modelName as ModelName}
         baseUrl={`/dashboard/${model}`}
         fields={fields}

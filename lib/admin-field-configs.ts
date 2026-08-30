@@ -1,63 +1,63 @@
-import type { FieldConfig } from "@/lib/types"
+﻿import type { FieldConfig } from "@/lib/types"
 import { PRODI_LIST } from "@/lib/prodi"
 
 export const blueprintFields: FieldConfig[] = [
-  { name: "title", label: "Judul", type: "text", required: true },
-  { name: "category", label: "Kategori", type: "text", required: true },
-  { name: "description", label: "Deskripsi", type: "textarea", required: true },
-  { name: "details", label: "Detail", type: "textarea" },
-  { name: "image", label: "Gambar", type: "image" },
+  { name: "title", label: "Judul", type: "text", required: true, group: "Informasi Utama" },
+  { name: "category", label: "Kategori", type: "text", required: true, group: "Informasi Utama" },
+  { name: "description", label: "Deskripsi", type: "textarea", required: true, group: "Informasi Utama" },
+  { name: "details", label: "Detail", type: "textarea", group: "Detail" },
+  { name: "image", label: "Gambar", type: "image", group: "Gambar" },
 ]
 
 export const dosenFields: FieldConfig[] = [
-  { name: "name", label: "Nama Lengkap", type: "text", required: true },
-  { name: "prodi", label: "Program Studi", type: "select", options: [...PRODI_LIST], required: true },
-  { name: "position", label: "Posisi", type: "text" },
-  { name: "nuptk", label: "NUPTK", type: "text" },
-  { name: "doi", label: "URL DOI Riset", type: "text" },
-  { name: "image", label: "Foto", type: "image" },
+  { name: "name", label: "Nama Lengkap", type: "text", required: true, group: "Informasi Utama" },
+  { name: "prodi", label: "Program Studi", type: "select", options: [...PRODI_LIST], required: true, group: "Informasi Utama" },
+  { name: "position", label: "Posisi", type: "text", group: "Informasi Utama" },
+  { name: "nuptk", label: "NUPTK", type: "text", group: "Informasi Utama" },
+  { name: "doi", label: "URL DOI Riset", type: "text", group: "Informasi Utama" },
+  { name: "image", label: "Foto", type: "image", group: "Gambar" },
 ]
 
 export const ukmFields: FieldConfig[] = [
-  { name: "name", label: "Nama UKM", type: "text", required: true },
-  { name: "description", label: "Deskripsi", type: "textarea", required: true },
-  { name: "activities", label: "Kegiatan", type: "textarea" },
-  { name: "contact", label: "Kontak", type: "text" },
-  { name: "logo", label: "Logo", type: "image" },
+  { name: "name", label: "Nama UKM", type: "text", required: true, group: "Informasi Utama" },
+  { name: "description", label: "Deskripsi", type: "textarea", required: true, group: "Informasi Utama" },
+  { name: "activities", label: "Kegiatan", type: "textarea", group: "Informasi Utama" },
+  { name: "contact", label: "Kontak", type: "text", group: "Informasi Utama" },
+  { name: "logo", label: "Logo", type: "image", group: "Logo" },
 ]
 
 export const eventFields: FieldConfig[] = [
-  { name: "title", label: "Judul Acara", type: "text", required: true },
-  { name: "slug", label: "Slug URL", type: "slug" },
-  { name: "status", label: "Status", type: "select", options: ["Akan Datang", "Sedang Berlangsung", "Selesai"] },
-  { name: "date", label: "Tanggal", type: "text" },
-  { name: "dateTime", label: "Tanggal (ISO, untuk urutan)", type: "date" },
-  { name: "time", label: "Waktu", type: "text" },
-  { name: "location", label: "Lokasi", type: "text" },
-  { name: "description", label: "Deskripsi", type: "textarea", required: true },
-  { name: "details", label: "Detail", type: "textarea" },
-  { name: "image", label: "Poster", type: "image" },
+  { name: "title", label: "Judul Acara", type: "text", required: true, group: "Informasi Utama" },
+  { name: "slug", label: "Slug URL", type: "slug", group: "Informasi Utama" },
+  { name: "status", label: "Status", type: "select", options: ["Akan Datang", "Sedang Berlangsung", "Selesai"], group: "Informasi Utama" },
+  { name: "date", label: "Tanggal", type: "text", group: "Informasi Utama" },
+  { name: "dateTime", label: "Tanggal (untuk urutan)", type: "date", group: "Informasi Utama" },
+  { name: "time", label: "Waktu", type: "text", group: "Informasi Utama" },
+  { name: "location", label: "Lokasi", type: "text", group: "Informasi Utama" },
+  { name: "description", label: "Deskripsi", type: "textarea", required: true, group: "Detail" },
+  { name: "details", label: "Detail", type: "textarea", group: "Detail" },
+  { name: "image", label: "Poster", type: "image", group: "Poster" },
 ]
 
 export const newsFields: FieldConfig[] = [
-  { name: "title", label: "Judul Berita", type: "text", required: true },
-  { name: "slug", label: "Slug URL", type: "slug" },
-  { name: "date", label: "Tanggal", type: "text" },
-  { name: "excerpt", label: "Ringkasan", type: "textarea", required: true },
-  { name: "content", label: "Konten", type: "textarea", required: true },
-  { name: "image", label: "Gambar", type: "image" },
+  { name: "title", label: "Judul Berita", type: "text", required: true, group: "Informasi Utama" },
+  { name: "slug", label: "Slug URL", type: "slug", group: "Informasi Utama" },
+  { name: "date", label: "Tanggal", type: "text", group: "Informasi Utama" },
+  { name: "excerpt", label: "Ringkasan", type: "textarea", required: true, group: "Informasi Utama" },
+  { name: "content", label: "Konten", type: "textarea", required: true, group: "Detail" },
+  { name: "image", label: "Gambar", type: "image", group: "Gambar" },
 ]
 
 export const faqFields: FieldConfig[] = [
-  { name: "question", label: "Pertanyaan", type: "text", required: true },
-  { name: "answer", label: "Jawaban", type: "textarea", required: true },
+  { name: "question", label: "Pertanyaan", type: "text", required: true, group: "Informasi Utama" },
+  { name: "answer", label: "Jawaban", type: "textarea", required: true, group: "Detail" },
 ]
 
 export const strukturFields: FieldConfig[] = [
-  { name: "parentId", label: "Parent ID (kosongkan jika root)", type: "text" },
-  { name: "role", label: "Jabatan", type: "text", required: true },
-  { name: "name", label: "Nama", type: "text", required: true },
-  { name: "details", label: "Detail Tugas", type: "textarea" },
+  { name: "parentId", label: "Parent ID (kosongkan jika root)", type: "text", group: "Informasi Utama" },
+  { name: "role", label: "Jabatan", type: "text", required: true, group: "Informasi Utama" },
+  { name: "name", label: "Nama", type: "text", required: true, group: "Informasi Utama" },
+  { name: "details", label: "Detail Tugas", type: "textarea", group: "Detail" },
 ]
 
 export const messageFields: FieldConfig[] = [
@@ -92,7 +92,6 @@ export const modelLabels: Record<string, { singular: string; plural: string }> =
   message: { singular: "Pesan", plural: "Pesan Masuk" },
 }
 
-// URL segments that differ from the internal model name (e.g. /dashboard/berita -> "news")
 const MODEL_ALIASES: Record<string, string> = {
   berita: "news",
 }

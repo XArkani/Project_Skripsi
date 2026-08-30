@@ -1,165 +1,252 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useMemo, useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Search, Mail, Trash2, Phone, User, Calendar, ArrowLeft, CheckCircle2 } from "lucide-react"
+import { Inbox, Search, Trash2, MailCheck } from "lucide-react"
 import { markMessageRead, deleteRecord } from "@/lib/admin-actions"
+import DetailSheet, { type DetailField } from "@/components/dashboard/detail-sheet"
+import DeleteDialog from "@/components/dashboard/delete-dialog"
+import EmptyState from "@/components/dashboard/empty-state"
+import DataTableToolbar from "@/components/dashboard/data-table-toolbar"
+import { useRouter } from "next/navigation"
 import type { Message } from "@/lib/types"
 
-interface MessagesManagerProps {
-  initialData: Message[]
+type Row = Message & { createdAt?: Date | string }
+
+function initialsOf(name: string) {
+  return name
+    .split(/\s+/)
+    .filter((w) => /^[A-Za-z]/.test(w))
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
 }
 
-export function MessagesManager({ initialData }: MessagesManagerProps) {
-  const [data, setData] = useState<Message[]>(initialData)
+function timeAgo(value: Date | string | undefined) {
+  if (!value) return null
+  const d = value instanceof Date ? value : new Date(value)
+  if (Number.isNaN(d.getTime())) return null
+  const diff = Math.max(0, Date.now() - d.getTime())
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return "Baru saja"
+  if (mins < 60) return `${mins} menit lalu`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return `${hours} jam lalu`
+  const days = Math.floor(hours / 24)
+  return `${days} hari lalu`
+}
+
+const filterTabs = [
+  { value: "semua", label: "Semua Pesan" },
+  { value: "belum", label: "Belum Dibaca" },
+  { value: "dibaca", label: "Sudah Dibaca" },
+] as const
+
+export function MessagesManager({ initialData }: { initialData: Row[] }) {
+  const router = useRouter()
+  const [data, setData] = useState<Row[]>(initialData)
   const [search, setSearch] = useState("")
-  const [selected, setSelected] = useState<Message | null>(null)
-  const [detailOpen, setDetailOpen] = useState(false)
+  const [status, setStatus] = useState<(typeof filterTabs)[number]["value"]>("semua")
+  const [selected, setSelected] = useState<Row | null>(null)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; label: string } | null>(null)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+  const [pending, startTransition] = useTransition()
 
-  const filtered = search
-    ? data.filter((item) => {
-        const haystack = [item.senderName, item.senderEmail, item.subject, item.message].join(" ").toLowerCase()
-        return haystack.includes(search.toLowerCase())
-      })
-    : data
+  const unread = useMemo(() => data.filter((m) => !m.isRead).length, [data])
 
-  async function handleOpen(item: Message) {
+  const filtered = useMemo(() => {
+    let list = data
+    const q = search.trim().toLowerCase()
+    if (q) {
+      list = list.filter((item) =>
+        [item.senderName, item.senderEmail, item.subject, item.message].join(" ").toLowerCase().includes(q)
+      )
+    }
+    if (status === "belum") list = list.filter((m) => !m.isRead)
+    if (status === "dibaca") list = list.filter((m) => m.isRead)
+    return list
+  }, [data, search, status])
+
+  async function openMessage(item: Row) {
     setSelected(item)
-    setDetailOpen(true)
+    setSheetOpen(true)
     if (!item.isRead) {
       const result = await markMessageRead(item.id)
       if (result.success) {
-        setData((prev) => prev.map((m) => (m.id === item.id ? result.data : m)))
-        setSelected(() => result.data)
+        setData((prev) => prev.map((m) => (m.id === item.id ? { ...m, ...result.data } : m)))
+        setSelected({ ...item, ...result.data })
       }
     }
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm("Hapus pesan ini?")) return
-    await deleteRecord("message", id)
-    setData((prev) => prev.filter((item) => item.id !== id))
-    setDetailOpen(false)
-    setSelected(null)
+  function handleDelete() {
+    if (!deleteTarget) return
+    setDeleteError(null)
+    startTransition(async () => {
+      try {
+        await deleteRecord("message", deleteTarget.id)
+        setData((prev) => prev.filter((item) => item.id !== deleteTarget.id))
+        setDeleteTarget(null)
+        setSheetOpen(false)
+        setSelected(null)
+        router.refresh()
+      } catch (err) {
+        setDeleteError(err instanceof Error ? err.message : "Gagal menghapus pesan.")
+      }
+    })
   }
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Kotak Masuk Pesan</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="relative max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Cari pesan..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
-          />
-        </div>
+  const detailFields: DetailField[] = selected
+    ? [
+        { label: "Pengirim", value: selected.senderName || "—" },
+        {
+          label: "Email",
+          value: selected.senderEmail || "—",
+        },
+        { label: "Telepon", value: selected.senderPhone || "—" },
+        { label: "Tanggal", value: selected.date || "—" },
+        { label: "Perihal", value: selected.subject || "—" },
+        { label: "Isi Pesan", value: selected.message || "—", multiline: true },
+      ]
+    : []
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground text-sm">
-            {search ? "Tidak ditemukan." : "Belum ada pesan masuk."}
-          </div>
-        ) : (
-          <ul className="divide-y divide-border border border-border rounded-xl overflow-hidden">
-            {filtered.map((item) => (
+  return (
+    <div className="space-y-4">
+      <DataTableToolbar
+        searchValue={search}
+        onSearchChange={setSearch}
+        placeholder="Cari nama, email, atau isi pesan..."
+      />
+
+      <div className="flex flex-wrap items-center gap-2">
+        {filterTabs.map((tab) => {
+          const count = tab.value === "semua" ? data.length : tab.value === "belum" ? unread : data.length - unread
+          const isActive = status === tab.value
+          return (
+            <button
+              key={tab.value}
+              type="button"
+              onClick={() => setStatus(tab.value)}
+              aria-pressed={isActive}
+              className={
+                isActive
+                  ? "inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-sm font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-100"
+                  : "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted"
+              }
+            >
+              {tab.label}
+              <span className="tabular-nums text-xs text-muted-foreground">({count})</span>
+            </button>
+          )
+        })}
+      </div>
+
+      {data.length === 0 ? (
+        <EmptyState
+          icon={Inbox}
+          title="Belum ada pesan"
+          description="Pesan dari pengunjung akan muncul di sini."
+        />
+      ) : filtered.length === 0 ? (
+        <EmptyState
+          icon={Search}
+          title="Pesan tidak ditemukan"
+          description="Tidak ada pesan yang cocok dengan filter atau pencarian saat ini."
+        />
+      ) : (
+        <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border">
+          {filtered.map((item) => {
+            const isUnread = !item.isRead
+            const meta = timeAgo(item.createdAt)
+            return (
               <li key={item.id}>
                 <button
                   type="button"
-                  onClick={() => handleOpen(item)}
-                  className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-muted/40 transition-colors cursor-pointer"
+                  onClick={() => openMessage(item)}
+                  className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:bg-muted/40"
                 >
                   <span className="relative shrink-0">
-                    <span className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                      <User className="h-4 w-4 text-muted-foreground" />
+                    <span className="grid h-10 w-10 place-items-center rounded-full bg-muted text-xs font-semibold text-muted-foreground">
+                      {initialsOf(item.senderName || "?") || "?"}
                     </span>
-                    {!item.isRead && <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-background" />}
+                    {isUnread && (
+                      <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full bg-emerald-600 ring-2 ring-background" aria-hidden="true" />
+                    )}
                   </span>
-                  <span className="flex-1 min-w-0">
-                    <span className="flex items-center justify-between gap-2">
-                      <span className="text-sm font-semibold truncate">{item.senderName}</span>
-                      <span className="text-xs text-muted-foreground shrink-0">{item.date}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-baseline justify-between gap-3">
+                      <span className={`line-clamp-1 ${isUnread ? "font-semibold text-foreground" : "font-medium text-muted-foreground"}`}>
+                        {item.senderName || "(tanpa nama)"}
+                      </span>
+                      <span className="shrink-0 text-xs text-muted-foreground">{meta ?? item.date}</span>
                     </span>
-                    <span className="block text-xs text-muted-foreground truncate mt-0.5">{item.subject}</span>
+                    <span className={`mt-0.5 block line-clamp-1 text-sm ${isUnread ? "text-foreground" : "text-muted-foreground"}`}>
+                      {item.subject || item.message}
+                    </span>
+                    <span className="mt-0.5 block truncate text-xs text-muted-foreground">
+                      {[item.senderEmail, item.date].filter(Boolean).join(" · ")}
+                    </span>
                   </span>
-                  {!item.isRead && <Badge variant="secondary">Baru</Badge>}
                 </button>
               </li>
-            ))}
-          </ul>
-        )}
+            )
+          })}
+        </ul>
+      )}
 
-        <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
-          {selected && (
-            <DialogContent className="sm:max-w-lg">
-              <DialogHeader>
-                <DialogTitle>
-                  <span className="inline-flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-emerald-600" />
-                    Detail Pesan
-                  </span>
-                </DialogTitle>
-              </DialogHeader>
-              <div className="px-6 py-5 space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs font-bold text-muted-foreground uppercase mb-1">Nama Pengirim</p>
-                    <p className="text-sm font-semibold">{selected.senderName}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-muted-foreground uppercase mb-1">Email</p>
-                    <p className="text-sm">{selected.senderEmail}</p>
-                  </div>
-                  {selected.senderPhone && (
-                    <div className="flex items-center gap-1.5">
-                      <Phone className="h-3.5 w-3.5 text-muted-foreground" />
-                      <p className="text-sm">{selected.senderPhone}</p>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-                    <p className="text-sm">{selected.date}</p>
-                  </div>
-                </div>
+      <DetailSheet
+        open={sheetOpen}
+        onOpenChange={(open) => {
+          setSheetOpen(open)
+          if (!open) setSelected(null)
+        }}
+        title={selected?.subject || "Detail Pesan"}
+        subtitle={selected?.senderEmail}
+        fields={detailFields}
+        footer={
+          selected ? (
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              {!selected.isRead && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="cursor-pointer"
+                  onClick={() => openMessage(selected)}
+                >
+                  <MailCheck className="h-4 w-4" />
+                  Tandai dibaca
+                </Button>
+              )}
+              <Button
+                type="button"
+                variant="destructive"
+                className="cursor-pointer"
+                onClick={() => selected && setDeleteTarget({ id: selected.id, label: selected.subject || "pesan ini" })}
+              >
+                <Trash2 className="h-4 w-4" />
+                Hapus
+              </Button>
+            </div>
+          ) : null
+        }
+      />
 
-                <div>
-                  <p className="text-xs font-bold text-muted-foreground uppercase mb-1">Perihal</p>
-                  <p className="text-sm font-semibold">{selected.subject}</p>
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-muted-foreground uppercase mb-1">Isi Pesan</p>
-                  <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed bg-muted/40 rounded-lg p-3">{selected.message}</p>
-                </div>
-
-                {selected.isRead && (
-                  <p className="text-xs text-emerald-600 font-medium flex items-center gap-1">
-                    <CheckCircle2 className="h-3.5 w-3.5" />
-                    Sudah dibaca
-                  </p>
-                )}
-
-                <div className="flex items-center justify-between gap-2 pt-2 border-t border-border/50">
-                  <Button variant="secondary" onClick={() => setDetailOpen(false)} className="cursor-pointer">
-                    <ArrowLeft className="h-4 w-4 mr-1" />
-                    Kembali
-                  </Button>
-                  <Button variant="destructive" onClick={() => handleDelete(selected.id)} className="cursor-pointer">
-                    <Trash2 className="h-4 w-4 mr-1" />
-                    Hapus
-                  </Button>
-                </div>
-              </div>
-            </DialogContent>
-          )}
-        </Dialog>
-      </CardContent>
-    </Card>
+      <DeleteDialog
+        open={deleteTarget !== null}
+        onOpenChange={(open) => {
+          if (!open && !pending) {
+            setDeleteTarget(null)
+            setDeleteError(null)
+          }
+        }}
+        itemLabel={deleteTarget?.label}
+        scopeLabel="pesan"
+        pending={pending}
+        error={deleteError}
+        onConfirm={handleDelete}
+      />
+    </div>
   )
 }

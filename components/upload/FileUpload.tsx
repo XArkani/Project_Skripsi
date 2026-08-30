@@ -61,7 +61,7 @@ export function FileUpload() {
                 {fileName}
               </p>
               <p className="text-xs text-muted-foreground truncate" title={fileUrl}>
-                Ready for processing
+                Siap diproses
               </p>
             </div>
           </div>
@@ -73,7 +73,7 @@ export function FileUpload() {
               setFileName(null);
             }}
             className="absolute top-4 right-4 p-2 bg-muted hover:bg-destructive hover:text-white text-muted-foreground rounded-full opacity-0 transition-all duration-300 group-hover:opacity-100 transform translate-y-[-10px] group-hover:translate-y-0"
-            title="Remove file"
+            title="Hapus file"
           >
             <X className="w-4 h-4" />
           </button>
@@ -120,11 +120,11 @@ export function FileUpload() {
 
             <div className="text-center space-y-1">
               <p className="text-sm font-normal text-foreground/80">
-                {uploading ? "Uploading..." : "Click or drag document here"}
+                {uploading ? "Mengunggah..." : "Klik atau seret dokumen ke sini"}
               </p>
               {!uploading && (
                 <p className="text-[11px] text-muted-foreground/70">
-                  PDF, DOCX, TXT or CSV (max. 8MB)
+                  PDF, DOCX, TXT, atau CSV (maks. 8MB)
                 </p>
               )}
             </div>

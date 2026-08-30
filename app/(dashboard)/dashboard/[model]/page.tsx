@@ -1,47 +1,64 @@
 import { notFound } from "next/navigation"
 import { getModelList } from "@/lib/admin-data"
-import { fieldConfigMap, modelLabels, resolveModel } from "@/lib/admin-field-configs"
-import { CrudList } from "@/components/admin/CrudList"
-import { contentHues } from "@/lib/admin-hues"
+import { resolveModel } from "@/lib/admin-field-configs"
+import DataTable from "@/components/dashboard/data-table"
+import PageHeader from "@/components/dashboard/page-header"
 import type { ModelName } from "@/lib/admin-actions"
+import type { Row } from "@/lib/admin-table-types"
 
-const modelHue: Record<string, keyof typeof contentHues> = {
-  blueprint: "blueprint",
-  dosen: "dosen",
-  ukm: "ukm",
-  event: "event",
-  news: "berita",
-  faq: "faq",
-  struktur: "struktur",
-  message: "pesan",
+const modelPageCopy: Record<string, { eyebrow: string; title: string; description: string }> = {
+  blueprint: {
+    eyebrow: "Kelola Konten",
+    title: "Blueprint & Sarana",
+    description: "Kelola ruangan dan fasilitas pendukung fakultas.",
+  },
+  dosen: {
+    eyebrow: "Kelola Konten",
+    title: "Dosen",
+    description: "Kelola data dan profil tenaga pendidik.",
+  },
+  ukm: {
+    eyebrow: "Kelola Konten",
+    title: "Unit Kegiatan Mahasiswa",
+    description: "Kelola organisasi dan kegiatan mahasiswa.",
+  },
+  event: {
+    eyebrow: "Kelola Konten",
+    title: "Agenda & Event",
+    description: "Kelola acara, seminar, dan workshop.",
+  },
+  news: {
+    eyebrow: "Kelola Konten",
+    title: "Berita",
+    description: "Kelola publikasi dan berita fakultas.",
+  },
+  faq: {
+    eyebrow: "Kelola Konten",
+    title: "FAQ",
+    description: "Kelola pertanyaan yang sering diajukan.",
+  },
+  struktur: {
+    eyebrow: "Kelola Konten",
+    title: "Struktur Organisasi",
+    description: "Kelola nama dan jabatan organisasi fakultas.",
+  },
 }
 
 export default async function ModelListPage({ params }: { params: Promise<{ model: string }> }) {
   const { model } = await params
   const modelName = resolveModel(model)
-  if (!modelName) return notFound()
+  if (!modelName || modelName === "message") return notFound()
 
-  const fields = fieldConfigMap[modelName]
-  const meta = modelLabels[modelName]
   const data = await getModelList(modelName as ModelName)
-  const hue = contentHues[modelHue[modelName] ?? "dashboard"]
+  const copy = modelPageCopy[modelName]
 
   return (
-    <div className="w-full">
-      <header className="mb-8">
-        <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          <span className={`h-1.5 w-1.5 rounded-full ${hue.chip.split(" ")[0]}`} aria-hidden="true" />
-          Kelola Konten
-        </p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">{meta.plural}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Kelola dan perbarui data {meta.singular.toLowerCase()}.</p>
-      </header>
-      <CrudList
-        title={meta.plural}
+    <div className="space-y-6">
+      <PageHeader {...copy} />
+      <DataTable
         modelName={modelName as ModelName}
+        rows={data as Row[]}
         baseUrl={`/dashboard/${model}`}
-        fields={fields}
-        initialData={data}
       />
     </div>
   )
