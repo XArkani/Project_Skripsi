@@ -6,7 +6,6 @@ import { notFound } from "next/navigation"
 import { getEventBySlug, getEvents } from "@/lib/faculty"
 import { Calendar, Clock, MapPin, ArrowLeft, CheckCircle2 } from "lucide-react"
 import { statusConfig } from "@/lib/status"
-import Breadcrumbs from "@/components/shared/Breadcrumbs"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 export async function generateStaticParams() {
@@ -48,8 +47,6 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-24">
-      <Breadcrumbs items={[{ label: "Beranda", href: "/" }, { label: "Agenda & Event", href: "/event" }, { label: evt.title }]} />
-
       <Link
         href="/event"
         className="inline-flex items-center gap-1.5 min-h-11 text-sm font-bold text-slate-500 hover:text-emerald-700 mb-6 transition-colors"

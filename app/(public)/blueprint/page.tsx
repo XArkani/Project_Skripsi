@@ -2,7 +2,6 @@ import { Suspense } from "react"
 import { cacheTag } from "next/cache"
 import { getBlueprints } from "@/lib/faculty"
 import EmptyState from "@/components/shared/EmptyState"
-import Breadcrumbs from "@/components/shared/Breadcrumbs"
 import BlueprintList from "@/components/sections/BlueprintList"
 
 export default async function BlueprintPage() {
@@ -13,8 +12,6 @@ export default async function BlueprintPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-24">
-      <Breadcrumbs items={[{ label: "Beranda", href: "/" }, { label: "Blueprint Fakultas" }]} />
-
       <div className="pb-8 mb-6">
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
           Infrastruktur Kampus
