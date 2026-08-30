@@ -1,52 +1,83 @@
-"use client"
-
-import { ArrowRight } from "lucide-react"
-import Link from "next/link"
-import { motion } from "framer-motion"
+import Image from "next/image"
 import type { Dosen } from "@/lib/types"
-import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
-import Reveal, { Stagger, fadeUpItem } from "@/components/shared/Reveal"
+import Container from "@/components/ui/container"
+import SectionHeading from "@/components/ui/section-heading"
+import ScrollReveal from "@/components/shared/ScrollReveal"
 
-interface DosenHighlightProps {
-  items: Dosen[]
+function initialsOf(name: string) {
+  return name
+    .split(/\s+/)
+    .filter((w) => /^[A-Za-z]/.test(w))
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
 }
 
-export default function DosenHighlight({ items }: DosenHighlightProps) {
-  const visibleItems = items.slice(0, 8)
+function isStockImage(src: string | null) {
+  if (!src) return true
+  try {
+    return new URL(src).hostname.includes("unsplash")
+  } catch {
+    return true
+  }
+}
+
+function DosenAvatar({ dosen }: { dosen: Dosen }) {
+  const hasImage = dosen.image && !isStockImage(dosen.image)
+  if (hasImage) {
+    return (
+      <Image src={dosen.image!} alt={`Foto ${dosen.name}`} fill sizes="96px" className="object-cover" loading="lazy" />
+    )
+  }
+  return (
+    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#008f5a] to-[#00231d] text-lg font-bold tracking-wide text-white">
+      {initialsOf(dosen.name) || "FT"}
+    </div>
+  )
+}
+
+export default function DosenHighlight({ items }: { items: Dosen[] }) {
+  const visible = items.slice(0, 4)
 
   return (
-    <section className="py-12 sm:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal className="flex flex-wrap items-end justify-between gap-4 mb-6">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">Tenaga Pendidik</h2>
-            <p className="text-slate-500 text-sm">Dosen ahli dengan riset nasional dan komitmen pengajaran tinggi.</p>
-          </div>
-          <Link href="/dosen" className="inline-flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors mb-1">
-            <span>Lihat Seluruh Dosen</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </Reveal>
+    <section className="bg-[#f7f9fa] py-16 sm:py-24">
+      <Container>
+        <ScrollReveal>
+          <SectionHeading
+            title="Tenaga Pendidik"
+            description="Dosen yang mendampingi mahasiswa dalam perkuliahan dan riset."
+            action={{ label: "Lihat Seluruh Dosen", href: "/dosen" }}
+          />
+        </ScrollReveal>
 
-        <Stagger className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-          {visibleItems.map((dosen) => (
-            <motion.div
-              key={dosen.id}
-              variants={fadeUpItem}
-              className="text-center p-4 sm:p-5 rounded-xl border border-slate-200 bg-white hover:border-emerald-200 hover:shadow-md transition-all"
+        <ScrollReveal delay={120}>
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+          {visible.map((d) => (
+            <div
+              key={d.id}
+              className="flex items-center gap-5 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)]"
             >
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden mx-auto ring-2 ring-white shadow-sm bg-slate-100">
-                <ImagePlaceholder label="Foto" className="w-full h-full" />
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl ring-1 ring-slate-200 sm:h-24 sm:w-24">
+                <DosenAvatar dosen={d} />
               </div>
-              <h3 className="font-bold text-slate-900 text-sm mt-3">{dosen.name}</h3>
-              <p className="text-emerald-700 text-xs font-bold mt-0.5">{dosen.prodi}</p>
-              {dosen.position && (
-                <p className="text-slate-400 text-xs mt-0.5">{dosen.position}</p>
-              )}
-            </motion.div>
+              <div className="min-w-0">
+                <h3 className="line-clamp-1 text-base font-semibold text-slate-950">{d.name}</h3>
+                <p className="mt-1 inline-flex rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                  {d.prodi}
+                </p>
+                {d.position && (
+                  <p className="mt-1.5 line-clamp-1 text-sm text-slate-500">{d.position}</p>
+                )}
+                {d.expertise && (
+                  <p className="mt-0.5 line-clamp-1 text-xs text-slate-400">{d.expertise}</p>
+                )}
+              </div>
+            </div>
           ))}
-        </Stagger>
-      </div>
+        </div>
+        </ScrollReveal>
+      </Container>
     </section>
   )
 }

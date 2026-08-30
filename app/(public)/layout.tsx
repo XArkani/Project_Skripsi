@@ -5,7 +5,7 @@ import PageTransition from "@/components/shared/PageTransition"
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 text-slate-800 font-sans selection:bg-emerald-200">
+    <div className="flex min-h-screen flex-col bg-white text-slate-800 font-sans">
       <Header />
       <main className="flex-grow">
         <PageTransition>{children}</PageTransition>

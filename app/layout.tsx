@@ -46,6 +46,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div
+          hidden
+          data-design-contract="FT_HOMEPAGE_REDESIGN"
+          data-seed-key="ASSIGNED_DIRECTION_FT_HOMEPAGE"
+        >
+          THESIS: institutional faculty homepage, not a SaaS dashboard; refuses card-grid-of-everything.
+          OWN-WORLD: green-black engineering palette, Inter single face, 8px grid, hairline borders,
+          blueprint-grid gradient fields in place of photography. STORY: who the faculty is, its
+          scale, facilities, people, student life; then browse or contact. FIRST VIEWPORT: solid 72px white
+          nav over a full-bleed green-black gradient hero shifted below it; centered headline,
+          description and two CTAs under a guaranteed sky gap; quick-access strip below. FORM:
+          editorial 13-section homepage, alternating bands, light reveal + count-up motion.
+          FINISH: reviewed and documented with DESIGN.md before the run is called complete.
+        </div>
         {children}
         <RegisterSW />
         <InstallPrompt />

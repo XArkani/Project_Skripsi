@@ -1,52 +1,88 @@
 "use client"
 
-import { HelpCircle } from "lucide-react"
+import { useState } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { Plus } from "lucide-react"
 import type { FAQ } from "@/lib/types"
-import Reveal, { Stagger, fadeUpItem } from "@/components/shared/Reveal"
+import { cn } from "@/lib/utils"
+import Container from "@/components/ui/container"
+import ScrollReveal from "@/components/shared/ScrollReveal"
 
-interface FaqPreviewProps {
-  items: FAQ[]
-}
-
-export default function FaqPreview({ items }: FaqPreviewProps) {
-  const visibleItems = items.slice(0, 4)
+export default function FaqPreview({ items }: { items: FAQ[] }) {
+  const [openId, setOpenId] = useState<string | null>(null)
+  const visible = items.slice(0, 5)
 
   return (
-    <section className="py-12 sm:py-16 bg-slate-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <Reveal>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 text-center mb-6">
-            Pertanyaan yang Sering Diajukan
-          </h2>
-        </Reveal>
+    <section className="bg-[#f7f9fa] py-16 sm:py-24">
+      <Container>
+        <ScrollReveal className="mx-auto max-w-3xl">
+          <div className="text-center">
+            <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-slate-950">
+              Pertanyaan yang Sering Diajukan
+            </h2>
+            <p className="mt-3 text-base text-slate-600">
+              Jawaban singkat untuk pertanyaan yang paling sering kami terima.
+            </p>
+          </div>
 
-        <Stagger className="space-y-3">
-          {visibleItems.map((faq) => (
-            <motion.div
-              key={faq.id}
-              variants={fadeUpItem}
-              className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200/80"
+          <div className="mt-10 divide-y divide-slate-200 border-y border-slate-200">
+            {visible.map((faq) => {
+              const isOpen = openId === faq.id
+              return (
+                <div key={faq.id}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenId(isOpen ? null : faq.id)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-panel-${faq.id}`}
+                    className="group flex w-full items-center justify-between gap-6 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  >
+                    <span className="text-sm font-semibold leading-snug text-slate-900 transition-colors group-hover:text-emerald-800 sm:text-base">
+                      {faq.question}
+                    </span>
+                    <span
+                      className={cn(
+                        "grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-200",
+                        isOpen
+                          ? "border-emerald-700 bg-emerald-700 text-white"
+                          : "border-slate-300 text-slate-500 group-hover:border-emerald-700 group-hover:text-emerald-700"
+                      )}
+                    >
+                      <Plus
+                        className={cn("h-4 w-4 transition-transform duration-300", isOpen && "rotate-45")}
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </button>
+                  <div
+                    id={`faq-panel-${faq.id}`}
+                    role="region"
+                    className={cn(
+                      "grid transition-[grid-template-rows] duration-300 ease-out",
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    )}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="pr-6 pb-6 pl-0 leading-relaxed text-slate-600 sm:mr-12 sm:ml-0">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="/faq"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             >
-              <h4 className="font-bold text-slate-800 text-sm sm:text-base flex items-start gap-2">
-                <HelpCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                <span>{faq.question}</span>
-              </h4>
-              <p className="text-slate-600 text-sm mt-2 pl-6 leading-relaxed">{faq.answer}</p>
-            </motion.div>
-          ))}
-        </Stagger>
-
-        <Reveal delay={0.15} className="text-center mt-6">
-          <Link
-            href="/faq"
-            className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-5 py-2 rounded-lg transition-colors"
-          >
-            Lihat FAQ Selengkapnya
-          </Link>
-        </Reveal>
-      </div>
+              Lihat FAQ Selengkapnya
+            </Link>
+          </div>
+        </ScrollReveal>
+      </Container>
     </section>
   )
 }

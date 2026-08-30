@@ -1,104 +1,50 @@
-"use client"
-
-import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion"
-import { useRef } from "react"
-import { EASE_PREMIUM } from "@/components/shared/Reveal"
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 28, filter: "blur(6px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.65, ease: EASE_PREMIUM },
-  },
-}
+import { ArrowRight } from "lucide-react"
 
 export default function HeroSection() {
-  const ref = useRef<HTMLElement>(null)
-  const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] })
-
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 90])
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reduceMotion ? 1 : 0.35])
-  const circleY1 = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -120])
-  const circleY2 = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 140])
-
   return (
-    <section
-      ref={ref}
-      className="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-950 text-white min-h-[65vh] sm:min-h-[75vh] lg:min-h-[85vh] flex items-center mt-16 sm:mt-20 lg:mt-24 pt-16 pb-12 sm:pt-20 sm:pb-20"
-    >
-      <div className="absolute inset-0 overflow-hidden select-none pointer-events-none" aria-hidden="true">
-        <motion.div
-          style={{ y: circleY1 }}
-          className="absolute -top-24 -left-16 w-72 h-72 rounded-full border-[32px] border-emerald-800/20 opacity-50"
-        />
-        <motion.div
-          style={{ y: circleY2 }}
-          className="absolute bottom-4 right-0 w-56 h-56 rounded-full border-[24px] border-emerald-700/15 opacity-40 translate-x-1/4 translate-y-1/4"
-        />
-      </div>
+    <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-gradient-to-br from-[#00624a] via-[#003c32] to-[#00120c] pb-16 pt-[72px] text-center sm:pb-20 lg:pb-24">
+      <div className="bg-blueprint-grid absolute inset-0 opacity-40" aria-hidden="true" />
+      <div
+        className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-emerald-500/25 blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute -bottom-28 -left-24 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl"
+        aria-hidden="true"
+      />
 
-      <motion.div
-        style={{ y: contentY, opacity: contentOpacity }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full"
-      >
-        <motion.div
-          variants={containerVariants}
-          initial={reduceMotion ? "visible" : "hidden"}
-          animate="visible"
-          className="max-w-2xl mx-auto text-center"
+      <div className="relative mx-auto w-full max-w-4xl px-4 sm:px-6">
+        <div aria-hidden="true" className="h-[96px] sm:h-[112px] lg:h-[128px]" />
+        <h1 className="animate-hero-rise text-[clamp(2.5rem,6vw,4.25rem)] font-bold leading-[1.07] tracking-[-0.03em] text-white [animation-delay:0.05s]">
+          Membangun Masa Depan <span className="text-emerald-300">Teknologi Berintegritas</span>
+        </h1>
+
+        <p
+          className="animate-hero-rise mx-auto mt-6 max-w-2xl text-base leading-relaxed text-emerald-100/85 sm:text-lg [animation-delay:0.15s]"
         >
-          <motion.div
-            variants={itemVariants}
-            className="inline-flex items-center gap-2 bg-emerald-800/50 border border-emerald-500/25 px-3 py-1 rounded-full text-white/90 text-xs font-semibold uppercase tracking-wider mb-5"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            <span>Maju Berinovasi, Kokoh Berkualitas</span>
-          </motion.div>
+          Fakultas Teknik Universitas Hamzanwadi mencetak lulusan yang adaptif, inovatif, dan
+          berakhlak mulia untuk era digital global.
+        </p>
 
-          <motion.h1
-            variants={itemVariants}
-            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] text-white mb-4"
+        <div
+          className="animate-hero-rise mt-9 flex flex-wrap items-center justify-center gap-3 [animation-delay:0.25s]"
+        >
+          <Link
+            href="/blueprint"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-emerald-700 px-7 text-sm font-semibold text-white shadow-[0_1px_2px_rgba(0,20,12,0.4)] transition-colors duration-200 hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
           >
-            Membangun Masa Depan<br />
-            <span className="text-emerald-300">Teknologi Berintegritas</span>
-          </motion.h1>
-
-          <motion.p
-            variants={itemVariants}
-            className="text-slate-200 text-sm sm:text-base max-w-lg mx-auto leading-relaxed mb-6"
+            Lihat Blueprint
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+          <Link
+            href="/dosen"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/5 px-7 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white/10 hover:border-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
           >
-            Selamat datang di Fakultas Teknik Universitas Hamzanwadi — mencetak lulusan adaptif, inovatif, dan
-            berakhlak mulia untuk era digital global.
-          </motion.p>
-
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-2 justify-center">
-            <Link
-              href="/blueprint"
-              className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
-            >
-              <span>Lihat Blueprint</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-            <Link
-              href="/dosen"
-              className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/15 border border-white/15 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
-            >
-              <span>Data Dosen</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+            Data Dosen
+          </Link>
+        </div>
+      </div>
     </section>
   )
 }

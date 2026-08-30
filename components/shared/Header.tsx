@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useSyncExternalStore } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { createPortal } from "react-dom"
@@ -12,319 +12,334 @@ import {
   ChevronDown,
   Home,
   Compass,
-  MessageCircle,
   GraduationCap,
-  Calendar,
+  UsersRound,
   Newspaper,
+  CalendarDays,
   Landmark,
   Lightbulb,
-  Zap,
+  MessageCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const navLinks = [
-  { href: "/", label: "Beranda" },
-  { href: "/blueprint", label: "Blueprint Fakultas" },
+type NavItem =
+  | { type: "link"; href: string; label: string }
+  | {
+      type: "dropdown"
+      id: "berita" | "informasi"
+      label: string
+      children: { href: string; label: string }[]
+    }
+
+const navItems: NavItem[] = [
+  { type: "link", href: "/", label: "Beranda" },
+  { type: "link", href: "/blueprint", label: "Blueprint Fakultas" },
+  { type: "link", href: "/dosen", label: "Dosen" },
+  { type: "link", href: "/ukm", label: "Kemahasiswaan" },
+  {
+    type: "dropdown",
+    id: "berita",
+    label: "Berita & Event",
+    children: [
+      { href: "/berita", label: "Berita & Publikasi" },
+      { href: "/event", label: "Agenda & Event" },
+    ],
+  },
+  {
+    type: "dropdown",
+    id: "informasi",
+    label: "Informasi",
+    children: [
+      { href: "/struktur", label: "Struktur Organisasi" },
+      { href: "/faq", label: "Tanya Jawab (FAQ)" },
+    ],
+  },
 ]
 
-const dropdownItems = [
-  { href: "/ukm", label: "Unit Kegiatan Mahasiswa (UKM)", icon: Zap },
-  { href: "/dosen", label: "Data Dosen & Riset", icon: GraduationCap },
-  { href: "/event", label: "Agenda & Event", icon: Calendar },
-  { href: "/berita", label: "Berita & Berkas", icon: Newspaper },
-  { href: "/struktur", label: "Struktur Organisasi", icon: Landmark },
-  { href: "/faq", label: "Tanya Jawab (FAQ)", icon: Lightbulb },
+const mobileLinks: { label: string; href: string; icon: typeof Home }[] = [
+  { label: "Beranda", href: "/", icon: Home },
+  { label: "Blueprint Fakultas", href: "/blueprint", icon: Compass },
+  { label: "Dosen", href: "/dosen", icon: GraduationCap },
+  { label: "Kemahasiswaan", href: "/ukm", icon: UsersRound },
+  { label: "Berita & Publikasi", href: "/berita", icon: Newspaper },
+  { label: "Agenda & Event", href: "/event", icon: CalendarDays },
+  { label: "Struktur Organisasi", href: "/struktur", icon: Landmark },
+  { label: "Tanya Jawab (FAQ)", href: "/faq", icon: Lightbulb },
 ]
 
-const mobileLinks = [
-  { href: "/", label: "Beranda", icon: Home },
-  { href: "/blueprint", label: "Blueprint Fakultas", icon: Compass },
-  { href: "/ukm", label: "Unit Kegiatan Mahasiswa (UKM)", icon: Zap },
-  { href: "/dosen", label: "Data Dosen", icon: GraduationCap },
-  { href: "/event", label: "Event & Agenda", icon: Calendar },
-  { href: "/berita", label: "Kumpulan Berita", icon: Newspaper },
-  { href: "/struktur", label: "Struktur Organisasi", icon: Landmark },
-  { href: "/faq", label: "Tanya Jawab (FAQ)", icon: Lightbulb },
-]
-
-const infoPaths = ["/ukm", "/dosen", "/event", "/berita", "/struktur", "/faq"]
+function isItemActive(pathname: string, item: NavItem) {
+  if (item.type === "link") {
+    return item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+  }
+  return item.children.some((c) => pathname.startsWith(c.href))
+}
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
-  const [isNavDropdownOpen, setIsNavDropdownOpen] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<null | "berita" | "informasi">(null)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  )
   const pathname = usePathname()
-  const headerRef = useRef<HTMLElement>(null)
-
-  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40)
-    handleScroll()
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
+    if (isMobileOpen) {
       const prev = document.body.style.overflow
       document.body.style.overflow = "hidden"
       return () => {
         document.body.style.overflow = prev
       }
     }
-  }, [isMobileMenuOpen])
+  }, [isMobileOpen])
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
-        setIsNavDropdownOpen(false)
-        setIsMobileMenuOpen(false)
-      }
-    }
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setIsNavDropdownOpen(false)
-        setIsMobileMenuOpen(false)
+        setOpenDropdown(null)
+        setIsMobileOpen(false)
       }
     }
-    document.addEventListener("click", handleClickOutside)
-    document.addEventListener("keydown", handleKeyDown)
-    return () => {
-      document.removeEventListener("click", handleClickOutside)
-      document.removeEventListener("keydown", handleKeyDown)
-    }
+    document.addEventListener("keydown", onKey)
+    return () => document.removeEventListener("keydown", onKey)
   }, [])
 
-  const isInfoActive = infoPaths.some((p) => pathname.startsWith(p))
-  const isSolid = scrolled || pathname !== "/"
+  useEffect(() => {
+    // Menutup menu saat navigasi berpindah halaman (sync dengan perubahan eksternal route).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOpenDropdown(null)
+    setIsMobileOpen(false)
+  }, [pathname])
+
+  const linkNeutral = "text-slate-700 hover:bg-slate-100 hover:text-emerald-700"
+  const linkActive = "font-semibold text-emerald-700"
 
   return (
     <>
-      <header
-        ref={headerRef}
-        className={cn(
-          "fixed top-0 inset-x-0 z-40 border-b transition-[background-color,backdrop-filter,box-shadow,padding,border-color] duration-300 ease-out",
-          isSolid
-            ? "bg-white/95 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] border-slate-100 py-3"
-            : "bg-transparent backdrop-blur-none shadow-none border-transparent py-4 sm:py-5"
-        )}
-      >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-3">
-            <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0 shrink">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 relative shrink-0">
-                <Image
-                  src="/LOGO FAKULTAS TEKNIK.webp"
-                  alt="Logo Fakultas Teknik"
-                  fill
-                  sizes="40px"
-                  priority
-                  className="rounded-xl object-contain bg-transparent group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="min-w-0">
-                <span className="block font-bold tracking-wider text-[13px] sm:text-base leading-none text-emerald-800">
-                  FAKULTAS TEKNIK
-                </span>
-                <span className="block text-[10px] sm:text-[12px] font-medium uppercase tracking-widest mt-0.5 text-slate-500">
-                  Universitas Hamzanwadi
-                </span>
-              </div>
-            </Link>
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-200 bg-white">
+        <div className="mx-auto flex h-[72px] w-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <Link href="/" className="group flex min-w-0 items-center gap-3" aria-label="Beranda Fakultas Teknik">
+            <span className="relative h-11 w-11 shrink-0">
+              <Image
+                src="/LOGO FAKULTAS TEKNIK.webp"
+                alt="Logo Fakultas Teknik"
+                fill
+                sizes="44px"
+                priority
+                className="object-contain transition-transform duration-200 group-hover:scale-[1.04]"
+              />
+            </span>
+            <span className="min-w-0">
+              <span
+                className="block truncate text-sm font-bold uppercase leading-none tracking-wider text-emerald-800"
+              >
+                Fakultas Teknik
+              </span>
+              <span
+                className="mt-1 block truncate text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500"
+              >
+                Universitas Hamzanwadi
+              </span>
+            </span>
+          </Link>
 
-            <nav className="hidden lg:flex items-center gap-1 shrink-0">
-              {navLinks.map((link) => (
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
+            {navItems.map((item) =>
+              item.type === "link" ? (
                 <Link
-                  key={link.href}
-                  href={link.href}
+                  key={item.href}
+                  href={item.href}
+                  aria-current={pathname === item.href ? "page" : undefined}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-sm font-semibold transition-colors",
-                    pathname === link.href
-                      ? "text-emerald-700 bg-emerald-50"
-                      : "text-slate-600 hover:text-emerald-600 hover:bg-slate-100"
+                    "rounded-lg px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                    isItemActive(pathname, item) ? linkActive : linkNeutral
                   )}
                 >
-                  {link.label}
+                  {item.label}
                 </Link>
-              ))}
-              <div className="relative" onMouseEnter={() => setIsNavDropdownOpen(true)} onMouseLeave={() => setIsNavDropdownOpen(false)}>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setIsNavDropdownOpen((v) => !v)
-                  }}
-                  aria-expanded={isNavDropdownOpen}
-                  aria-controls="desktop-informasi-menu"
-                  className={cn(
-                    "px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-1.5 transition-colors",
-                    isInfoActive
-                      ? "text-emerald-700 bg-emerald-50"
-                      : "text-slate-600 hover:text-emerald-600 hover:bg-slate-100"
-                  )}
+              ) : (
+                <div
+                  key={item.id}
+                  className="relative"
+                  onMouseEnter={() => setOpenDropdown(item.id)}
+                  onMouseLeave={() => setOpenDropdown((prev) => (prev === item.id ? null : prev))}
                 >
-                  <span>Informasi</span>
-                  <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", isNavDropdownOpen && "rotate-180")} />
-                </button>
-                <AnimatePresence>
-                  {isNavDropdownOpen && (
-                    <motion.div
-                      id="desktop-informasi-menu"
-                      className="absolute left-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 overflow-hidden"
-                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                      transition={{ type: "spring", stiffness: 340, damping: 28, mass: 0.8 }}
-                    >
-                      {dropdownItems.map((item) => {
-                        const Icon = item.icon
-                        return (
+                  <button
+                    type="button"
+                    onClick={() => setOpenDropdown((prev) => (prev === item.id ? null : item.id))}
+                    aria-expanded={openDropdown === item.id}
+                    aria-controls={`dropdown-${item.id}`}
+                    className={cn(
+                      "flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                      isItemActive(pathname, item) ? linkActive : linkNeutral
+                    )}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={cn(
+                        "h-3.5 w-3.5 transition-transform duration-200",
+                        openDropdown === item.id && "rotate-180"
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {openDropdown === item.id && (
+                      <motion.div
+                        id={`dropdown-${item.id}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.18, ease: "easeOut" }}
+                        className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_8px_24px_rgba(2,6,23,0.08)]"
+                      >
+                        {item.children.map((c) => (
                           <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => setIsNavDropdownOpen(false)}
+                            key={c.href}
+                            href={c.href}
+                            onClick={() => setOpenDropdown(null)}
                             className={cn(
-                              "w-full flex items-center gap-3 px-5 py-2.5 text-sm font-medium transition-colors",
-                              pathname.startsWith(item.href)
-                                ? "text-emerald-700 bg-emerald-50"
-                                : "text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/70"
+                              "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                              pathname.startsWith(c.href)
+                                ? "text-emerald-700"
+                                : "text-slate-700 hover:bg-slate-50 hover:text-emerald-700"
                             )}
                           >
-                            <Icon className="w-4 h-4 shrink-0" />
-                            <span>{item.label}</span>
+                            {c.label}
                           </Link>
-                        )
-                      })}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </nav>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )
+            )}
+          </nav>
 
-            <div className="hidden lg:flex items-center gap-3 shrink-0">
-              <Link
-                href="/hubungi"
-                className="bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white px-6 py-2.5 min-h-11 rounded-xl text-sm font-bold shadow-sm hover:shadow-md transition-all inline-flex items-center justify-center"
-              >
-                Hubungi Kami
-              </Link>
-            </div>
-
-            <div className="lg:hidden flex items-center shrink-0">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsMobileMenuOpen((v) => !v)
-                }}
-                className={cn(
-                  "inline-flex items-center justify-center w-11 h-11 rounded-xl border transition-colors duration-200 active:scale-95",
-                  isMobileMenuOpen
-                    ? "bg-emerald-600 text-white border-emerald-600 shadow-md"
-                    : isSolid
-                      ? "bg-emerald-50 text-emerald-800 border-emerald-100 hover:bg-emerald-100"
-                      : "bg-white/90 backdrop-blur-md text-emerald-800 border-white/60 shadow-sm hover:bg-white"
-                )}
-                aria-label={isMobileMenuOpen ? "Tutup menu" : "Buka menu"}
-                aria-expanded={isMobileMenuOpen}
-                aria-controls="mobile-nav-panel"
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={isMobileMenuOpen ? "close" : "open"}
-                    initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 22, mass: 0.7 }}
-                    className="inline-flex"
-                  >
-                    {isMobileMenuOpen ? <X className="w-5 h-5" strokeWidth={2.5} /> : <Menu className="w-5 h-5" strokeWidth={2.5} />}
-                  </motion.span>
-                </AnimatePresence>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              id="mobile-nav-panel"
-              role="dialog"
-              aria-modal="true"
-              className="lg:hidden absolute top-full inset-x-3 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden origin-top"
-              initial={{ opacity: 0, y: -12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -12, scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 320, damping: 30, mass: 0.9 }}
+          <div className="hidden shrink-0 items-center lg:flex">
+            <Link
+              href="/hubungi"
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             >
-              <div className="px-5 sm:px-6 pt-5 pb-2 flex items-center justify-between">
-                <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400">Menu Navigasi</span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Fakultas Teknik</span>
-              </div>
-              <nav className="px-3 pb-2 max-h-[calc(100dvh-180px)] sm:max-h-[calc(100vh-190px)] overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
-                {mobileLinks.map((link, i) => {
-                  const Icon = link.icon
-                  const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
-                  return (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, x: -8 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.04 * i, type: "spring", stiffness: 300, damping: 24 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={cn(
-                          "flex items-center gap-3 w-full py-3 px-3 sm:px-4 rounded-xl text-[13px] sm:text-sm font-semibold transition-colors",
-                          isActive ? "bg-emerald-50 text-emerald-800" : "text-slate-600 active:bg-slate-50 hover:bg-slate-50 hover:text-emerald-700"
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            "w-9 h-9 shrink-0 rounded-xl flex items-center justify-center transition-colors",
-                            isActive ? "bg-emerald-600 text-white shadow-sm" : "bg-slate-100 text-slate-500"
-                          )}
-                        >
-                          <Icon className="w-4 h-4" />
-                        </span>
-                        <span className="truncate">{link.label}</span>
-                      </Link>
-                    </motion.div>
-                  )
-                })}
-              </nav>
-              <div className="border-t border-slate-100 p-3 sm:p-4 bg-slate-50/50">
-                <Link
-                  href="/hubungi"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm shadow-md active:scale-[0.98] transition-all"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Hubungi Kami
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              Hubungi Kami
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsMobileOpen(true)}
+            aria-label="Buka menu navigasi"
+            aria-expanded={isMobileOpen}
+            aria-controls="mobile-nav-panel"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition-colors hover:text-emerald-700 lg:hidden"
+          >
+            <Menu className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
       </header>
 
       {mounted &&
         createPortal(
           <AnimatePresence>
-            {isMobileMenuOpen && (
+            {isMobileOpen && (
               <motion.div
-                className="fixed inset-0 bg-slate-950/40 backdrop-blur-[2px] z-30 lg:hidden"
+                key="mobile-backdrop"
+                className="fixed inset-0 z-40 bg-slate-950/40 lg:hidden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.22, ease: "easeOut" }}
-                onClick={() => setIsMobileMenuOpen(false)}
+                transition={{ duration: 0.2 }}
+                onClick={() => setIsMobileOpen(false)}
                 aria-hidden="true"
               />
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
+
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {isMobileOpen && (
+              <motion.aside
+                key="mobile-nav-panel"
+                id="mobile-nav-panel"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Menu navigasi"
+                className="fixed inset-y-0 right-0 z-50 flex w-[min(20rem,86vw)] flex-col bg-white shadow-2xl lg:hidden"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", stiffness: 340, damping: 34 }}
+              >
+                <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+                  <div className="flex items-center gap-2.5">
+                    <span className="relative h-10 w-10">
+                      <Image
+                        src="/LOGO FAKULTAS TEKNIK.webp"
+                        alt="Logo Fakultas Teknik"
+                        fill
+                        sizes="40px"
+                        className="object-contain"
+                      />
+                    </span>
+                    <span>
+                      <span className="block text-sm font-bold uppercase leading-none tracking-wider text-emerald-800">
+                        Fakultas Teknik
+                      </span>
+                      <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                        Universitas Hamzanwadi
+                      </span>
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileOpen(false)}
+                    aria-label="Tutup menu navigasi"
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-slate-600 transition-colors hover:bg-slate-100 hover:text-emerald-700"
+                  >
+                    <X className="h-5 w-5" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <nav className="flex-1 overflow-y-auto overscroll-contain px-3 py-4" aria-label="Menu mobile">
+                  {mobileLinks.map((item) => {
+                    const Icon = item.icon
+                    const isActive =
+                      item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setIsMobileOpen(false)}
+                        aria-current={isActive ? "page" : undefined}
+                        className={cn(
+                          "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors",
+                          isActive
+                            ? "bg-emerald-50 font-semibold text-emerald-800"
+                            : "text-slate-700 hover:bg-slate-50 hover:text-emerald-700"
+                        )}
+                      >
+                        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                        {item.label}
+                      </Link>
+                    )
+                  })}
+                </nav>
+
+                <div className="border-t border-slate-200 p-4">
+                  <Link
+                    href="/hubungi"
+                    onClick={() => setIsMobileOpen(false)}
+                    className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 text-sm font-semibold text-white transition-colors hover:bg-emerald-800"
+                  >
+                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                    Hubungi Kami
+                  </Link>
+                </div>
+              </motion.aside>
             )}
           </AnimatePresence>,
           document.body
