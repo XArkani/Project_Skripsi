@@ -41,7 +41,7 @@ export default function DosenHighlight({ items }: { items: Dosen[] }) {
   const visible = items.slice(0, 4)
 
   return (
-    <section className="bg-[#f7f9fa] py-16 sm:py-24">
+    <section className="bg-muted py-16 sm:py-24">
       <Container>
         <ScrollReveal>
           <SectionHeading
@@ -56,21 +56,21 @@ export default function DosenHighlight({ items }: { items: Dosen[] }) {
           {visible.map((d) => (
             <div
               key={d.id}
-              className="flex items-center gap-5 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)]"
+              className="flex items-center gap-5 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)]"
             >
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl ring-1 ring-slate-200 sm:h-24 sm:w-24">
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl ring-1 ring-border sm:h-24 sm:w-24">
                 <DosenAvatar dosen={d} />
               </div>
               <div className="min-w-0">
-                <h3 className="line-clamp-1 text-base font-semibold text-slate-950">{d.name}</h3>
+                <h3 className="line-clamp-1 text-base font-semibold text-foreground">{d.name}</h3>
                 <p className="mt-1 inline-flex rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
                   {d.prodi}
                 </p>
                 {d.position && (
-                  <p className="mt-1.5 line-clamp-1 text-sm text-slate-500">{d.position}</p>
+                  <p className="mt-1.5 line-clamp-1 text-sm text-muted-foreground">{d.position}</p>
                 )}
                 {d.expertise && (
-                  <p className="mt-0.5 line-clamp-1 text-xs text-slate-400">{d.expertise}</p>
+                  <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{d.expertise}</p>
                 )}
               </div>
             </div>

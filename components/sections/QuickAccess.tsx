@@ -31,7 +31,7 @@ const links = [
 
 export default function QuickAccess() {
   return (
-    <section className="border-y border-slate-200 bg-white">
+    <section className="border-y border-border bg-background">
       <ScrollReveal className="mx-auto w-full max-w-[1280px] px-0">
         <div className="grid grid-cols-2 lg:grid-cols-4">
         {links.map((item, i) => {
@@ -40,19 +40,19 @@ export default function QuickAccess() {
             <Link
               key={item.href}
               href={item.href}
-              className={`group flex items-center gap-4 px-4 py-6 transition-colors duration-200 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-emerald-600 sm:px-6 ${i % 2 === 1 ? "border-l border-slate-200 lg:border-l" : ""} ${i >= 2 ? "border-t border-slate-200 lg:border-t-0" : ""} ${i > 0 ? "lg:border-l lg:border-l-slate-200" : ""}`}
+              className={`group flex items-center gap-4 px-4 py-6 transition-colors duration-200 hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-emerald-600 sm:px-6 ${i % 2 === 1 ? "border-l border-border lg:border-l" : ""} ${i >= 2 ? "border-t border-border lg:border-t-0" : ""} ${i > 0 ? "lg:border-l lg:border-l-border" : ""}`}
             >
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 transition-colors duration-200 group-hover:bg-emerald-700 group-hover:text-white">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <span className="min-w-0">
-                <span className="block truncate text-sm font-semibold text-slate-900 group-hover:text-emerald-700">
+                <span className="block truncate text-sm font-semibold text-foreground group-hover:text-emerald-700">
                   {item.title}
                 </span>
-                <span className="block truncate text-xs text-slate-500">{item.caption}</span>
+                <span className="block truncate text-xs text-muted-foreground">{item.caption}</span>
               </span>
               <ArrowUpRight
-                className="ml-auto h-4 w-4 shrink-0 text-slate-300 transition-colors group-hover:text-emerald-700"
+                className="ml-auto h-4 w-4 shrink-0 text-muted-foreground/60 transition-colors group-hover:text-emerald-700"
                 aria-hidden="true"
               />
             </Link>

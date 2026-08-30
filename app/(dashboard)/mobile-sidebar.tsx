@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { NavLinks } from "./nav-links";
 import { LogoutButton } from "./logout-button";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 
 export function MobileSidebar({ email }: { email?: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,6 +64,9 @@ export function MobileSidebar({ email }: { email?: string }) {
           />
         </span>
         <p className="text-sm font-bold tracking-tight text-emerald-800">Fakultas Teknik</p>
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Backdrop */}

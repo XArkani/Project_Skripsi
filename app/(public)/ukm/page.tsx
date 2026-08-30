@@ -15,8 +15,8 @@ export default async function UKMPage() {
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
           Kehidupan Kemahasiswaan
         </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-1.5">Unit Kegiatan Mahasiswa</h1>
-        <p className="text-slate-500 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mt-1.5">Unit Kegiatan Mahasiswa</h1>
+        <p className="text-muted-foreground text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
           Salurkan bakat, perluas jaringan perkawanan, dan kembangkan karya nyata keteknikan di luar
           perkuliahan. Temukan komunitasmu dan terhubung langsung dengan komunikasinya.
         </p>

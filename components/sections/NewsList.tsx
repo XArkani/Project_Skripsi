@@ -50,25 +50,25 @@ function NewsCard({ item, animate }: { item: News; animate: boolean }) {
       initial={animate ? "hidden" : false}
       whileInView={animate ? "visible" : undefined}
       viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
-      className="group bg-white overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
+      className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
     >
-      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-100">
+      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-muted">
         <NewsMedia src={item.image} alt={item.title} />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
           <Calendar className="w-3.5 h-3.5 shrink-0 text-emerald-600" aria-hidden="true" />
           {item.date}
         </span>
 
         <Link href={`/berita/${item.slug}`}>
-          <h3 className="font-bold text-slate-900 leading-snug group-hover:text-emerald-700 transition-colors line-clamp-2">
+          <h3 className="font-bold text-foreground leading-snug group-hover:text-emerald-700 transition-colors line-clamp-2">
             {item.title}
           </h3>
         </Link>
 
-        <p className="text-sm text-slate-600 leading-relaxed line-clamp-3">{item.excerpt}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{item.excerpt}</p>
 
         <div className="mt-auto pt-3">
           <Link
@@ -106,23 +106,23 @@ export default function NewsList({ items }: NewsListProps) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-white/95 backdrop-blur-sm">
+      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Cari berita, prestasi, atau kata kunci..."
             aria-label="Cari berita"
-            className="w-full pl-11 pr-10 py-3 rounded-xl border border-slate-200 bg-white focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-slate-400"
+            className="w-full pl-11 pr-10 py-3 rounded-xl border border-border bg-background focus:bg-background focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-muted-foreground"
           />
           {query !== "" && (
             <button
               type="button"
               onClick={() => setQuery("")}
               aria-label="Bersihkan pencarian"
-              className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-11 h-11 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-11 h-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -131,9 +131,9 @@ export default function NewsList({ items }: NewsListProps) {
       </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <p aria-live="polite" className="text-sm text-slate-500">
-          Menampilkan <span className="font-bold text-slate-800">{filtered.length}</span> dari{" "}
-          <span className="font-bold text-slate-800">{items.length}</span> berita
+        <p aria-live="polite" className="text-sm text-muted-foreground">
+          Menampilkan <span className="font-bold text-foreground">{filtered.length}</span> dari{" "}
+          <span className="font-bold text-foreground">{items.length}</span> berita
         </p>
         {hasFilter && (
           <button
@@ -148,12 +148,12 @@ export default function NewsList({ items }: NewsListProps) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400 mx-auto">
+        <div className="rounded-2xl border border-dashed border-border bg-card px-6 py-14 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground mx-auto">
             <Newspaper className="h-7 w-7" />
           </div>
-          <h3 className="text-base font-bold text-slate-700 mt-4">Berita tidak ditemukan</h3>
-          <p className="max-w-sm mx-auto text-sm text-slate-500 mt-1.5">
+          <h3 className="text-base font-bold text-foreground mt-4">Berita tidak ditemukan</h3>
+          <p className="max-w-sm mx-auto text-sm text-muted-foreground mt-1.5">
             {query.trim() !== "" ? (
               <>
                 Tidak ada berita yang cocok untuk pencarian{" "}

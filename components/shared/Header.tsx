@@ -21,6 +21,7 @@ import {
   MessageCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ThemeToggle } from "./ThemeToggle"
 
 type NavItem =
   | { type: "link"; href: string; label: string }
@@ -112,12 +113,12 @@ export default function Header() {
     setIsMobileOpen(false)
   }, [pathname])
 
-  const linkNeutral = "text-slate-700 hover:bg-slate-100 hover:text-emerald-700"
+  const linkNeutral = "text-foreground hover:bg-muted hover:text-emerald-700"
   const linkActive = "font-semibold text-emerald-700"
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-200 bg-white">
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background">
         <div className="mx-auto flex h-[72px] w-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <Link href="/" className="group flex min-w-0 items-center gap-3" aria-label="Beranda Fakultas Teknik">
             <span className="relative h-11 w-11 shrink-0">
@@ -137,7 +138,7 @@ export default function Header() {
                 Fakultas Teknik
               </span>
               <span
-                className="mt-1 block truncate text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500"
+                className="mt-1 block truncate text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground"
               >
                 Universitas Hamzanwadi
               </span>
@@ -192,7 +193,7 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.18, ease: "easeOut" }}
-                        className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_8px_24px_rgba(2,6,23,0.08)]"
+                        className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-border bg-background p-1.5 shadow-[0_8px_24px_rgba(2,6,23,0.08)]"
                       >
                         {item.children.map((c) => (
                           <Link
@@ -203,7 +204,7 @@ export default function Header() {
                               "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                               pathname.startsWith(c.href)
                                 ? "text-emerald-700"
-                                : "text-slate-700 hover:bg-slate-50 hover:text-emerald-700"
+                                : "text-foreground hover:bg-muted hover:text-emerald-700"
                             )}
                           >
                             {c.label}
@@ -217,7 +218,8 @@ export default function Header() {
             )}
           </nav>
 
-          <div className="hidden shrink-0 items-center lg:flex">
+          <div className="hidden shrink-0 items-center gap-2 lg:flex">
+            <ThemeToggle />
             <Link
               href="/hubungi"
               className="inline-flex h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
@@ -232,7 +234,7 @@ export default function Header() {
             aria-label="Buka menu navigasi"
             aria-expanded={isMobileOpen}
             aria-controls="mobile-nav-panel"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition-colors hover:text-emerald-700 lg:hidden"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:text-emerald-700 lg:hidden"
           >
             <Menu className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -268,13 +270,13 @@ export default function Header() {
                 role="dialog"
                 aria-modal="true"
                 aria-label="Menu navigasi"
-                className="fixed inset-y-0 right-0 z-50 flex w-[min(20rem,86vw)] flex-col bg-white shadow-2xl lg:hidden"
+                className="fixed inset-y-0 right-0 z-50 flex w-[min(20rem,86vw)] flex-col bg-background shadow-2xl lg:hidden"
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", stiffness: 340, damping: 34 }}
               >
-                <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+                <div className="flex items-center justify-between border-b border-border px-5 py-4">
                   <div className="flex items-center gap-2.5">
                     <span className="relative h-10 w-10">
                       <Image
@@ -289,7 +291,7 @@ export default function Header() {
                       <span className="block text-sm font-bold uppercase leading-none tracking-wider text-emerald-800">
                         Fakultas Teknik
                       </span>
-                      <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                      <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
                         Universitas Hamzanwadi
                       </span>
                     </span>
@@ -298,7 +300,7 @@ export default function Header() {
                     type="button"
                     onClick={() => setIsMobileOpen(false)}
                     aria-label="Tutup menu navigasi"
-                    className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-slate-600 transition-colors hover:bg-slate-100 hover:text-emerald-700"
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-emerald-700"
                   >
                     <X className="h-5 w-5" aria-hidden="true" />
                   </button>
@@ -319,7 +321,7 @@ export default function Header() {
                           "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors",
                           isActive
                             ? "bg-emerald-50 font-semibold text-emerald-800"
-                            : "text-slate-700 hover:bg-slate-50 hover:text-emerald-700"
+                            : "text-foreground hover:bg-muted hover:text-emerald-700"
                         )}
                       >
                         <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -329,7 +331,8 @@ export default function Header() {
                   })}
                 </nav>
 
-                <div className="border-t border-slate-200 p-4">
+                <div className="space-y-3 border-t border-border p-4">
+                  <ThemeToggle />
                   <Link
                     href="/hubungi"
                     onClick={() => setIsMobileOpen(false)}

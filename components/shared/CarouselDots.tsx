@@ -22,7 +22,7 @@ export default function CarouselDots({ count, activeIndex, onSelect, className }
           aria-label={`Lompat ke data ${i + 1}`}
           className={cn(
             "h-2.5 rounded-full transition-all duration-300 cursor-pointer",
-            i === activeIndex ? "w-7 bg-emerald-600" : "w-2.5 bg-slate-300 hover:bg-slate-400"
+            i === activeIndex ? "w-7 bg-emerald-600" : "w-2.5 bg-border hover:bg-muted-foreground"
           )}
         />
       ))}

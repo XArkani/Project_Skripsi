@@ -22,18 +22,18 @@ const pillars = [
 
 export default function FacultyIntro() {
   return (
-    <section className="bg-[#f7f9fa] py-16 sm:py-24">
+    <section className="bg-muted py-16 sm:py-24">
       <ScrollReveal className="mx-auto grid w-full max-w-[1280px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <div>
-          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-slate-950">
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-foreground">
             Membangun Talenta Teknologi untuk Masa Depan
           </h2>
-          <p className="mt-5 max-w-xl leading-relaxed text-slate-600">
+          <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
             Fakultas Teknik Universitas Hamzanwadi menjadi tempat bertumbuh bagi mahasiswa yang ingin
             belajar, menguji gagasan, dan mengembangkan keahlian di dunia keteknikan. Kami mendampingi
             mahasiswa dari ruang kuliah hingga karya nyata yang berguna bagi masyarakat.
           </p>
-          <p className="mt-4 max-w-xl leading-relaxed text-slate-600">
+          <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">
             Dengan empat program studi, tenaga pendidik yang berpengalaman, serta laboratorium dan
             fasilitas yang mendukung, fakultas ini berkomitmen mencetak lulusan yang siap bekerja,
             adaptif, dan berintegritas.

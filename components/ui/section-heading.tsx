@@ -27,14 +27,14 @@ export default function SectionHeading({
       <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
         <h2
           className={cn(
-            "text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-slate-950",
+            "text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-foreground",
             titleClassName
           )}
         >
           {title}
         </h2>
         {description && (
-          <p className={cn("mt-3 max-w-xl text-base leading-relaxed text-slate-600", align === "center" && "mx-auto")}>
+          <p className={cn("mt-3 max-w-xl text-base leading-relaxed text-muted-foreground", align === "center" && "mx-auto")}>
             {description}
           </p>
         )}

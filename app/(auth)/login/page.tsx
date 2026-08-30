@@ -50,7 +50,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-white selection:bg-emerald-200 selection:text-emerald-950">
+    <div className="min-h-dvh bg-background selection:bg-emerald-200 selection:text-emerald-950">
       <Toast message={toastMessage} type={toastType} />
       <div className="min-h-dvh grid lg:grid-cols-[1.05fr_0.95fr]">
         <aside className="relative overflow-hidden bg-emerald-950 text-white flex flex-col min-h-[420px] lg:min-h-dvh">
@@ -116,23 +116,23 @@ export default function LoginPage() {
           </div>
         </aside>
 
-        <main className="flex flex-col bg-slate-50/60 min-h-[520px] lg:bg-white">
+        <main className="flex flex-col bg-muted/60 min-h-[520px] lg:bg-background">
           <div className="flex flex-1 items-center justify-center px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
-            <div className="w-full max-w-[420px] rounded-[28px] border border-slate-200 bg-white p-6 sm:p-8 shadow-[0_20px_60px_rgba(15,23,42,0.08),0_1px_3px_rgba(15,23,42,0.08)] ring-1 ring-black/[0.02]">
+            <div className="w-full max-w-[420px] rounded-[28px] border border-border bg-card p-6 sm:p-8 shadow-[0_20px_60px_rgba(15,23,42,0.08),0_1px_3px_rgba(15,23,42,0.08)] ring-1 ring-black/[0.02]">
               <div className="mb-8">
                 <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" aria-hidden="true" />
                   <span className="text-[11px] font-extrabold tracking-[0.14em] text-emerald-700">ADMIN PORTAL</span>
                 </div>
-                <h2 className="mt-4 text-[26px] sm:text-[28px] font-extrabold tracking-[-0.03em] leading-none text-slate-900">Masuk ke dasbor</h2>
-                <p className="mt-2.5 text-[13.5px] leading-6 text-slate-500 max-w-[36ch]">
+                <h2 className="mt-4 text-[26px] sm:text-[28px] font-extrabold tracking-[-0.03em] leading-none text-foreground">Masuk ke dasbor</h2>
+                <p className="mt-2.5 text-[13.5px] leading-6 text-muted-foreground max-w-[36ch]">
                   Gunakan kredensial operator. Butuh akses baru? Hubungi dekanat untuk aktivasi akun.
                 </p>
               </div>
 
               <form onSubmit={handleLogin} noValidate className="space-y-5">
                 <div>
-                  <label htmlFor="login-email" className="block text-[11px] font-extrabold tracking-[0.12em] text-slate-700 mb-2">
+                  <label htmlFor="login-email" className="block text-[11px] font-extrabold tracking-[0.12em] text-foreground mb-2">
                     EMAIL PENGELOLA
                   </label>
                   <input
@@ -144,12 +144,12 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@hamzanwadi.ac.id"
-                    className="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-[14px] font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/15 focus:border-emerald-500 transition-all caret-emerald-600"
+                    className="w-full h-11 rounded-xl border border-border bg-muted/80 px-4 text-[14px] font-medium text-foreground placeholder:text-muted-foreground focus:bg-background focus:outline-none focus:ring-4 focus:ring-emerald-500/15 focus:border-emerald-500 transition-all caret-emerald-600"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="login-password" className="block text-[11px] font-extrabold tracking-[0.12em] text-slate-700 mb-2">
+                  <label htmlFor="login-password" className="block text-[11px] font-extrabold tracking-[0.12em] text-foreground mb-2">
                     PASSWORD
                   </label>
                   <div className="relative">
@@ -162,13 +162,13 @@ export default function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Masukkan password"
-                      className="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/80 px-4 pr-11 text-[14px] font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/15 focus:border-emerald-500 transition-all caret-emerald-600"
+                      className="w-full h-11 rounded-xl border border-border bg-muted/80 px-4 pr-11 text-[14px] font-medium text-foreground placeholder:text-muted-foreground focus:bg-background focus:outline-none focus:ring-4 focus:ring-emerald-500/15 focus:border-emerald-500 transition-all caret-emerald-600"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((s) => !s)}
                       aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
-                      className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors focus-visible:outline-2 focus-visible:outline-emerald-500 focus-visible:outline-offset-2"
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg inline-flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-emerald-500 focus-visible:outline-offset-2"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>

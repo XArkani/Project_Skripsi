@@ -21,7 +21,7 @@ const cardVariants = {
 }
 
 const CARD_CLASSES =
-  "group bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-emerald-200 hover:shadow-lg transition-all flex flex-col justify-between gap-4"
+  "group bg-card rounded-2xl p-5 border border-border shadow-sm hover:border-emerald-200 hover:shadow-lg transition-all flex flex-col justify-between gap-4"
 
 function isStockImage(src: string) {
   try {
@@ -53,25 +53,25 @@ function DosenCard({ dosen, animate }: { dosen: Dosen; animate: boolean }) {
       className={CARD_CLASSES}
     >
       <div className="flex gap-4">
-        <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-sm">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-2xl overflow-hidden border border-border bg-muted shadow-sm">
           <DosenAvatar dosen={dosen} />
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="font-bold text-base text-slate-900 leading-snug">{dosen.name}</h3>
+          <h3 className="font-bold text-base text-foreground leading-snug">{dosen.name}</h3>
           <span className="inline-flex items-center gap-1.5 mt-2 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-full">
             <GraduationCap className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
             {dosen.prodi}
           </span>
           {dosen.position && (
-            <p className="mt-2.5 text-sm font-semibold text-slate-700 flex items-start gap-1.5">
+            <p className="mt-2.5 text-sm font-semibold text-muted-foreground flex items-start gap-1.5">
               <Briefcase className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" aria-hidden="true" />
               <span className="min-w-0">{dosen.position}</span>
             </p>
           )}
           {dosen.nuptk && (
-            <p className="mt-2 text-xs text-slate-500">
-              NUPTK: <span className="font-semibold text-slate-700">{dosen.nuptk}</span>
+            <p className="mt-2 text-xs text-muted-foreground">
+              NUPTK: <span className="font-semibold text-foreground/85">{dosen.nuptk}</span>
             </p>
           )}
         </div>
@@ -88,7 +88,7 @@ function DosenCard({ dosen, animate }: { dosen: Dosen; animate: boolean }) {
           <span className="truncate">Lihat DOI / Publikasi</span>
         </a>
       ) : (
-        <p className="w-full min-h-11 flex items-center justify-center rounded-xl border border-slate-200 text-sm text-slate-400">
+        <p className="w-full min-h-11 flex items-center justify-center rounded-xl border border-border text-sm text-muted-foreground">
           DOI belum tersedia
         </p>
       )}
@@ -135,24 +135,24 @@ export default function DosenGrid({ items }: DosenGridProps) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-white/95 backdrop-blur-sm">
+      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm">
         <div className="flex flex-col gap-3">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari dosen, prodi, atau posisi..."
               aria-label="Cari dosen"
-              className="w-full pl-11 pr-10 py-3 rounded-xl border border-slate-200 bg-white focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-slate-400"
+              className="w-full pl-11 pr-10 py-3 rounded-xl border border-border bg-background focus:bg-background focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-muted-foreground"
             />
             {query !== "" && (
               <button
                 type="button"
                 onClick={() => setQuery("")}
                 aria-label="Bersihkan pencarian"
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -172,14 +172,14 @@ export default function DosenGrid({ items }: DosenGridProps) {
                     "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                     isActive
                       ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                      : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:text-emerald-700"
+                      : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700"
                   )}
                 >
                   {chip.label}
                   <span
                     className={cn(
                       "text-xs font-bold rounded-full px-1.5 py-0.5",
-                      isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                      isActive ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
                     )}
                   >
                     {chip.count}
@@ -192,9 +192,9 @@ export default function DosenGrid({ items }: DosenGridProps) {
       </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <p className="text-sm text-slate-500">
-          Menampilkan <span className="font-bold text-slate-800">{filteredItems.length}</span> dari{" "}
-          <span className="font-bold text-slate-800">{items.length}</span> dosen
+        <p className="text-sm text-muted-foreground">
+          Menampilkan <span className="font-bold text-foreground">{filteredItems.length}</span> dari{" "}
+          <span className="font-bold text-foreground">{items.length}</span> dosen
         </p>
         {hasActiveState && (
           <button
@@ -212,12 +212,12 @@ export default function DosenGrid({ items }: DosenGridProps) {
       </div>
 
       {filteredItems.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400 mx-auto">
+        <div className="rounded-2xl border border-dashed border-border bg-card px-6 py-14 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground mx-auto">
             <UsersRound className="h-7 w-7" />
           </div>
-          <h3 className="text-base font-bold text-slate-700 mt-4">Dosen tidak ditemukan</h3>
-          <p className="max-w-sm mx-auto text-sm text-slate-500 mt-1.5">
+          <h3 className="text-base font-bold text-foreground mt-4">Dosen tidak ditemukan</h3>
+          <p className="max-w-sm mx-auto text-sm text-muted-foreground mt-1.5">
             Tidak ada dosen yang cocok{query.trim() !== "" && (
               <>
                 {" "}untuk pencarian <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>

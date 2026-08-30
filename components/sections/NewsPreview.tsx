@@ -13,7 +13,7 @@ export default function NewsPreview({ items }: { items: News[] }) {
   if (!featured) return null
 
   return (
-    <section className="bg-[#f7f9fa] py-16 sm:py-24">
+    <section className="bg-muted py-16 sm:py-24">
       <Container>
         <ScrollReveal>
           <SectionHeading
@@ -33,13 +33,13 @@ export default function NewsPreview({ items }: { items: News[] }) {
               <ImagePlaceholder label={featured.title} className="h-full w-full" />
             </div>
             <div className="mt-5 max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {featured.date}
               </p>
-              <h3 className="mt-2 line-clamp-2 text-2xl font-bold leading-snug tracking-[-0.01em] text-slate-950 group-hover:text-emerald-800 sm:text-3xl">
+              <h3 className="mt-2 line-clamp-2 text-2xl font-bold leading-snug tracking-[-0.01em] text-foreground group-hover:text-emerald-800 sm:text-3xl">
                 {featured.title}
               </h3>
-              <p className="mt-3 line-clamp-3 leading-relaxed text-slate-600">{featured.excerpt}</p>
+              <p className="mt-3 line-clamp-3 leading-relaxed text-muted-foreground">{featured.excerpt}</p>
               <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 group-hover:text-emerald-800">
                 Baca Berita
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
@@ -47,9 +47,9 @@ export default function NewsPreview({ items }: { items: News[] }) {
             </div>
           </Link>
 
-          <div className="flex flex-col divide-y divide-slate-200 border-y border-slate-200">
+          <div className="flex flex-col divide-y divide-border border-y border-border">
             {secondary.length === 0 && (
-              <p className="py-8 text-sm text-slate-500">Belum ada berita lainnya.</p>
+              <p className="py-8 text-sm text-muted-foreground">Belum ada berita lainnya.</p>
             )}
             {secondary.map((n) => (
               <Link
@@ -57,11 +57,11 @@ export default function NewsPreview({ items }: { items: News[] }) {
                 href={`/berita/${n.slug}`}
                 className="group flex flex-col gap-3 py-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
               >
-                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{n.date}</p>
-                <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-950 group-hover:text-emerald-800">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{n.date}</p>
+                <h3 className="line-clamp-2 text-base font-bold leading-snug text-foreground group-hover:text-emerald-800">
                   {n.title}
                 </h3>
-                <p className="line-clamp-2 text-sm leading-relaxed text-slate-600">{n.excerpt}</p>
+                <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">{n.excerpt}</p>
               </Link>
             ))}
           </div>

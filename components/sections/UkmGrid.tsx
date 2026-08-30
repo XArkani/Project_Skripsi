@@ -210,11 +210,11 @@ function UkmCard({ ukm, animate }: CardProps) {
       initial={animate ? "hidden" : false}
       whileInView={animate ? "visible" : undefined}
       viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
-      className="group bg-white overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
+      className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
     >
-      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-100">
+      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-muted">
         <UkmMedia ukm={ukm} />
-        <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white/95 backdrop-blur border border-emerald-100 px-2.5 py-1 rounded-full shadow-sm">
+        <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-background/95 backdrop-blur border border-emerald-100 px-2.5 py-1 rounded-full shadow-sm">
           <Tag className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
           {category}
         </span>
@@ -225,22 +225,22 @@ function UkmCard({ ukm, animate }: CardProps) {
           <div className="relative w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-100 flex items-center justify-center shadow-sm">
             <UkmLogo ukm={ukm} />
           </div>
-          <h2 className="min-w-0 flex-1 font-bold text-base text-slate-900 leading-snug line-clamp-2">{ukm.name}</h2>
+          <h2 className="min-w-0 flex-1 font-bold text-base text-foreground leading-snug line-clamp-2">{ukm.name}</h2>
         </div>
 
-        <p className="text-sm text-slate-600 leading-relaxed">{ukm.description}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">{ukm.description}</p>
 
         {ukm.activities && (
           <div className="flex items-start gap-2.5">
             <Zap className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" aria-hidden="true" />
-            <p className="text-sm text-slate-700 leading-relaxed">
-              <span className="font-bold text-slate-800">Kegiatan:</span> {ukm.activities}
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              <span className="font-bold text-foreground">Kegiatan:</span> {ukm.activities}
             </p>
           </div>
         )}
 
         {links.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
+          <div className="flex flex-wrap gap-2 pt-3 border-t border-border">
             {links.map((link, i) => {
               const Icon = CONTACT_ICONS[link.type]
               return (
@@ -248,7 +248,7 @@ function UkmCard({ ukm, animate }: CardProps) {
                   key={`${link.href}-${i}`}
                   href={link.href}
                   {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="inline-flex items-center gap-1.5 min-h-11 px-3.5 py-2 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:border-emerald-300 hover:text-emerald-700 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  className="inline-flex items-center gap-1.5 min-h-11 px-3.5 py-2 rounded-lg border border-border bg-background text-sm font-bold text-muted-foreground hover:border-emerald-300 hover:text-emerald-700 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                 >
                   <Icon className="w-4 h-4 shrink-0 text-emerald-600" aria-hidden="true" />
                   <span className="truncate max-w-[180px]">{link.label}</span>
@@ -329,23 +329,23 @@ export default function UkmGrid({ items }: UkmGridProps) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-white/95 backdrop-blur-sm space-y-3">
+      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Cari nama UKM, kegiatan, atau kategori..."
             aria-label="Cari UKM"
-            className="w-full pl-11 pr-10 py-3 rounded-xl border border-slate-200 bg-white focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-slate-400"
+            className="w-full pl-11 pr-10 py-3 rounded-xl border border-border bg-background focus:bg-background focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-muted-foreground"
           />
           {query !== "" && (
             <button
               type="button"
               onClick={() => setQuery("")}
               aria-label="Bersihkan pencarian"
-              className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-11 h-11 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-11 h-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -365,14 +365,14 @@ export default function UkmGrid({ items }: UkmGridProps) {
                   "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                   isActive
                     ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:text-emerald-700"
+                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700"
                 )}
               >
                 {category}
                 <span
                   className={cn(
                     "text-xs font-bold rounded-full px-1.5 py-0.5",
-                    isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                    isActive ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
                   )}
                 >
                   {counts.get(category) ?? 0}
@@ -384,9 +384,9 @@ export default function UkmGrid({ items }: UkmGridProps) {
       </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <p aria-live="polite" className="text-sm text-slate-500">
-          Menampilkan <span className="font-bold text-slate-800">{filteredItems.length}</span> dari{" "}
-          <span className="font-bold text-slate-800">{items.length}</span> UKM
+        <p aria-live="polite" className="text-sm text-muted-foreground">
+          Menampilkan <span className="font-bold text-foreground">{filteredItems.length}</span> dari{" "}
+          <span className="font-bold text-foreground">{items.length}</span> UKM
         </p>
         {hasFilter && (
           <button
@@ -401,12 +401,12 @@ export default function UkmGrid({ items }: UkmGridProps) {
       </div>
 
       {filteredItems.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400 mx-auto">
+        <div className="rounded-2xl border border-dashed border-border bg-card px-6 py-14 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground mx-auto">
             <Users className="h-7 w-7" />
           </div>
-          <h3 className="text-base font-bold text-slate-700 mt-4">UKM tidak ditemukan</h3>
-          <p className="max-w-sm mx-auto text-sm text-slate-500 mt-1.5">
+          <h3 className="text-base font-bold text-foreground mt-4">UKM tidak ditemukan</h3>
+          <p className="max-w-sm mx-auto text-sm text-muted-foreground mt-1.5">
             Tidak ada unit kegiatan yang cocok{query.trim() !== "" && (
               <>
                 {" "}

@@ -13,7 +13,7 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
   if (!featured) return null
 
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-background py-16 sm:py-24">
       <Container>
         <ScrollReveal>
           <SectionHeading
@@ -22,7 +22,7 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
           action={{ label: "Lihat Semua Fasilitas", href: "/blueprint" }}
         />
 
-        <article className="mt-10 grid overflow-hidden rounded-[20px] border border-slate-200 bg-[#f7f9fa] lg:grid-cols-2">
+        <article className="mt-10 grid overflow-hidden rounded-[20px] border border-border bg-muted lg:grid-cols-2">
           <div className="relative min-h-[260px] sm:min-h-[320px]">
             <ImagePlaceholder label={featured.title} className="absolute inset-0 h-full w-full" />
             <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/30 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-100 backdrop-blur-sm">
@@ -33,12 +33,12 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-700">
               Fasilitas Unggulan
             </p>
-            <h3 className="mt-3 text-2xl font-bold leading-snug tracking-[-0.01em] text-slate-950 sm:text-3xl">
+            <h3 className="mt-3 text-2xl font-bold leading-snug tracking-[-0.01em] text-foreground sm:text-3xl">
               {featured.title}
             </h3>
-            <p className="mt-4 leading-relaxed text-slate-600">{featured.description}</p>
+            <p className="mt-4 leading-relaxed text-muted-foreground">{featured.description}</p>
             {featured.details && (
-              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-500">{featured.details}</p>
+              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{featured.details}</p>
             )}
             <Link
               href="/blueprint"
@@ -56,7 +56,7 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
               <Link
                 key={item.id}
                 href="/blueprint"
-                className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
               >
                 <div className="relative aspect-[4/3]">
                   <ImagePlaceholder label={item.category} className="h-full w-full" compact />
@@ -65,10 +65,10 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
                   <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
                     {item.category}
                   </p>
-                  <h3 className="mt-1 line-clamp-1 text-sm font-semibold text-slate-900 group-hover:text-emerald-800">
+                  <h3 className="mt-1 line-clamp-1 text-sm font-semibold text-foreground group-hover:text-emerald-800">
                     {item.title}
                   </h3>
-                  <p className="mt-1 line-clamp-2 text-sm text-slate-500">{item.description}</p>
+                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{item.description}</p>
                 </div>
               </Link>
             ))}

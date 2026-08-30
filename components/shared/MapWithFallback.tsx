@@ -23,7 +23,7 @@ export default function MapWithFallback() {
           href="https://www.google.com/maps/search/?api=1&query=Universitas+Hamzanwadi"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-white text-emerald-900 font-bold text-xs px-4 py-2.5 rounded-lg shadow-md hover:bg-emerald-50 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 bg-background text-emerald-900 font-bold text-xs px-4 py-2.5 rounded-lg shadow-md hover:bg-emerald-50 transition-colors cursor-pointer"
         >
           <ExternalLink className="w-3.5 h-3.5" />
           Buka di Google Maps

@@ -1,6 +1,7 @@
 import { Agentation } from "agentation";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import RegisterSW from "@/components/pwa/RegisterSW";
@@ -33,7 +34,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f172a",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };
 
 export default function RootLayout({
@@ -42,10 +46,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={cn("font-sans", inter.variable)}>
+    <html lang="id" className={cn("font-sans", inter.variable)} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div
           hidden
           data-design-contract="FT_HOMEPAGE_REDESIGN"
@@ -64,6 +69,7 @@ export default function RootLayout({
         <RegisterSW />
         <InstallPrompt />
         {process.env.NODE_ENV === "development" && <Agentation />}
+        </ThemeProvider>
       </body>
     </html>
   );

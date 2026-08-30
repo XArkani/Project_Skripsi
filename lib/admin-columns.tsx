@@ -31,8 +31,8 @@ function StatusBadge({ status }: { status: string }) {
     status === "Sedang Berlangsung"
       ? "bg-emerald-50 text-emerald-700 ring-emerald-100"
       : status === "Akan Datang"
-        ? "bg-blue-50 text-blue-700 ring-blue-100"
-        : "bg-slate-100 text-slate-600 ring-slate-200"
+        ? "bg-blue-500/15 text-blue-700 ring-blue-500/30"
+        : "bg-muted text-muted-foreground ring-border"
   return (
     <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset", cls)}>
       {status}

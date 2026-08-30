@@ -43,7 +43,7 @@ export default function EventPreview({ items }: { items: Event[] }) {
   const f = dateParts(featured)
 
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-background py-16 sm:py-24">
       <Container>
         <ScrollReveal>
           <SectionHeading
@@ -58,7 +58,7 @@ export default function EventPreview({ items }: { items: Event[] }) {
           <article className="lg:col-span-3">
             <Link
               href={`/event/${featured.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             >
               <div className="relative aspect-[16/9] overflow-hidden">
                 <ImagePlaceholder label={featured.title} className="h-full w-full" />
@@ -67,17 +67,17 @@ export default function EventPreview({ items }: { items: Event[] }) {
                 </span>
               </div>
               <div className="flex flex-1 flex-col gap-3 p-6 sm:p-7">
-                <div className="flex items-center gap-3 text-slate-500">
-                  <span className="flex items-center gap-2 rounded-lg border border-slate-200 bg-[#f7f9fa] px-3 py-1.5">
-                    <span className="tnum text-lg font-bold leading-none text-slate-900">{f.day || "?"}</span>
-                    <span className="text-[11px] font-bold uppercase text-slate-500">{f.month}</span>
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <span className="flex items-center gap-2 rounded-lg border border-border bg-muted px-3 py-1.5">
+                    <span className="tnum text-lg font-bold leading-none text-foreground">{f.day || "?"}</span>
+                    <span className="text-[11px] font-bold uppercase text-muted-foreground">{f.month}</span>
                   </span>
                 </div>
-                <h3 className="line-clamp-2 text-2xl font-bold leading-snug tracking-[-0.01em] text-slate-950 group-hover:text-emerald-800">
+                <h3 className="line-clamp-2 text-2xl font-bold leading-snug tracking-[-0.01em] text-foreground group-hover:text-emerald-800">
                   {featured.title}
                 </h3>
-                <p className="line-clamp-2 leading-relaxed text-slate-600">{featured.description}</p>
-                <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500">
+                <p className="line-clamp-2 leading-relaxed text-muted-foreground">{featured.description}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">
                     <Clock3 className="h-4 w-4 text-emerald-700" aria-hidden="true" />
                     {featured.time || "Waktu menyusul"}
@@ -92,12 +92,12 @@ export default function EventPreview({ items }: { items: Event[] }) {
           </article>
 
           <div className="lg:col-span-2">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
               Agenda Terdekat
             </p>
-            <div className="mt-4 divide-y divide-slate-200 border-y border-slate-200">
+            <div className="mt-4 divide-y divide-border border-y border-border">
               {agenda.length === 0 ? (
-                <p className="py-8 text-sm text-slate-500">Belum ada agenda berikutnya.</p>
+                <p className="py-8 text-sm text-muted-foreground">Belum ada agenda berikutnya.</p>
               ) : (
                 agenda.map((evt) => {
                   const d = dateParts(evt)
@@ -107,25 +107,25 @@ export default function EventPreview({ items }: { items: Event[] }) {
                       href={`/event/${evt.slug}`}
                       className="group flex items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                     >
-                      <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl border border-slate-200 bg-[#f7f9fa]">
+                      <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl border border-border bg-muted">
                         <span className="text-center">
-                          <span className="tnum block text-lg font-bold leading-none text-slate-900">
+                          <span className="tnum block text-lg font-bold leading-none text-foreground">
                             {d.day || "?"}
                           </span>
-                          <span className="block text-[10px] font-bold uppercase text-slate-500">{d.month}</span>
+                          <span className="block text-[10px] font-bold uppercase text-muted-foreground">{d.month}</span>
                         </span>
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="flex items-center gap-2">
                           <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${statusDot[evt.status] ?? "bg-slate-400"}`} aria-hidden="true" />
-                          <span className="line-clamp-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                          <span className="line-clamp-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                             {evt.status}
                           </span>
                         </span>
-                        <span className="mt-0.5 block line-clamp-2 text-sm font-semibold leading-snug text-slate-900 group-hover:text-emerald-800">
+                        <span className="mt-0.5 block line-clamp-2 text-sm font-semibold leading-snug text-foreground group-hover:text-emerald-800">
                           {evt.title}
                         </span>
-                        <span className="mt-1 flex items-center gap-1 text-xs text-slate-500">
+                        <span className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
                           <MapPin className="h-3 w-3" aria-hidden="true" />
                           <span className="truncate">{evt.location || "Lokasi menyusul"}</span>
                         </span>

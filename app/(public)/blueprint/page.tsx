@@ -16,8 +16,8 @@ export default async function BlueprintPage() {
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
           Infrastruktur Kampus
         </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-1.5">Fasilitas & Sarana Prasarana</h1>
-        <p className="text-slate-500 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mt-1.5">Fasilitas & Sarana Prasarana</h1>
+        <p className="text-muted-foreground text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
           Gedung, laboratorium, dan fasilitas pendukung Fakultas Teknik Universitas Hamzanwadi.
           Jelajahi sarana yang menunjang kegiatan belajar dan riset.
         </p>
@@ -28,11 +28,11 @@ export default async function BlueprintPage() {
       ) : (
         <Suspense fallback={<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" aria-hidden="true">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="animate-pulse rounded-2xl border border-slate-200 bg-white overflow-hidden">
-              <div className="aspect-video bg-slate-100" />
+            <div key={i} className="animate-pulse rounded-2xl border border-border bg-background overflow-hidden">
+              <div className="aspect-video bg-muted" />
               <div className="p-5 space-y-3">
-                <div className="h-5 w-3/4 bg-slate-200 rounded" />
-                <div className="h-4 w-full bg-slate-100 rounded" />
+                <div className="h-5 w-3/4 bg-muted rounded" />
+                <div className="h-4 w-full bg-muted rounded" />
               </div>
             </div>
           ))}

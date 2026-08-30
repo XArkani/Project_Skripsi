@@ -79,7 +79,7 @@ export default function StrukturChart({ items }: StrukturChartProps) {
                 whileInView={!reduceMotion ? "visible" : undefined}
                 viewport={!reduceMotion ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
                 transition={{ delay: !reduceMotion ? i * 0.05 : 0 }}
-                className="group bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col items-center gap-3 text-center"
+                className="group bg-card p-6 rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col items-center gap-3 text-center"
               >
                 <span className="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border border-emerald-100">
                   {wd.role.replace("Wakil Dekan ", "").replace("Bidang ", "").trim()}
@@ -87,9 +87,9 @@ export default function StrukturChart({ items }: StrukturChartProps) {
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-100 text-emerald-700 font-extrabold text-lg shadow-sm group-hover:scale-105 transition-transform">
                   {getInitials(wd.name) || <GraduationCap className="w-6 h-6" aria-hidden="true" />}
                 </div>
-                <h3 className="font-bold text-slate-900 text-sm leading-snug">{wd.name}</h3>
-                <p className="text-slate-500 text-xs">{wd.role}</p>
-                {wd.details && <p className="text-slate-400 text-[11px] leading-relaxed">{wd.details}</p>}
+                <h3 className="font-bold text-foreground text-sm leading-snug">{wd.name}</h3>
+                <p className="text-muted-foreground text-xs">{wd.role}</p>
+                {wd.details && <p className="text-muted-foreground text-[11px] leading-relaxed">{wd.details}</p>}
               </motion.div>
             ))}
           </div>
@@ -103,7 +103,7 @@ export default function StrukturChart({ items }: StrukturChartProps) {
             <div className="h-10 w-0.5 bg-emerald-300" />
           </div>
 
-          <div className="w-full bg-slate-50 p-6 sm:p-10 rounded-2xl border border-slate-200 text-center">
+          <div className="w-full bg-muted p-6 sm:p-10 rounded-2xl border border-border text-center">
             <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-emerald-700">
               <School className="w-4 h-4" aria-hidden="true" />
               Program Studi Di Bawah Naungan
@@ -116,7 +116,7 @@ export default function StrukturChart({ items }: StrukturChartProps) {
                   initial={!reduceMotion ? "hidden" : false}
                   whileInView={!reduceMotion ? "visible" : undefined}
                   viewport={!reduceMotion ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
-                  className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-200 hover:shadow-md transition-all text-left flex items-start gap-3"
+                  className="bg-card p-5 rounded-xl border border-border shadow-sm hover:border-emerald-200 hover:shadow-md transition-all text-left flex items-start gap-3"
                 >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700">
                     <School className="w-5 h-5" aria-hidden="true" />
@@ -125,9 +125,9 @@ export default function StrukturChart({ items }: StrukturChartProps) {
                     <span className="text-emerald-700 font-bold text-xs block uppercase tracking-wide">
                       {prodiName(kp.role)}
                     </span>
-                    <h4 className="font-bold text-slate-800 text-sm sm:text-base">{kp.name}</h4>
-                    <p className="text-slate-400 text-xs">{kp.role}</p>
-                    {kp.details && <p className="text-slate-500 text-xs leading-relaxed">{kp.details}</p>}
+                    <h4 className="font-bold text-foreground text-sm sm:text-base">{kp.name}</h4>
+                    <p className="text-muted-foreground text-xs">{kp.role}</p>
+                    {kp.details && <p className="text-muted-foreground text-xs leading-relaxed">{kp.details}</p>}
                   </div>
                 </motion.div>
               ))}

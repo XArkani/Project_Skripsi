@@ -67,7 +67,7 @@ function FacilityRow({ bp, index, animate, onOpen }: RowProps) {
           type="button"
           onClick={onOpen}
           aria-haspopup="dialog"
-          className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-lg bg-slate-100 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-lg bg-muted cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
         >
           <FacilityMedia src={bp.image} alt={bp.title} />
           <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
@@ -84,9 +84,9 @@ function FacilityRow({ bp, index, animate, onOpen }: RowProps) {
       </div>
 
       <div className={cn("space-y-4", isEven ? "" : "md:order-1")}>
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">{bp.title}</h2>
-        <p className="text-slate-600 leading-relaxed">{bp.description}</p>
-        {bp.details && <p className="text-slate-500 text-sm leading-relaxed">{bp.details}</p>}
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-snug">{bp.title}</h2>
+        <p className="text-muted-foreground leading-relaxed">{bp.description}</p>
+        {bp.details && <p className="text-muted-foreground text-sm leading-relaxed">{bp.details}</p>}
         <button
           type="button"
           onClick={onOpen}
@@ -178,23 +178,23 @@ export default function BlueprintList({ items }: BlueprintListProps) {
 
   return (
     <div className="space-y-8">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-white/95 backdrop-blur-sm space-y-3">
+      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
             type="search"
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
             placeholder="Cari fasilitas, gedung, atau laboratorium..."
             aria-label="Cari fasilitas"
-            className="w-full pl-11 pr-10 py-3 rounded-xl border border-slate-200 bg-white focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-slate-400"
+            className="w-full pl-11 pr-10 py-3 rounded-xl border border-border bg-background focus:bg-background focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm transition-all outline-none placeholder:text-muted-foreground"
           />
           {query !== "" && (
             <button
               type="button"
               onClick={() => setQuery("")}
               aria-label="Bersihkan pencarian"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -214,14 +214,14 @@ export default function BlueprintList({ items }: BlueprintListProps) {
                   "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                   isActive
                     ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:text-emerald-700"
+                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700"
                 )}
               >
                 {category}
                 <span
                   className={cn(
                     "text-xs font-bold rounded-full px-1.5 py-0.5",
-                    isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                    isActive ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
                   )}
                 >
                   {counts.get(category) ?? 0}
@@ -233,9 +233,9 @@ export default function BlueprintList({ items }: BlueprintListProps) {
       </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <p aria-live="polite" className="text-sm text-slate-500">
-          Menampilkan <span className="font-bold text-slate-800">{filteredItems.length}</span> dari{" "}
-          <span className="font-bold text-slate-800">{items.length}</span> fasilitas
+        <p aria-live="polite" className="text-sm text-muted-foreground">
+          Menampilkan <span className="font-bold text-foreground">{filteredItems.length}</span> dari{" "}
+          <span className="font-bold text-foreground">{items.length}</span> fasilitas
         </p>
         {hasFilter && (
           <button
@@ -250,12 +250,12 @@ export default function BlueprintList({ items }: BlueprintListProps) {
       </div>
 
       {filteredItems.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400 mx-auto">
+        <div className="rounded-2xl border border-dashed border-border bg-card px-6 py-14 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground mx-auto">
             <Building2 className="h-7 w-7" />
           </div>
-          <h3 className="text-base font-bold text-slate-700 mt-4">Fasilitas tidak ditemukan</h3>
-          <p className="max-w-sm mx-auto text-sm text-slate-500 mt-1.5">
+          <h3 className="text-base font-bold text-foreground mt-4">Fasilitas tidak ditemukan</h3>
+          <p className="max-w-sm mx-auto text-sm text-muted-foreground mt-1.5">
             Tidak ada fasilitas yang cocok{query.trim() !== "" && (
               <>
                 {" "}
@@ -290,10 +290,10 @@ export default function BlueprintList({ items }: BlueprintListProps) {
       <DialogPrimitive.Root open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
-          <DialogPrimitive.Content className="fixed top-1/2 left-1/2 z-50 w-full max-w-2xl max-h-[85vh] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-white shadow-2xl border border-slate-200 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
+          <DialogPrimitive.Content className="fixed top-1/2 left-1/2 z-50 w-full max-w-2xl max-h-[85vh] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-card shadow-2xl border border-border outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
             {selected && (
               <>
-                <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+                <div className="relative aspect-video w-full overflow-hidden bg-muted">
                   <FacilityMedia src={selected.image} alt={selected.title} />
                   <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
                     <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
@@ -309,14 +309,14 @@ export default function BlueprintList({ items }: BlueprintListProps) {
                   </button>
                 </div>
                 <div className="p-6 sm:p-8">
-                  <DialogPrimitive.Title className="text-xl sm:text-2xl font-extrabold text-slate-900 pr-8">
+                  <DialogPrimitive.Title className="text-xl sm:text-2xl font-extrabold text-foreground pr-8">
                     {selected.title}
                   </DialogPrimitive.Title>
-                  <DialogPrimitive.Description className="mt-3 text-slate-600 leading-relaxed">
+                  <DialogPrimitive.Description className="mt-3 text-muted-foreground leading-relaxed">
                     {selected.description}
                   </DialogPrimitive.Description>
                   {selected.details && (
-                    <p className="mt-4 text-sm text-slate-500 leading-relaxed border-t border-slate-100 pt-4">
+                    <p className="mt-4 text-sm text-muted-foreground leading-relaxed border-t border-border pt-4">
                       {selected.details}
                     </p>
                   )}

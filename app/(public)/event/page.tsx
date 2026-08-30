@@ -15,8 +15,8 @@ export default async function EventPage() {
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
           Kalender Akademik
         </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-1.5">Agenda & Event Teknik</h1>
-        <p className="text-slate-500 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mt-1.5">Agenda & Event Teknik</h1>
+        <p className="text-muted-foreground text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
           Seminar, pelatihan, loka karya, dan konferensi yang kami selenggarakan. Cari berdasarkan
           kata kunci atau saring berdasarkan status acara.
         </p>

@@ -13,19 +13,19 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
   const visible = items.slice(0, 5)
 
   return (
-    <section className="bg-[#f7f9fa] py-16 sm:py-24">
+    <section className="bg-muted py-16 sm:py-24">
       <Container>
         <ScrollReveal className="mx-auto max-w-3xl">
           <div className="text-center">
-            <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-slate-950">
+            <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-foreground">
               Pertanyaan yang Sering Diajukan
             </h2>
-            <p className="mt-3 text-base text-slate-600">
+            <p className="mt-3 text-base text-muted-foreground">
               Jawaban singkat untuk pertanyaan yang paling sering kami terima.
             </p>
           </div>
 
-          <div className="mt-10 divide-y divide-slate-200 border-y border-slate-200">
+          <div className="mt-10 divide-y divide-border border-y border-border">
             {visible.map((faq) => {
               const isOpen = openId === faq.id
               return (
@@ -37,7 +37,7 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
                     aria-controls={`faq-panel-${faq.id}`}
                     className="group flex w-full items-center justify-between gap-6 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                   >
-                    <span className="text-sm font-semibold leading-snug text-slate-900 transition-colors group-hover:text-emerald-800 sm:text-base">
+                    <span className="text-sm font-semibold leading-snug text-foreground transition-colors group-hover:text-emerald-800 sm:text-base">
                       {faq.question}
                     </span>
                     <span
@@ -45,7 +45,7 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
                         "grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-200",
                         isOpen
                           ? "border-emerald-700 bg-emerald-700 text-white"
-                          : "border-slate-300 text-slate-500 group-hover:border-emerald-700 group-hover:text-emerald-700"
+                          : "border-border text-muted-foreground group-hover:border-emerald-700 group-hover:text-emerald-700"
                       )}
                     >
                       <Plus
@@ -63,7 +63,7 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
                     )}
                   >
                     <div className="overflow-hidden">
-                      <p className="pr-6 pb-6 pl-0 leading-relaxed text-slate-600 sm:mr-12 sm:ml-0">
+                      <p className="pr-6 pb-6 pl-0 leading-relaxed text-muted-foreground sm:mr-12 sm:ml-0">
                         {faq.answer}
                       </p>
                     </div>

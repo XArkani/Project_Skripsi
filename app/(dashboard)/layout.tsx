@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { LogoutButton } from "./logout-button";
 import { DashboardLoadingSkeleton } from "./loading-skeleton";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { NavLinks } from "./nav-links";
 import { MobileSidebar } from "./mobile-sidebar";
 import PageContainer from "@/components/dashboard/page-container";
@@ -48,9 +49,12 @@ async function SessionCheck({ children }: { children: React.ReactNode }) {
         </nav>
 
         <div className="shrink-0 border-t border-border/50 p-3">
-          <p className="truncate px-2 pb-2 text-xs font-medium text-muted-foreground">
-            {session.user.email}
-          </p>
+          <div className="flex items-center justify-between px-2 pb-2">
+            <p className="truncate text-xs font-medium text-muted-foreground">
+              {session.user.email}
+            </p>
+            <ThemeToggle />
+          </div>
           <LogoutButton />
         </div>
       </aside>

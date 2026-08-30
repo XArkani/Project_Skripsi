@@ -15,9 +15,9 @@ const contactInfo = [
 ]
 
 const inputClass =
-  "w-full border border-slate-200 rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-colors"
+  "w-full border border-border rounded-xl bg-muted px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-background transition-colors"
 
-const labelClass = "block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5"
+const labelClass = "block text-xs font-bold text-foreground uppercase tracking-wide mb-1.5"
 
 export default function HubungiPage() {
   const [form, setForm] = useState({
@@ -73,10 +73,10 @@ export default function HubungiPage() {
 
       <div className="text-center md:text-left mb-12">
         <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">Hubungi Kami</span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 mt-2 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mt-2 tracking-tight">
           Layanan Pertanyaan Terpadu
         </h1>
-        <p className="text-slate-500 text-sm sm:text-base mt-3 max-w-2xl md:mx-0 mx-auto">
+        <p className="text-muted-foreground text-sm sm:text-base mt-3 max-w-2xl md:mx-0 mx-auto">
           Dapatkan info terakreditasi mengenai penerimaan mahasiswa baru, magang, kerja sama industri, dan layanan
           perkuliahan.
         </p>
@@ -116,8 +116,8 @@ export default function HubungiPage() {
         </div>
 
         <div className="lg:col-span-7 flex">
-          <div className="w-full bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
-            <h3 className="font-extrabold text-xl text-slate-900 mb-6">Ajukan Pertanyaan / Kirim Aspirasi</h3>
+          <div className="w-full bg-card p-6 sm:p-8 rounded-3xl border border-border shadow-sm flex flex-col">
+            <h3 className="font-extrabold text-xl text-foreground mb-6">Ajukan Pertanyaan / Kirim Aspirasi</h3>
 
             <form onSubmit={handleSubmit} className="space-y-5 flex flex-col flex-1">
               <div className="absolute left-[-9999px] top-auto" aria-hidden="true">
@@ -224,15 +224,15 @@ export default function HubungiPage() {
         </div>
       </div>
 
-      <div className="mt-10 rounded-3xl overflow-hidden border border-slate-200 shadow-sm bg-white">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white px-6 sm:px-8 py-4 sm:py-5 border-b border-slate-100">
+      <div className="mt-10 rounded-3xl overflow-hidden border border-border shadow-sm bg-card">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card px-6 sm:px-8 py-4 sm:py-5 border-b border-border">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
               <MapPin className="w-5 h-5 text-emerald-700" />
             </div>
             <div>
-              <h3 className="font-bold text-sm sm:text-base text-slate-900">Lokasi Kampus</h3>
-              <p className="text-xs sm:text-sm text-slate-500">{CONTACT_INFO.mapsAddressShort}</p>
+              <h3 className="font-bold text-sm sm:text-base text-foreground">Lokasi Kampus</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">{CONTACT_INFO.mapsAddressShort}</p>
             </div>
           </div>
           <a

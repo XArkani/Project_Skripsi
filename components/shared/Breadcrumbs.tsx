@@ -11,7 +11,7 @@ interface BreadcrumbsProps {
 
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
-    <nav className="flex items-center space-x-2 text-sm text-slate-500 mb-6">
+    <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-6">
       {items.map((item, index) => {
         const isLast = index === items.length - 1
         return (
@@ -22,7 +22,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 {item.label}
               </Link>
             ) : (
-              <span className={isLast ? "text-slate-900 font-semibold" : ""}>
+              <span className={isLast ? "text-foreground font-semibold" : ""}>
                 {item.label}
               </span>
             )}
