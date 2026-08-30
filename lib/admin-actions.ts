@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidateTag } from "next/cache"
+import { revalidateTag, updateTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
@@ -111,6 +111,7 @@ export async function createRecord(modelName: ModelName, base: string, data: Rec
   const normalized = normalizeEmptyStrings(modelName, data)
   await createOnModel(modelName, normalized)
   revalidateTag(modelTags[modelName], "max")
+  updateTag("home")
   redirect(base)
 }
 
@@ -135,6 +136,7 @@ export async function updateRecord(
   const normalized = normalizeEmptyStrings(modelName, data)
   const record = await updateOnModel(modelName, id, normalized)
   revalidateTag(modelTags[modelName], "max")
+  updateTag("home")
   if (modelName === "event" || modelName === "news") {
     const slug = (record as { slug: string }).slug
     revalidateTag(`${modelName}-${slug}`, "max")
@@ -153,5 +155,6 @@ export async function deleteRecord(modelName: ModelName, id: string) {
   await checkAdmin()
   await deleteOnModel(modelName, id)
   revalidateTag(modelTags[modelName], "max")
+  updateTag("home")
   return { success: true }
 }

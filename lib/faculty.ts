@@ -29,21 +29,21 @@ function toEvent(e: EventRecord): Event {
 export async function getBlueprints(): Promise<Blueprint[]> {
   "use cache"
   cacheTag("blueprint")
-  const data = await prisma.blueprint.findMany({ orderBy: { createdAt: "asc" } })
+  const data = await prisma.blueprint.findMany({ orderBy: { createdAt: "desc" } })
   return data as Blueprint[]
 }
 
 export async function getDosen(): Promise<Dosen[]> {
   "use cache"
   cacheTag("dosen")
-  const data = await prisma.dosen.findMany({ orderBy: { createdAt: "asc" } })
+  const data = await prisma.dosen.findMany({ orderBy: { createdAt: "desc" } })
   return data as Dosen[]
 }
 
 export async function getUKM(): Promise<UKM[]> {
   "use cache"
   cacheTag("ukm")
-  const data = await prisma.ukm.findMany({ orderBy: { createdAt: "asc" } })
+  const data = await prisma.ukm.findMany({ orderBy: { createdAt: "desc" } })
   return data as UKM[]
 }
 
@@ -51,7 +51,7 @@ export async function getEvents(): Promise<Event[]> {
   "use cache"
   cacheTag("event")
   const data = await prisma.event.findMany({
-    orderBy: [{ dateTime: { sort: "asc", nulls: "last" } }, { createdAt: "asc" }],
+    orderBy: [{ dateTime: { sort: "asc", nulls: "last" } }, { createdAt: "desc" }],
   })
   return data.map(toEvent)
 }
@@ -59,14 +59,14 @@ export async function getEvents(): Promise<Event[]> {
 export async function getNews(): Promise<News[]> {
   "use cache"
   cacheTag("news")
-  const data = await prisma.news.findMany({ orderBy: { createdAt: "asc" } })
+  const data = await prisma.news.findMany({ orderBy: { createdAt: "desc" } })
   return data as News[]
 }
 
 export async function getFAQs(): Promise<FAQ[]> {
   "use cache"
   cacheTag("faq")
-  const data = await prisma.faq.findMany({ orderBy: { createdAt: "asc" } })
+  const data = await prisma.faq.findMany({ orderBy: { createdAt: "desc" } })
   return data as FAQ[]
 }
 
