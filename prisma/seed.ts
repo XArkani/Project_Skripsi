@@ -201,6 +201,288 @@ const dosenSamples = [
   },
 ]
 
+const dosenBaru = [
+  {
+    name: "Imam Fathurrahman, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=4EHs0TMAAAAJ&hl=id&oi=sra",
+    nuptk: "7543763664130220",
+    image: "",
+  },
+  {
+    name: "Muhamad Sadali, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=mlhSBPQAAAAJ&hl=id&oi=sra",
+    nuptk: "7452749650130090",
+    image: "",
+  },
+  {
+    name: "Mahpuz, S.E., M.Kom.",
+    prodi: "Informatika",
+    title: "S.E., M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=zztbpcoAAAAJ&hl=id&oi=sra",
+    nuptk: "9563751652131470",
+    image: "",
+  },
+  {
+    name: "Suhartini, S.E., M.Kom.",
+    prodi: "Informatika",
+    title: "S.E., M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=2hvDSxUAAAAJ&hl=id&oi=sra",
+    nuptk: "4563757658237000",
+    image: "",
+  },
+  {
+    name: "Harianto, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=XskmsVgAAAAJ&hl=id&oi=sra",
+    nuptk: "4459768669130270",
+    image: "",
+  },
+  {
+    name: "Ida Wahidah, M.Sc.",
+    prodi: "Informatika",
+    title: "M.Sc.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=NksVoDkAAAAJ&hl=id&oi=sra",
+    nuptk: "7246771672230300",
+    image: "",
+  },
+  {
+    name: "Lalu Kertawijaya, M.Pd.",
+    prodi: "Informatika",
+    title: "M.Pd.",
+    position: "Dosen Informatika",
+    doi: "https://doi.org/10.29408/jt.v3i1.28863",
+    nuptk: "6563759660130470",
+    image: "",
+  },
+  {
+    name: "Jumawal, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.co.id/citations?hl=id&user=FGnR7UEAAAAJ",
+    nuptk: "9546775676130140",
+    image: "",
+  },
+  {
+    name: "Zaenul Amri, S.Pd., M.Kom.",
+    prodi: "Informatika",
+    title: "S.Pd., M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=vkQlr-4AAAAJ&hl=id&oi=sra",
+    nuptk: "2062773674130230",
+    image: "",
+  },
+  {
+    name: "Zulkipli, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://scholar.google.com/citations?user=Dn6PlUYAAAAJ&hl=id&oi=sra",
+    nuptk: "7553767668130260",
+    image: "",
+  },
+  {
+    name: "Taufik Akbar, M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "M.Kom.",
+    position: "Kaprodi Teknik Komputer",
+    doi: "https://scholar.google.com/citations?user=YNj4dmUAAAAJ&hl=id&oi=sra",
+    nuptk: "4961769670137010",
+    image: "",
+  },
+  {
+    name: "Hadian Mandala Putra, S.Si., M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "S.Si., M.Kom.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://scholar.google.com/citations?user=-LpXY9wAAAAJ&hl=id&oi=sra",
+    nuptk: "3855771672130260",
+    image: "",
+  },
+  {
+    name: "Muhammad Qusyairi, M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "M.Kom.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://scholar.google.com/citations?user=PFngjloAAAAJ&hl=id&oi=sra",
+    nuptk: "7036773674130250",
+    image: "",
+  },
+  {
+    name: "Dr. Ramli Ahmad, S.T., M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "S.T., M.Kom.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://scholar.google.com/citations?user=Z60xR8IAAAAJ&hl=id&oi=sra",
+    nuptk: "1551759660130150",
+    image: "",
+  },
+  {
+    name: "Arnila Sandi, M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "M.Kom.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://doi.org/10.29408/jit.v7i2.26375",
+    nuptk: "3150756657230180",
+    image: "",
+  },
+  {
+    name: "Intan Komala Dewi Patwari, S.Kom., M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "S.Kom., M.Kom.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://doi.org/10.29408/jprinter.v2i1.23849",
+    nuptk: "2954765666237020",
+    image: "",
+  },
+  {
+    name: "M. Nuzuluddin, M.Pd.",
+    prodi: "Teknik Komputer",
+    title: "M.Pd.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://scholar.google.com/citations?user=aNxP-nEAAAAJ&hl=id&oi=sra",
+    nuptk: "2560772673130200",
+    image: "",
+  },
+  {
+    name: "Ahwan Ahmadi, M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "M.Kom.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://scholar.google.com/citations?user=rXrFJrkAAAAJ&hl=id&oi=sra",
+    nuptk: "653770671130302",
+    image: "",
+  },
+  {
+    name: "Muhammad Saiful, M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "M.Kom.",
+    position: "Kaprodi Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=Hz5OrOYAAAAJ&hl=id&oi=sra",
+    nuptk: "4752756657131150",
+    image: "",
+  },
+  {
+    name: "Amri Muliawan Nur, S.T., M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "S.T., M.Kom.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=7ujREfMAAAAJ&hl=id&oi=sra",
+    nuptk: "5534758659130240",
+    image: "",
+  },
+  {
+    name: "Hariman Bahtiar, M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "M.Kom.",
+    position: "Dosen Bidang Akademik",
+    doi: "https://scholar.google.com/citations?user=yXyY49UAAAAJ&hl=id&oi=sra",
+    nuptk: "458758660200013",
+    image: "",
+  },
+  {
+    name: "Yahya, S.T., M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "S.T., M.Kom.",
+    position: "Dosen Non-Akademik",
+    doi: "https://scholar.google.com/citations?user=XtvBGBUAAAAJ&hl=id&oi=sra",
+    nuptk: "2552748649110010",
+    image: "",
+  },
+  {
+    name: "Yupi Kuspandi Putra, M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "M.Kom.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=PWmDmeMAAAAJ&hl=id&oi=sra",
+    nuptk: "449761662200042",
+    image: "",
+  },
+  {
+    name: "Amir Bagja, M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "M.Kom.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=71F7A0sAAAAJ&hl=id&oi=sra",
+    nuptk: "7335763664130240",
+    image: "",
+  },
+  {
+    name: "Nur Nurhidayati, S.Pd., M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "S.Pd., M.Kom.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://doi.org/10.29408/jit.v4i1.2989",
+    nuptk: "5453766667230250",
+    image: "",
+  },
+  {
+    name: "Muh. Adrian Juniarta Hidayat, M.Eng.",
+    prodi: "Sistem Informasi",
+    title: "M.Eng.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=V4sreh4AAAAJ&hl=id&oi=sra",
+    nuptk: "939771672130292",
+    image: "",
+  },
+  {
+    name: "L. M. Samsu, S.E., M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "S.E., M.Kom.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=X9ulkvkAAAAJ&hl=id&oi=sra",
+    nuptk: "5563753654131170",
+    image: "",
+  },
+  {
+    name: "Fathurrahman, M.Kom.",
+    prodi: "Sistem Informasi",
+    title: "M.Kom.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=uDJWf4cAAAAJ&hl=id&oi=sra",
+    nuptk: "2057764665130230",
+    image: "",
+  },
+  {
+    name: "Agus Muliadi Putra, M.Si.",
+    prodi: "Teknik Lingkungan",
+    title: "M.Si.",
+    position: "Kaprodi Teknik Lingkungan",
+    doi: "https://scholar.google.com/citations?user=AztHAIYAAAAJ&hl=id&oi=sra",
+    nuptk: "2154763664130210",
+    image: "",
+  },
+  {
+    name: "Baiq Liana Widiyanti, M.Pd.",
+    prodi: "Sistem Informasi",
+    title: "M.Pd.",
+    position: "Lektor",
+    doi: "https://scholar.google.com/citations?user=XXGjluAAAAAJ&hl=id&oi=sra",
+    nuptk: "3344755656230150",
+    image: "",
+  },
+  {
+    name: "Husnayati Hartini, M.Si.",
+    prodi: "Sistem Informasi",
+    title: "M.Si.",
+    position: "Dosen Sistem Informasi",
+    doi: "https://scholar.google.com/citations?user=hanHPkMAAAAJ&hl=id&oi=sra",
+    nuptk: "8144762663231160",
+    image: "",
+  },
+]
+
 const ukmSamples = [
   {
     name: "Robotik Hamzanwadi",
@@ -353,9 +635,10 @@ async function seedBlueprints() {
 }
 
 async function seedDosen() {
-  await prisma.dosen.deleteMany({})
-  await prisma.dosen.createMany({ data: dosenSamples })
-  console.log(`Dosen: reset & ${dosenSamples.length} data baru dibuat.`)
+  await prisma.dosen.createMany({ data: dosenSamples, skipDuplicates: true })
+  const result = await prisma.dosen.createMany({ data: dosenBaru, skipDuplicates: true })
+  const total = await prisma.dosen.count()
+  console.log(`Dosen: ${result.count} baru ditambahkan, total ${total} (4 lama dipertahankan).`)
 }
 
 async function seedUkm() {
@@ -399,63 +682,56 @@ async function seedFaq() {
 }
 
 async function seedStruktur() {
-  const count = await prisma.struktur.count()
-  if (count > 0) {
-    console.log("Struktur organisasi: data sudah ada, dilewati.")
-    return
-  }
-
+  await prisma.struktur.deleteMany({})
   const dekan = await prisma.struktur.create({
     data: {
       parentId: null,
-      role: "Dekan",
-      name: "Dr. Ir. H. Ahmad Fauzi, M.T.",
-      details: "Penanggung jawab penuh penyelenggaraan pendidikan, penelitian, dan pengabdian masyarakat.",
+      role: "Dekan Fakultas Teknik",
+      name: "Dr. H. Muhammad Djamaluddin, B.E., M.Kom.",
+      details: "Pimpinan tertinggi Fakultas Teknik, penanggung jawab penyelenggaraan pendidikan, penelitian, dan pengabdian masyarakat.",
     },
   })
-
   await prisma.struktur.createMany({
     data: [
       {
         parentId: dekan.id,
-        role: "Wakil Dekan Bidang Akademik",
-        name: "Rina Kartika, S.Kom., M.Kom.",
-        details: "Mengkoordinasikan kurikulum, perkuliahan, dan mutu akademik.",
+        role: "Wakil Dekan I",
+        name: "Hariman Bahtiar, M.Kom.",
+        details: "Bidang Akademik",
       },
       {
         parentId: dekan.id,
-        role: "Wakil Dekan Bidang Perencanaan & Keuangan",
-        name: "Budi Santoso, S.T., M.T.",
-        details: "Mengelola perencanaan program, anggaran, dan sarana prasarana.",
+        role: "Wakil Dekan II",
+        name: "Yahya, S.T., M.Kom.",
+        details: "Bidang Non-Akademik",
       },
       {
         parentId: dekan.id,
-        role: "Wakil Dekan Bidang Riset & Pengabdian Masyarakat",
-        name: "Dr. Siti Rahayu, S.T., M.T.",
-        details: "Mengelola program riset, publikasi ilmiah, dan pengabdian kepada masyarakat.",
+        role: "Ketua Program Studi Informatika",
+        name: "Aris Sudianto, M.Kom.",
+        details: "Program Studi Informatika",
       },
       {
         parentId: dekan.id,
-        role: "Wakil Dekan Bidang Perencanaan, SDM & Sarana",
-        name: "Lalu Muhamad Syamsir, S.T., M.Eng.",
-        details: "Menyusun perencanaan program, pengelolaan SDM, dan sarana prasarana.",
+        role: "Ketua Program Studi Teknik Komputer",
+        name: "Taufik Akbar, M.Kom.",
+        details: "Program Studi Teknik Komputer",
       },
       {
         parentId: dekan.id,
-        role: "Ketua Program Studi Teknik Informatika",
-        name: "Dewi Lestari, S.Si., M.Cs.",
-        details: "Memimpin pengelolaan program studi Teknik Informatika.",
+        role: "Ketua Program Studi Sistem Informasi",
+        name: "Muhammad Saiful, M.Kom.",
+        details: "Program Studi Sistem Informasi",
       },
       {
         parentId: dekan.id,
-        role: "Ketua Program Studi Teknik Industri",
-        name: "Ir. H. Muhammad Ridwan, M.T.",
-        details: "Memimpin pengelolaan program studi Teknik Industri.",
+        role: "Ketua Program Studi Teknik Lingkungan",
+        name: "Agus Muliadi Putra, M.Si.",
+        details: "Program Studi Teknik Lingkungan",
       },
     ],
   })
-
-  console.log(`Struktur organisasi: 7 data dibuat.`)
+  console.log(`Struktur organisasi: reset & 7 data baru dibuat (1 Dekan + 2 WD + 4 Kaprodi).`)
 }
 
 async function main() {
