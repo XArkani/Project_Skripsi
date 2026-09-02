@@ -73,8 +73,11 @@ export async function getFAQs(): Promise<FAQ[]> {
 export async function getStruktur(): Promise<Struktur[]> {
   "use cache"
   cacheTag("struktur")
-  const data = await prisma.struktur.findMany({ orderBy: { createdAt: "asc" } })
-  return data as Struktur[]
+  const data = await prisma.struktur.findMany({
+    orderBy: { createdAt: "asc" },
+    select: { id: true, parentId: true, role: true, name: true, details: true },
+  })
+  return data.map((d) => ({ ...d, details: d.details ?? "" })) as Struktur[]
 }
 
 export async function getMessages(): Promise<Message[]> {

@@ -89,14 +89,7 @@ const CONTACT_ICONS: Record<string, LucideIcon> = {
   other: Link2,
 }
 
-const PRIMARY_LABELS: Record<string, string> = {
-  instagram: "Ikuti di Instagram",
-  email: "Kirim Email",
-  whatsapp: "Chat WhatsApp",
-  phone: "Hubungi Telepon",
-  website: "Kunjungi Situs",
-  other: "Hubungi UKM",
-}
+
 
 interface ContactLink {
   type: "instagram" | "email" | "whatsapp" | "phone" | "website" | "other"
@@ -112,11 +105,26 @@ function parseContact(contact: string): ContactLink[] {
     .filter(Boolean)
 
   for (const seg of segments) {
-    const lower = seg.toLowerCase()
+    const urlMatch = seg.match(/https?:\/\/[^\s]+/)
+    if (urlMatch) {
+      const url = urlMatch[0]
+      const lowerUrl = url.toLowerCase()
+      if (lowerUrl.includes("instagram.com")) {
+        const handleMatch = url.match(/instagram\.com\/([a-z0-9_.]+)/i)
+        const handle = handleMatch?.[1]?.split(/[?\/]/)[0]
+        if (handle) {
+          links.push({ type: "instagram", href: `https://www.instagram.com/${handle}`, label: `@${handle}` })
+          continue
+        }
+      }
+      links.push({ type: "website", href: url, label: url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") })
+      continue
+    }
 
+    const lower = seg.toLowerCase()
     const instaMatch = lower.match(/instagram\s*[:@]?\s*@?([a-z0-9_.]{1,30})/)
-    if (instaMatch) {
-      links.push({ type: "instagram", href: `https://instagram.com/${instaMatch[1]}`, label: `@${instaMatch[1]}` })
+    if (instaMatch && instaMatch[1] !== "com") {
+      links.push({ type: "instagram", href: `https://www.instagram.com/${instaMatch[1]}`, label: `@${instaMatch[1]}` })
       continue
     }
 
@@ -128,13 +136,7 @@ function parseContact(contact: string): ContactLink[] {
 
     const rawInstaMatch = seg.match(/@([a-z0-9_.]{1,30})/i)
     if (rawInstaMatch) {
-      links.push({ type: "instagram", href: `https://instagram.com/${rawInstaMatch[1]}`, label: `@${rawInstaMatch[1]}` })
-      continue
-    }
-
-    const urlMatch = seg.match(/https?:\/\/[^\s]+/)
-    if (urlMatch) {
-      links.push({ type: "website", href: urlMatch[0], label: urlMatch[0].replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") })
+      links.push({ type: "instagram", href: `https://www.instagram.com/${rawInstaMatch[1]}`, label: `@${rawInstaMatch[1]}` })
       continue
     }
 
@@ -186,6 +188,10 @@ function UkmLogo({ ukm }: { ukm: UKM }) {
 }
 
 function UkmMedia({ ukm }: { ukm: UKM }) {
+  const src = ukm.logo
+  if (src && IMAGE_URL_PATTERN.test(src) && !isStockImage(src)) {
+    return <Image src={src} alt={`Cover ${ukm.name}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover" />
+  }
   return (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100">
       {createElement(getUkmIcon(ukm), { className: "w-12 h-12 text-emerald-600", "aria-hidden": true })}
@@ -201,8 +207,6 @@ interface CardProps {
 function UkmCard({ ukm, animate }: CardProps) {
   const links = useMemo(() => parseContact(ukm.contact), [ukm.contact])
   const category = getCategory(ukm)
-
-  const primary = links[0]
 
   return (
     <motion.div
@@ -239,36 +243,27 @@ function UkmCard({ ukm, animate }: CardProps) {
           </div>
         )}
 
-        {links.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-3 border-t border-border">
-            {links.map((link, i) => {
-              const Icon = CONTACT_ICONS[link.type]
-              return (
-                <a
-                  key={`${link.href}-${i}`}
-                  href={link.href}
-                  {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="inline-flex items-center gap-1.5 min-h-11 px-3.5 py-2 rounded-lg border border-border bg-background text-sm font-bold text-muted-foreground hover:border-emerald-300 hover:text-emerald-700 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-                >
-                  <Icon className="w-4 h-4 shrink-0 text-emerald-600" aria-hidden="true" />
-                  <span className="truncate max-w-[180px]">{link.label}</span>
-                </a>
-              )
-            })}
+        {links.length > 0 ? (
+          <div className="pt-3 border-t border-border mt-auto">
+            <div className="flex flex-col gap-2">
+              {links.map((link, i) => {
+                const Icon = CONTACT_ICONS[link.type]
+                return (
+                  <a
+                    key={`${link.href}-${i}`}
+                    href={link.href}
+                    {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="w-full flex items-center justify-center gap-2 min-h-11 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50/50 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  >
+                    <Icon className="w-4 h-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                    <span className="truncate">{link.label}</span>
+                  </a>
+                )
+              })}
+            </div>
           </div>
-        )}
-
-        <div className="mt-auto pt-2">
-          {primary && primary.href ? (
-            <a
-              href={primary.href}
-              {...(primary.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors cursor-pointer"
-            >
-              <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-              {PRIMARY_LABELS[primary.type] ?? "Hubungi UKM"}
-            </a>
-          ) : (
+        ) : (
+          <div className="mt-auto pt-3 border-t border-border">
             <Link
               href="/hubungi"
               className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-sm font-bold transition-colors cursor-pointer"
@@ -276,8 +271,8 @@ function UkmCard({ ukm, animate }: CardProps) {
               <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
               Hubungi Selengkapnya
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </motion.div>
   )

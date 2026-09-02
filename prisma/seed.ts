@@ -485,24 +485,57 @@ const dosenBaru = [
 
 const ukmSamples = [
   {
-    name: "Robotik Hamzanwadi",
-    description: "UKM yang fokus pada pengembangan robotika, kompetisi nasional, dan pelatihan IoT.",
-    activities: "Riset robot line follower, humanoid, drone; pelatihan mingguan; lomba nasional.",
-    contact: "robotik@hamzanwadi.ac.id",
+    name: "BEM Fakultas Teknik Universitas Hamzanwadi",
+    description:
+      "Badan Eksekutif Mahasiswa Fakultas Teknik Universitas Hamzanwadi merupakan organisasi kemahasiswaan tingkat fakultas yang menjadi wadah penyaluran aspirasi, pengembangan kepemimpinan, kreativitas, keilmuan, serta kebersamaan mahasiswa Fakultas Teknik.",
+    activities:
+      "Islamic Fest, Talkshow dan Seminar Karier, Bridge Connect, kegiatan kepemimpinan dan kaderisasi, pengembangan minat dan bakat, penelitian dan pengembangan keilmuan, pengabdian kepada masyarakat, serta Musyawarah Besar (MUBES).",
+    contact: "https://www.instagram.com/bemft.uhamzanwadi",
     logo: "",
   },
   {
-    name: "Sistem Informasi Geografis Club",
-    description: "Komunitas mahasiswa yang mendalami pemetaan digital dan aplikasi GIS.",
-    activities: "Praktikum SIG, pembuatan peta digital Lombok, kolaborasi riset daerah.",
-    contact: "sigclub@hamzanwadi.ac.id",
+    name: "Himpunan Mahasiswa Program Studi Informatika",
+    description:
+      "Himpunan Mahasiswa Program Studi Informatika (HMPS Informatika) merupakan organisasi kemahasiswaan di lingkungan Program Studi Informatika Fakultas Teknik Universitas Hamzanwadi. HMPS Informatika menjadi wadah bagi mahasiswa untuk mengembangkan kemampuan akademik maupun nonakademik, kreativitas, kepemimpinan, solidaritas, serta berpartisipasi dalam berbagai kegiatan yang mendukung pengembangan mahasiswa Informatika.",
+    activities:
+      "Pengembangan desain, studi banding, pengenalan program studi ke sekolah, olahraga, kegiatan ilmiah, sosial, pengabdian masyarakat, kompetisi kreatif, dan pengakraban mahasiswa.",
+    contact: "https://www.instagram.com/hmpsi.ftuhamzanwadi",
     logo: "",
   },
   {
-    name: "Kewirausahaan Teknik",
-    description: "UKM pengembangan jiwa wirausaha mahasiswa teknik berbasis produk inovasi.",
-    activities: "Pelatihan bisnis, inkubasi startup, pameran produk mahasiswa.",
-    contact: "wirausaha@hamzanwadi.ac.id",
+    name: "Himpunan Mahasiswa Teknik Komputer",
+    description:
+      "HMPS Teknik Komputer merupakan organisasi kemahasiswaan Program Studi Teknik Komputer Fakultas Teknik Universitas Hamzanwadi yang menjadi wadah bagi mahasiswa untuk mengembangkan kemampuan akademik, teknologi, kepemimpinan, kreativitas, serta mempererat solidaritas dan kebersamaan antar mahasiswa. Organisasi ini juga melaksanakan berbagai program yang mendukung pengembangan kompetensi mahasiswa dan pengabdian kepada masyarakat.",
+    activities:
+      "Organisasi mahasiswa Program Studi Teknik Komputer Fakultas Teknik Universitas Hamzanwadi yang menjadi wadah pengembangan akademik, teknologi, kepemimpinan, kreativitas, dan solidaritas mahasiswa melalui kegiatan pembelajaran, organisasi, serta pengabdian kepada masyarakat.",
+    contact: "https://www.instagram.com/hmpstk_ftuh",
+    logo: "",
+  },
+  {
+    name: "Himpunan Mahasiswa Sistem Informasi",
+    description:
+      "HMPS Sistem Informasi merupakan organisasi mahasiswa Program Studi Sistem Informasi Fakultas Teknik Universitas Hamzanwadi yang menjadi wadah bagi mahasiswa untuk mengembangkan kompetensi akademik, teknologi, kreativitas, kepemimpinan, serta solidaritas. Organisasi ini juga menjalankan berbagai program kerja yang mendukung pengembangan keterampilan mahasiswa dan kegiatan sosial.",
+    activities:
+      "Organisasi mahasiswa Program Studi Sistem Informasi Fakultas Teknik Universitas Hamzanwadi yang menjadi wadah pengembangan akademik, teknologi, kreativitas, kepemimpinan, dan solidaritas mahasiswa melalui berbagai kegiatan pendidikan, sosial, serta pengembangan kompetensi.",
+    contact: "https://www.instagram.com/hmps_sisteminformasi",
+    logo: "",
+  },
+  {
+    name: "Himpunan Mahasiswa Teknik Lingkungan",
+    description:
+      "Himpunan Mahasiswa Program Studi Teknik Lingkungan Fakultas Teknik Universitas Hamzanwadi merupakan wadah bagi mahasiswa untuk mengembangkan kemampuan akademik, kepemimpinan, solidaritas, serta kepedulian terhadap lingkungan melalui berbagai kegiatan pendidikan, konservasi, sosial, dan pengabdian kepada masyarakat.",
+    activities:
+      "Edukasi dan sosialisasi lingkungan, penanaman pohon, konservasi sumber mata air, penghijauan, pengabdian kepada masyarakat, edukasi konservasi hutan, serta kegiatan sosial dan pelestarian lingkungan.",
+    contact: "https://www.instagram.com/hmpstekling_ftuh",
+    logo: "",
+  },
+  {
+    name: "HIMMAH NWDI Komisariat Fakultas Teknik",
+    description:
+      "Himpunan Mahasiswa Nahdlatul Wathan Diniyah Islamiyah (HIMMAH NWDI) Komisariat Fakultas Teknik merupakan organisasi yang menjadi wadah pengembangan kepemimpinan, intelektualitas, kreativitas, inovasi, serta kepedulian sosial dan keagamaan bagi kader Fakultas Teknik Universitas Hamzanwadi.",
+    activities:
+      "Wahana Pengkaderan (WaPa), Kelas Khusus Robotika/IoT, kegiatan sosial dan pengabdian masyarakat, berbagi takjil Ramadhan, buka puasa bersama, kegiatan keagamaan, pelatihan dan pengembangan intelektual, serta kegiatan pengembangan kreativitas dan inovasi kader.",
+    contact: "https://www.instagram.com/himmahnwdi_ftek",
     logo: "",
   },
 ]
@@ -585,24 +618,79 @@ const newsSamples = [
 
 const faqSamples = [
   {
-    question: "Bagaimana cara mendaftar menjadi mahasiswa baru Fakultas Teknik?",
+    question: "Apa itu Fakultas Teknik Universitas Hamzanwadi?",
     answer:
-      "Pendaftaran dilakukan melalui jalur prestasi, jalur tes, atau jalur beasiswa afirmasi. Informasi jadwal dan persyaratan dapat diakses pada halaman Penerimaan Mahasiswa Baru atau menghubungi layanan pertanyaan terpadu.",
+      "Fakultas Teknik Universitas Hamzanwadi merupakan fakultas yang berfokus pada pendidikan dan pengembangan ilmu pengetahuan di bidang teknologi, komputasi, dan rekayasa lingkungan.",
   },
   {
-    question: "Apakah fakultas menyediakan beasiswa?",
+    question: "Apa saja program studi yang tersedia di Fakultas Teknik Universitas Hamzanwadi?",
     answer:
-      "Ya. Fakultas menyediakan beasiswa prestasi akademik, bantuan UKT, serta beasiswa afirmasi bagi mahasiswa dari daerah terdepan, terluar, dan tertinggal.",
+      "Fakultas Teknik Universitas Hamzanwadi memiliki empat program studi jenjang S1, yaitu Teknik Informatika, Sistem Informasi, Teknik Komputer, dan Teknik Lingkungan.",
   },
   {
-    question: "Apa saja kegiatan kemahasiswaan yang tersedia?",
+    question: "Apa yang dipelajari di Program Studi Teknik Informatika?",
     answer:
-      "Tersedia berbagai UKM seperti Robotik Hamzanwadi, SIG Club, dan UKM Kewirausahaan Teknik, serta kegiatan rutin seperti seminar, workshop, dan lomba tingkat nasional.",
+      "Program Studi Teknik Informatika mempelajari bidang pemrograman, rekayasa perangkat lunak, pengembangan aplikasi, kecerdasan buatan, data, jaringan komputer, serta berbagai teknologi komputasi.",
   },
   {
-    question: "Bagaimana cara mengajukan kunjungan atau kerja sama industri?",
+    question: "Apa yang dipelajari di Program Studi Sistem Informasi?",
     answer:
-      "Ajukan surat resmi melalui bagian layanan fakultas atau kirimkan melalui halaman Hubungi Kami. Staf kami akan memproses permohonan dalam maksimal 3 hari kerja.",
+      "Program Studi Sistem Informasi mempelajari penerapan teknologi informasi dalam organisasi, seperti analisis dan perancangan sistem, basis data, pengelolaan informasi, serta pemanfaatan teknologi untuk mendukung proses bisnis.",
+  },
+  {
+    question: "Apa yang dipelajari di Program Studi Teknik Komputer?",
+    answer:
+      "Program Studi Teknik Komputer mempelajari integrasi perangkat keras dan perangkat lunak, seperti mikrokontroler, embedded system, Internet of Things (IoT), jaringan komputer, dan sistem kendali.",
+  },
+  {
+    question: "Apa yang dipelajari di Program Studi Teknik Lingkungan?",
+    answer:
+      "Program Studi Teknik Lingkungan mempelajari pengelolaan lingkungan, pengolahan air dan limbah, sanitasi, pengendalian pencemaran, serta penerapan teknologi yang mendukung keberlanjutan lingkungan.",
+  },
+  {
+    question: "Apa perbedaan Teknik Informatika, Sistem Informasi, dan Teknik Komputer?",
+    answer:
+      "Teknik Informatika lebih berfokus pada perangkat lunak dan komputasi, Sistem Informasi berfokus pada penerapan teknologi dalam organisasi dan bisnis, sedangkan Teknik Komputer berfokus pada integrasi perangkat keras, perangkat lunak, jaringan, dan sistem tertanam.",
+  },
+  {
+    question: "Di mana saya dapat melihat informasi dosen Fakultas Teknik?",
+    answer:
+      "Informasi mengenai dosen Fakultas Teknik dapat dilihat melalui halaman Data Dosen, yang menyediakan informasi dosen berdasarkan program studi di lingkungan Fakultas Teknik.",
+  },
+  {
+    question: "Bagaimana cara mengetahui struktur organisasi Fakultas Teknik?",
+    answer:
+      "Informasi mengenai Dekan, Wakil Dekan, Ketua Program Studi, serta struktur pengelola Fakultas Teknik dapat dilihat melalui halaman Struktur Organisasi.",
+  },
+  {
+    question: "Di mana saya dapat melihat informasi fasilitas dan laboratorium Fakultas Teknik?",
+    answer:
+      "Informasi mengenai fasilitas, ruangan, serta laboratorium yang tersedia dapat dilihat melalui halaman Blueprint Fakultas pada website.",
+  },
+  {
+    question: "Bagaimana cara mengetahui kegiatan terbaru Fakultas Teknik?",
+    answer:
+      "Informasi mengenai seminar, kegiatan akademik, kegiatan mahasiswa, dan agenda Fakultas Teknik dapat dilihat melalui halaman Event.",
+  },
+  {
+    question: "Di mana saya dapat melihat berita terbaru Fakultas Teknik?",
+    answer:
+      "Berita mengenai kegiatan, prestasi, informasi akademik, dan perkembangan terbaru Fakultas Teknik dapat dilihat melalui halaman Berita pada website.",
+  },
+  {
+    question: "Apakah terdapat organisasi mahasiswa di Fakultas Teknik?",
+    answer:
+      "Ya. Fakultas Teknik memiliki organisasi mahasiswa yang menjadi wadah bagi mahasiswa untuk mengembangkan kemampuan organisasi, kepemimpinan, kreativitas, dan kegiatan kemahasiswaan. Informasinya dapat dilihat melalui halaman Organisasi Mahasiswa.",
+  },
+  {
+    question: "Bagaimana cara mendaftar menjadi mahasiswa Fakultas Teknik Universitas Hamzanwadi?",
+    answer:
+      "Pendaftaran dilakukan melalui sistem Penerimaan Mahasiswa Baru Universitas Hamzanwadi. Calon mahasiswa dapat memilih salah satu program studi yang tersedia di Fakultas Teknik sesuai dengan jalur dan periode penerimaan yang berlaku.",
+  },
+  {
+    question: "Bagaimana jika informasi yang saya cari tidak tersedia di website?",
+    answer:
+      "Jika informasi yang dibutuhkan belum tersedia, pengunjung dapat menggunakan halaman Hubungi Kami untuk mengirimkan pertanyaan atau pesan kepada pengelola Fakultas Teknik.",
   },
 ]
 
@@ -642,13 +730,9 @@ async function seedDosen() {
 }
 
 async function seedUkm() {
-  const count = await prisma.ukm.count()
-  if (count > 0) {
-    console.log("UKM: data sudah ada, dilewati.")
-    return
-  }
+  await prisma.ukm.deleteMany({})
   await prisma.ukm.createMany({ data: ukmSamples })
-  console.log(`UKM: ${ukmSamples.length} data dibuat.`)
+  console.log(`UKM: reset & ${ukmSamples.length} data baru dibuat.`)
 }
 
 async function seedEvents() {
@@ -672,13 +756,9 @@ async function seedNews() {
 }
 
 async function seedFaq() {
-  const count = await prisma.faq.count()
-  if (count > 0) {
-    console.log("FAQ: data sudah ada, dilewati.")
-    return
-  }
+  await prisma.faq.deleteMany({})
   await prisma.faq.createMany({ data: faqSamples })
-  console.log(`FAQ: ${faqSamples.length} data dibuat.`)
+  console.log(`FAQ: reset & ${faqSamples.length} data baru dibuat.`)
 }
 
 async function seedStruktur() {
