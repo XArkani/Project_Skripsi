@@ -157,11 +157,15 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
       )
     }
     if (field.type === "date") {
+      // Nilai dari DB berupa ISO datetime ("2026-08-19T00:00:00.000Z") yang
+      // tidak bisa ditampilkan input type="date" (tampil kosong). Potong ke
+      // YYYY-MM-DD agar tanggal tersimpan terlihat & tetap valid saat submit.
+      const dateValue = /^\d{4}-\d{2}-\d{2}/.test(value) ? value.slice(0, 10) : value
       return (
         <Input
           id={inputId}
           type="date"
-          value={value}
+          value={dateValue}
           onChange={(e) => handleChange(field.name, e.target.value)}
         />
       )

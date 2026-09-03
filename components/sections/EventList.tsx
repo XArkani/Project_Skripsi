@@ -148,7 +148,7 @@ export default function EventList({ events }: EventListProps) {
 
   const filteredEvents = events
     .filter(matches)
-    .sort((a, b) => (a.dateTime ?? "").localeCompare(b.dateTime ?? ""))
+    .sort((a, b) => (b.dateTime ?? "").localeCompare(a.dateTime ?? ""))
 
   const hasFilter = query.trim() !== "" || activeStatus !== "Semua"
 

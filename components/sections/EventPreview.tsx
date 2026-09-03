@@ -1,5 +1,6 @@
+import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Clock3, MapPin } from "lucide-react"
+import { Clock3, MapPin } from "lucide-react"
 import type { Event } from "@/lib/types"
 import Container from "@/components/ui/container"
 import SectionHeading from "@/components/ui/section-heading"
@@ -35,11 +36,21 @@ const statusDot: Record<string, string> = {
   Selesai: "bg-slate-400",
 }
 
-export default function EventPreview({ items }: { items: Event[] }) {
-  const [featured, ...rest] = items
-  const agenda = rest.slice(0, 3)
+function isStockImage(src: string) {
+  try {
+    return new URL(src).hostname.includes("unsplash")
+  } catch {
+    return false
+  }
+}
 
+export default function EventPreview({ items }: { items: Event[] }) {
+  // Featured dipin ke event BISINDO agar tidak double dengan berita terbaru
+  // (Uji Kompetensi). Fallback ke event terbaru bila slug tidak ditemukan.
+  const pinned = items.find((e) => e.slug === "pelatihan-bahasa-isyarat-indonesia-bisindo-dan-relawan-mengabdi")
+  const featured = pinned ?? items[0]
   if (!featured) return null
+  const agenda = items.filter((e) => e.slug !== featured.slug).slice(0, 3)
   const f = dateParts(featured)
 
   return (
@@ -60,8 +71,19 @@ export default function EventPreview({ items }: { items: Event[] }) {
               href={`/event/${featured.slug}`}
               className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             >
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <ImagePlaceholder label={featured.title} className="h-full w-full" />
+              <div className="relative aspect-[16/9] overflow-hidden bg-muted">
+                {featured.image && !isStockImage(featured.image) ? (
+                  <Image
+                    src={featured.image}
+                    alt={featured.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <ImagePlaceholder label={featured.title} className="h-full w-full" />
+                )}
                 <span className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold text-white ${statusChip[featured.status] ?? "bg-slate-700"}`}>
                   {featured.status}
                 </span>
@@ -135,13 +157,6 @@ export default function EventPreview({ items }: { items: Event[] }) {
                 })
               )}
             </div>
-            <Link
-              href="/event"
-              className="group mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 hover:text-emerald-800"
-            >
-              Lihat Semua Agenda
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
-            </Link>
           </div>
         </div>
         </ScrollReveal>

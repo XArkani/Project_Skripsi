@@ -1,7 +1,8 @@
 import { Agentation } from "agentation";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import Script from "next/script";
+import { CustomThemeProvider } from "@/components/shared/theme-provider";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import RegisterSW from "@/components/pwa/RegisterSW";
@@ -35,6 +36,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
@@ -51,7 +54,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        {/* Blocking theme script: sets the theme class before hydration to
+            prevent a flash of the wrong theme. Handled by Next.js infrastructure
+            (not rendered inside a React component tree), so it never triggers
+            the React 19 "script tag in component" console error. */}
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem("theme")||"system";var r=t==="system"?(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):t;document.documentElement.classList.add(r);document.documentElement.style.colorScheme=r;}catch(e){}})();`}
+        </Script>
+        <CustomThemeProvider>
         <div
           hidden
           data-design-contract="FT_HOMEPAGE_REDESIGN"
@@ -71,7 +81,7 @@ export default function RootLayout({
         <RegisterSW />
         <InstallPrompt />
         {process.env.NODE_ENV === "development" && <Agentation />}
-        </ThemeProvider>
+        </CustomThemeProvider>
       </body>
     </html>
   );

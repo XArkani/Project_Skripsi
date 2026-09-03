@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getEventBySlug, getEvents } from "@/lib/faculty"
-import { Calendar, Clock, MapPin, ArrowLeft, CheckCircle2 } from "lucide-react"
+import { Calendar, Clock, MapPin, ArrowLeft, CheckCircle2, ExternalLink } from "lucide-react"
 import { statusConfig } from "@/lib/status"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
@@ -105,6 +105,27 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
               </>
             )}
           </div>
+
+          {evt.source && (
+            <div className="rounded-2xl border border-border bg-muted/40 px-5 py-4 text-sm">
+              <p className="text-muted-foreground">
+                <span className="font-bold text-foreground">Sumber: </span>
+                {evt.sourceUrl ? (
+                  <a
+                    href={evt.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
+                  >
+                    {evt.source}
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                  </a>
+                ) : (
+                  <span className="font-semibold text-foreground">{evt.source}</span>
+                )}
+              </p>
+            </div>
+          )}
 
           <div className="pt-6 border-t border-border flex flex-wrap gap-4 items-center justify-between">
             <p className="text-sm text-muted-foreground">

@@ -45,11 +45,11 @@ function StatCell({ stat, start }: { stat: Stat; start: boolean }) {
   return (
     <div>
       <span className="mb-3 block h-1 w-8 rounded-full bg-emerald-400" aria-hidden="true" />
-      <p className="tnum text-4xl font-bold tracking-tight text-white sm:text-[3.25rem] lg:text-5xl">
+      <p className="tnum text-3xl font-bold tracking-tight text-white sm:text-[3.25rem] lg:text-5xl">
         {count}
         {suffix}
       </p>
-      <p className="mt-1.5 text-sm font-medium text-emerald-100/85">{stat.label}</p>
+      <p className="mt-1.5 text-[13px] font-medium leading-snug text-emerald-100/85 sm:text-sm">{stat.label}</p>
     </div>
   )
 }

@@ -23,10 +23,30 @@ const modelTags: Record<ModelName, string> = {
 const STRING_FIELD_TYPES = new Set(["text", "textarea", "slug", "select", "image"])
 const NULLABLE_UNIQUE_FIELDS = new Set(["nuptk"])
 
+/**
+ * Buang semua key yang bukan field model (mis. `id`, `createdAt`,
+ * `updatedAt` yang ikut terkirim dari form edit) agar tidak sengaja
+ * tertulis ke kolom read-only. Pengaman untuk semua halaman edit.
+ */
+function sanitizePayload(modelName: ModelName, data: Record<string, unknown>) {
+  const allowed = new Set((fieldConfigMap[modelName] ?? []).map((f) => f.name))
+  const next: Record<string, unknown> = {}
+  for (const [key, value] of Object.entries(data)) {
+    if (allowed.has(key)) next[key] = value
+  }
+  return next
+}
+
 function normalizeEmptyStrings(modelName: ModelName, data: Record<string, unknown>) {
   const fields = fieldConfigMap[modelName] ?? []
   const next: Record<string, unknown> = { ...data }
   for (const f of fields) {
+    // Input tanggal yang dikosongkan terkirim sebagai "" — Prisma menolak
+    // string kosong untuk DateTime, jadi ubah ke null (kolom nullable).
+    if (f.type === "date" && next[f.name] === "") {
+      next[f.name] = null
+      continue
+    }
     if (STRING_FIELD_TYPES.has(f.type)) {
       if (NULLABLE_UNIQUE_FIELDS.has(f.name)) {
         if (next[f.name] == null || next[f.name] === "") next[f.name] = null
@@ -107,7 +127,7 @@ export async function createRecord(modelName: ModelName, _base: string, data: Re
     const title = String(data.title ?? "")
     data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title)
   }
-  const normalized = normalizeEmptyStrings(modelName, data)
+  const normalized = normalizeEmptyStrings(modelName, sanitizePayload(modelName, data))
   await createOnModel(modelName, normalized)
   // updateTag = expire seketika (read-your-own-writes). Jangan pakai
   // revalidateTag di sini karena itu stale-while-revalidate (butuh 1x
@@ -136,7 +156,7 @@ export async function updateRecord(
     const title = String(data.title ?? "")
     data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title, undefined, id)
   }
-  const normalized = normalizeEmptyStrings(modelName, data)
+  const normalized = normalizeEmptyStrings(modelName, sanitizePayload(modelName, data))
   const record = await updateOnModel(modelName, id, normalized)
   updateTag(modelTags[modelName])
   updateTag("home")

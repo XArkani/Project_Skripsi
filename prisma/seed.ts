@@ -542,44 +542,84 @@ const ukmSamples = [
 
 const eventSamples = [
   {
-    title: "Seminar Nasional Teknologi 2026",
-    slug: "seminar-nasional-teknologi-2026",
-    status: "Akan Datang",
-    date: "2026-09-15",
-    dateTime: "2026-09-15T00:00:00.000Z",
-    time: "09:00 - 15:00 WITA",
-    location: "Aula Fakultas Teknik",
-    description:
-      "Seminar tahunan dengan tema 'Teknologi Digital untuk Masa Depan Lombok yang Berkelanjutan'.",
-    details:
-      "Pembicara utama praktisi industri dan akademisi nasional. Terbuka untuk umum, mahasiswa, dan alumni. Pendaftaran melalui bagian layanan fakultas.",
-    image: "",
-  },
-  {
-    title: "Workshop Internet of Things",
-    slug: "workshop-internet-of-things",
-    status: "Sedang Berlangsung",
-    date: "2026-08-12",
-    dateTime: "2026-08-12T00:00:00.000Z",
-    time: "08:30 - 16:00 WITA",
-    location: "Laboratorium Robotika & IoT",
-    description: "Pelatihan praktis merancang perangkat IoT untuk pemantauan lingkungan pertanian.",
-    details:
-      "Peserta dibatasi 30 mahasiswa. Modul lengkap disediakan, termasuk kit sensor gratis bagi peserta terpilih.",
-    image: "",
-  },
-  {
-    title: "Konferensi Mahasiswa Teknik",
-    slug: "konferensi-mahasiswa-teknik",
+    title: "Uji Kompetensi Mahasiswa Fakultas Teknik Universitas Hamzanwadi 2026",
+    slug: "uji-kompetensi-mahasiswa-fakultas-teknik-universitas-hamzanwadi-2026",
     status: "Selesai",
-    date: "2026-05-20",
-    dateTime: "2026-05-20T00:00:00.000Z",
-    time: "08:00 - 17:00 WITA",
-    location: "Gedung Kuliah Bersama",
-    description: "Forum presentasi hasil penelitian dan karya mahasiswa antar program studi.",
+    date: "19–20 Agustus 2026",
+    dateTime: new Date("2026-08-19T00:00:00.000Z"),
+    time: "08.00 WITA",
+    location: "Fakultas Teknik Universitas Hamzanwadi, Pancor, Lombok Timur",
+    description:
+      "Fakultas Teknik Universitas Hamzanwadi menyelenggarakan Uji Kompetensi Mahasiswa selama dua hari yang diikuti mahasiswa tingkat akhir dari berbagai program studi. Kegiatan ini bertujuan memastikan mahasiswa tidak hanya memahami teori akademik, tetapi juga memiliki keterampilan teknis dan praktis yang relevan dengan kebutuhan dunia kerja.",
     details:
-      "Sebanyak 45 makalah dipresentasikan. Best paper mendapatkan pendanaan riset dari fakultas.",
+      "Uji Kompetensi Mahasiswa merupakan salah satu kegiatan Fakultas Teknik Universitas Hamzanwadi untuk mengukur kesiapan mahasiswa sebelum memasuki dunia profesional.\n\nPelaksanaan tahun 2026 mencakup delapan bidang keahlian, yaitu Rekayasa Perangkat Lunak, Internet of Things dan Robotika, Mikrokontroler, Data Mining/Data Science, Multimedia, Jaringan Komputer, Manajemen Lingkungan, serta Rekayasa Lingkungan.\n\nMelalui kegiatan tersebut, mahasiswa diuji sesuai bidang kompetensi masing-masing. Pada bidang Rekayasa Perangkat Lunak, mahasiswa diuji dalam kemampuan perancangan, pemrograman, dan pengujian aplikasi.\n\nBidang Internet of Things dan Robotika menguji kemampuan mahasiswa dalam integrasi sensor, otomatisasi, pemrograman, dan pengembangan sistem berbasis perangkat cerdas.\n\nPada bidang Data Mining dan Data Science, kompetensi mahasiswa dinilai melalui proses analisis data, pemodelan, dan penyajian informasi.\n\nSementara pada bidang lingkungan, mahasiswa diuji mengenai pengelolaan lingkungan, limbah, air bersih, mitigasi risiko, serta penerapan solusi rekayasa lingkungan.\n\nFakultas Teknik menempatkan kegiatan Uji Kompetensi sebagai bagian dari peningkatan kualitas lulusan agar mahasiswa memiliki kompetensi akademik sekaligus kemampuan profesional yang sesuai dengan kebutuhan industri.",
     image: "",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/id/news/details/pastikan-lulusan-kompeten-dan-profesional-fakultas/",
+  },
+  {
+    title: "IT Competition IX Fakultas Teknik Universitas Hamzanwadi",
+    slug: "it-competition-ix-fakultas-teknik-universitas-hamzanwadi",
+    status: "Selesai",
+    date: "6 Juli 2026",
+    dateTime: new Date("2026-07-06T00:00:00.000Z"),
+    time: "08.00 WITA",
+    location: "Gedung Fakultas Teknik Universitas Hamzanwadi",
+    description:
+      "IT Competition IX merupakan kompetisi teknologi yang diselenggarakan Fakultas Teknik Universitas Hamzanwadi sebagai wadah pengembangan kreativitas, inovasi, kemampuan berpikir kritis, dan pemecahan masalah bagi generasi muda. Kegiatan ini diikuti lebih dari 50 peserta dari berbagai daerah di Pulau Lombok.",
+    details:
+      "IT Competition IX diselenggarakan di Gedung Fakultas Teknik Universitas Hamzanwadi pada 6 Juli 2026.\n\nKegiatan tahunan yang telah memasuki penyelenggaraan kesembilan tersebut dirancang sebagai ruang kompetisi sekaligus pengembangan kemampuan generasi muda pada bidang teknologi informasi.\n\nLebih dari 50 peserta dari berbagai wilayah di Pulau Lombok mengikuti kegiatan tersebut.\n\nIT Competition IX mempertandingkan lima bidang kompetisi, yaitu Lomba Cerdas Cermat IT dan Lingkungan tingkat SMA/sederajat, Kompetisi Robotik, Cyber Security, Sayembara Poster, serta E-Sport Mobile Legends.\n\nPada kategori robotika, terdapat Robot Sumo dan Robot Soccer yang menjadi salah satu kategori dengan tingkat antusiasme peserta cukup tinggi.\n\nMelalui kompetisi tersebut, Fakultas Teknik Universitas Hamzanwadi ingin memberikan ruang kepada generasi muda untuk meningkatkan kreativitas, inovasi, kemampuan berpikir kritis, kemampuan teknis, serta kemampuan menyelesaikan permasalahan.\n\nFakultas Teknik juga berencana mengembangkan penyelenggaraan IT Competition pada tahun berikutnya agar mampu menjangkau peserta dengan skala yang lebih luas hingga tingkat nasional.",
+    image: "",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/id/news/details/asah-kreativitas-dan-inovasi-digital-pelajar-fakul/",
+  },
+  {
+    title: "Pelatihan Bahasa Isyarat Indonesia (BISINDO) dan Relawan Mengabdi",
+    slug: "pelatihan-bahasa-isyarat-indonesia-bisindo-dan-relawan-mengabdi",
+    status: "Selesai",
+    date: "25 Juni 2026",
+    dateTime: new Date("2026-06-25T00:00:00.000Z"),
+    time: "08.00 WITA",
+    location: "Aula Fakultas Teknik Universitas Hamzanwadi",
+    description:
+      "Universitas Hamzanwadi membuka Program Pelatihan Bahasa Isyarat Indonesia (BISINDO) dan Relawan Mengabdi untuk meningkatkan kemampuan komunikasi bahasa isyarat sekaligus membangun kepedulian dan semangat kerelawanan dalam memberikan layanan kepada penyandang disabilitas.",
+    details:
+      "Pembukaan Program Pelatihan Bahasa Isyarat Indonesia atau BISINDO dan Relawan Mengabdi diselenggarakan pada 25 Juni 2026 di Aula Fakultas Teknik Universitas Hamzanwadi.\n\nKegiatan tersebut melibatkan berbagai unsur Universitas Hamzanwadi dan mitra eksternal.\n\nPeserta dan undangan berasal dari Pusat Layanan Disabilitas Universitas Hamzanwadi, Perpustakaan dan Kearsipan Daerah Lombok Timur, Dinas Pendidikan dan Kebudayaan Lombok Timur, mitra sekolah, relawan PLD, serta peserta pelatihan BISINDO.\n\nProgram pelatihan difokuskan pada pengembangan kemampuan peserta dalam berkomunikasi menggunakan Bahasa Isyarat Indonesia.\n\nSelain pembelajaran bahasa isyarat, kegiatan ini juga diarahkan untuk membentuk kepedulian sosial dan semangat kerelawanan sehingga peserta memiliki kemampuan dalam memberikan layanan dan pendampingan yang lebih baik kepada penyandang disabilitas.\n\nKegiatan pembukaan menjadi bagian awal dari rangkaian pelatihan dan kegiatan pengabdian yang mendukung terciptanya lingkungan pendidikan yang semakin inklusif.",
+    image: "",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/news/details/pembukaan-program-pelatihan-bahasa-isyarat-indones/",
+  },
+  {
+    title: "FGD Validasi dan Penyempurnaan Kurikulum OBE Program Studi Teknik Komputer",
+    slug: "fgd-validasi-dan-penyempurnaan-kurikulum-obe-program-studi-teknik-komputer",
+    status: "Selesai",
+    date: "18 April 2026",
+    dateTime: new Date("2026-04-18T00:00:00.000Z"),
+    time: "08.00 WITA",
+    location: "Ruang B2, Fakultas Teknik Universitas Hamzanwadi",
+    description:
+      "Program Studi Teknik Komputer Fakultas Teknik Universitas Hamzanwadi menyelenggarakan Focus Group Discussion untuk melakukan validasi dan penyempurnaan Kurikulum Outcome-Based Education 2026 dengan melibatkan akademisi, mahasiswa, alumni, dan praktisi industri.",
+    details:
+      "Focus Group Discussion atau FGD dilaksanakan pada 18 April 2026 di Ruang B2 Fakultas Teknik Universitas Hamzanwadi.\n\nKegiatan tersebut merupakan bagian dari proses validasi dan penyempurnaan Kurikulum Outcome-Based Education atau OBE Program Studi Teknik Komputer.\n\nPenyempurnaan kurikulum dilakukan agar kompetensi mahasiswa dan profil lulusan tetap relevan dengan perkembangan teknologi serta kebutuhan dunia industri.\n\nProgram Studi Teknik Komputer melibatkan berbagai pihak dalam kegiatan ini, mulai dari unsur akademik, mahasiswa, alumni hingga praktisi industri.\n\nBeberapa mitra industri yang dilibatkan antara lain Lombok Center IT, PT Solah Solution Indonesia, dan CV RoboKids Academy.\n\nDiskusi menghasilkan sejumlah rekomendasi terkait penguatan kompetensi mahasiswa pada bidang embedded system, Internet of Things, jaringan komputer, keamanan siber, fabrikasi digital, serta desain 3D.\n\nSelain itu, pembelajaran berbasis proyek dan praktik direkomendasikan untuk terus dikembangkan.\n\nKolaborasi dengan industri juga diarahkan melalui kegiatan magang, kuliah praktisi, program MBKM, kemitraan teknologi, serta penelitian terapan antara dosen dan mahasiswa.\n\nHasil FGD digunakan sebagai salah satu dasar untuk melakukan penyempurnaan Kurikulum OBE Program Studi Teknik Komputer.",
+    image: "",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/id/news/details/diskusi-kelompok-terfokus-fgd-tentang-kurikulum-ob/",
+  },
+  {
+    title: "Informatics Robotic Innovation Cup (IRIC) 2026",
+    slug: "informatics-robotic-innovation-cup-iric-2026",
+    status: "Selesai",
+    date: "23–24 Januari 2026",
+    dateTime: new Date("2026-01-23T00:00:00.000Z"),
+    time: "08.00 WITA",
+    location: "Aula Fakultas Teknik Universitas Hamzanwadi",
+    description:
+      "Program Studi Informatika Fakultas Teknik Universitas Hamzanwadi menyelenggarakan Informatics Robotic Innovation Cup atau IRIC 2026 sebagai kompetisi robotika tingkat provinsi yang melibatkan mahasiswa serta pelajar SMP dan SMA dari berbagai wilayah di Nusa Tenggara Barat.",
+    details:
+      "Informatics Robotic Innovation Cup atau IRIC 2026 diselenggarakan selama dua hari pada 23–24 Januari 2026 di Aula Fakultas Teknik Universitas Hamzanwadi.\n\nKegiatan tersebut mengusung tema \"Cipta, Karya, Teknologi\" dan menjadi salah satu kegiatan Program Studi Informatika dalam mendorong kreativitas dan inovasi generasi muda pada bidang teknologi robotika.\n\nPeserta berasal dari kalangan mahasiswa serta pelajar SMP, SMA, dan sederajat dari berbagai daerah di Nusa Tenggara Barat.\n\nKompetisi dibagi menjadi kategori Robot Soccer untuk peserta mahasiswa dan Robot Avoider untuk peserta tingkat sekolah.\n\nSelama kompetisi, peserta dituntut menerapkan kemampuan perancangan robot, pemrograman, algoritma, strategi, logika, dan penyelesaian masalah.\n\nIRIC juga menjadi sarana untuk mengenalkan perkembangan teknologi robotika kepada pelajar sekaligus meningkatkan kemampuan mahasiswa dalam mengimplementasikan pengetahuan teknologi yang telah diperoleh selama proses pembelajaran.\n\nKegiatan ditutup dengan pemberian penghargaan kepada peserta terbaik.\n\nFakultas Teknik berharap IRIC dapat terus dikembangkan sebagai salah satu wadah kompetisi teknologi sehingga mahasiswa dan pelajar memiliki kemampuan inovasi serta daya saing yang semakin baik.",
+    image: "",
+    source: "Website Resmi Fakultas Teknik Universitas Hamzanwadi",
+    sourceUrl: "https://ft.hamzanwadi.ac.id/in/galeri/detail/fakultas-teknik-universitas-hamzanwadi-sukses-gela/",
   },
 ]
 
@@ -790,13 +830,10 @@ async function seedUkm() {
 }
 
 async function seedEvents() {
-  const count = await prisma.event.count()
-  if (count > 0) {
-    console.log("Event: data sudah ada, dilewati.")
-    return
+  for (const item of eventSamples) {
+    await prisma.event.upsert({ where: { slug: item.slug }, update: {}, create: item })
   }
-  await prisma.event.createMany({ data: eventSamples, skipDuplicates: true })
-  console.log(`Event: ${eventSamples.length} data dibuat.`)
+  console.log(`Event: ${eventSamples.length} data dipastikan ada (upsert by slug, tanpa duplikat).`)
 }
 
 async function seedNews() {

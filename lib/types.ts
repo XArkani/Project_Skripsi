@@ -43,6 +43,8 @@ export interface Event {
   description: string
   details: string
   image: string
+  source?: string | null
+  sourceUrl?: string | null
 }
 
 export interface News {

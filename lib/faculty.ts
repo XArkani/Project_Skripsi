@@ -10,6 +10,8 @@ type EventRecord = {
   location: string | null
   details: string | null
   image: string | null
+  source: string | null
+  sourceUrl: string | null
   dateTime: Date | null
 } & Pick<Event, "id" | "title" | "slug" | "description">
 
@@ -51,7 +53,7 @@ export async function getEvents(): Promise<Event[]> {
   "use cache"
   cacheTag("event")
   const data = await prisma.event.findMany({
-    orderBy: [{ dateTime: { sort: "asc", nulls: "last" } }, { createdAt: "desc" }],
+    orderBy: [{ dateTime: { sort: "desc", nulls: "last" } }, { createdAt: "desc" }],
   })
   return data.map(toEvent)
 }
