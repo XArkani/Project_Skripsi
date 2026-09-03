@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidateTag } from "next/cache"
+import { refresh, updateTag } from "next/cache"
 import { headers } from "next/headers"
 import { prisma } from "@/lib/prisma"
 
@@ -41,12 +41,14 @@ export async function saveNews(formData: FormData) {
     })
   }
 
-  revalidateTag("news", "max")
+  updateTag("news")
+  refresh()
 }
 
 export async function deleteNews(id: string) {
   await prisma.news.delete({ where: { id } })
-  revalidateTag("news", "max")
+  updateTag("news")
+  refresh()
 }
 
 async function getClientIp() {
@@ -82,10 +84,12 @@ export async function submitContact(formData: FormData) {
     data: { senderName, senderEmail, senderPhone, senderIp: ip, subject, message, date },
   })
 
-  revalidateTag("messages", "max")
+  updateTag("messages")
+  refresh()
 }
 
 export async function deleteMessage(id: string) {
   await prisma.message.delete({ where: { id } })
-  revalidateTag("messages", "max")
+  updateTag("messages")
+  refresh()
 }

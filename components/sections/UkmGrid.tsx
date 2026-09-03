@@ -182,7 +182,7 @@ function getCategory(ukm: UKM): string {
 function UkmLogo({ ukm }: { ukm: UKM }) {
   const src = ukm.logo
   if (src && IMAGE_URL_PATTERN.test(src) && !isStockImage(src)) {
-    return <Image src={src} alt={`Logo ${ukm.name}`} fill sizes="56px" className="object-contain" />
+    return <Image src={src} alt={`Logo ${ukm.name}`} fill sizes="56px" className="object-contain p-1" />
   }
   return createElement(getUkmIcon(ukm), { className: "w-6 h-6 text-emerald-600", "aria-hidden": true })
 }
@@ -190,7 +190,7 @@ function UkmLogo({ ukm }: { ukm: UKM }) {
 function UkmMedia({ ukm }: { ukm: UKM }) {
   const src = ukm.logo
   if (src && IMAGE_URL_PATTERN.test(src) && !isStockImage(src)) {
-    return <Image src={src} alt={`Cover ${ukm.name}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover" />
+    return <Image src={src} alt={`Logo ${ukm.name} tampil penuh`} fill sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-contain bg-white object-center p-3" />
   }
   return (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100">
@@ -216,7 +216,7 @@ function UkmCard({ ukm, animate }: CardProps) {
       viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
       className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
     >
-      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-muted">
+      <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-white">
         <UkmMedia ukm={ukm} />
         <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-background/95 backdrop-blur border border-emerald-100 px-2.5 py-1 rounded-full shadow-sm">
           <Tag className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />

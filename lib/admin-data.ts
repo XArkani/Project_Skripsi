@@ -1,6 +1,10 @@
 import { prisma } from "@/lib/prisma"
 import type { ModelName } from "@/lib/admin-actions"
 
+// Sengaja TIDAK memakai "use cache" di sini agar halaman dashboard admin
+// selalu membaca data terbaru dari database. Invalidasi cache publik
+// ditangani via updateTag() + refresh() di lib/admin-actions.ts.
+
 export async function getModelList(modelName: ModelName) {
   switch (modelName) {
     case "blueprint":

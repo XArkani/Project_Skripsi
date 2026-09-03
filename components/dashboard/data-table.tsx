@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { deleteRecord, type ModelName } from "@/lib/admin-actions"
+import { toast } from "sonner"
 import { getAdminTable } from "@/lib/admin-columns"
 import type { Row } from "@/lib/admin-table-types"
 import { cn } from "@/lib/utils"
@@ -45,6 +46,17 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; label: string } | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
+  // Sinkronkan state lokal saat server mengirim rows baru (mis. setelah
+  // tambah/edit + router.refresh()). Pola "adjust state during render"
+  // agar tidak perlu useEffect (hindari cascading renders).
+  // Tanpa ini tabel tetap menampilkan snapshot lama sampai browser
+  // di-refresh manual.
+  const [prevRows, setPrevRows] = useState(rows)
+  if (prevRows !== rows) {
+    setPrevRows(rows)
+    setData(rows)
+    setPage(1)
+  }
 
   const { columns, searchKeys, filter: filterMeta } = config
 
@@ -116,9 +128,12 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
         await deleteRecord(modelName, deleteTarget.id)
         setData((prev) => prev.filter((r) => String(r.id) !== deleteTarget.id))
         setDeleteTarget(null)
+        toast.success("Data berhasil dihapus.")
         router.refresh()
       } catch (err) {
-        setDeleteError(err instanceof Error ? err.message : "Gagal menghapus data.")
+        const msg = err instanceof Error ? err.message : "Gagal menghapus data."
+        setDeleteError(msg)
+        toast.error(msg)
       }
     })
   }

@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useUploadThing } from "@/lib/uploadthing-client";
 import { FileUp, Loader2, X, FileText } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 export function FileUpload() {
@@ -18,11 +19,13 @@ export function FileUpload() {
       if (res?.[0]) {
         setFileUrl(res[0].ufsUrl);
         setFileName(res[0].name);
+        toast.success("Dokumen berhasil diunggah.");
       }
       setUploading(false);
     },
     onUploadError: (err) => {
       setError(err.message);
+      toast.error(err.message || "Gagal mengunggah dokumen.");
       setUploading(false);
     },
   });

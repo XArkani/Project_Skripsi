@@ -6,6 +6,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import RegisterSW from "@/components/pwa/RegisterSW";
 import InstallPrompt from "@/components/pwa/InstallPrompt";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -66,6 +67,7 @@ export default function RootLayout({
           FINISH: reviewed and documented with DESIGN.md before the run is called complete.
         </div>
         {children}
+        <Toaster />
         <RegisterSW />
         <InstallPrompt />
         {process.env.NODE_ENV === "development" && <Agentation />}

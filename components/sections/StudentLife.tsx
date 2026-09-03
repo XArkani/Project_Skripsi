@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Bot, Map as MapIcon, Rocket, Sparkles, Zap } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import type { UKM } from "@/lib/types"
@@ -18,6 +19,18 @@ function pickIcon(ukm: UKM): LucideIcon {
   return match?.icon ?? Zap
 }
 
+function hasRealLogo(ukm: UKM): boolean {
+  const src = ukm.logo?.trim() ?? ""
+  if (!src) return false
+  if (!/^(https?:\/\/|\/)/i.test(src)) return false
+  try {
+    if (src.startsWith("http") && new URL(src).hostname.includes("unsplash")) return false
+  } catch {
+    return false
+  }
+  return true
+}
+
 export default function StudentLife({ items }: { items: UKM[] }) {
   const visible = items.slice(0, 3)
 
@@ -34,39 +47,53 @@ export default function StudentLife({ items }: { items: UKM[] }) {
 
         <ScrollReveal delay={120}>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {visible.length === 0 && (
-            <p className="text-sm text-muted-foreground md:col-span-3">
-              Informasi organisasi mahasiswa akan segera hadir.
-            </p>
-          )}
-          {visible.map((ukm) => {
-            const Icon = pickIcon(ukm)
-            return (
-              <article
-                key={ukm.id}
-                className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)]"
-              >
-                <div className="bg-blueprint-grid relative flex h-32 items-center justify-center bg-gradient-to-br from-[#00624a] via-[#003c32] to-[#00150f]">
-                  <span className="grid h-14 w-14 place-items-center rounded-2xl border border-emerald-300/30 bg-emerald-50/10 text-emerald-200 transition-colors duration-300 group-hover:bg-emerald-200 group-hover:text-emerald-900">
-                    <Icon className="h-6 w-6" aria-hidden="true" />
-                  </span>
-                </div>
-                <div className="flex flex-col p-5">
-                  <h3 className="line-clamp-2 text-base font-semibold text-foreground">{ukm.name}</h3>
-                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
-                    {ukm.description}
-                  </p>
-                  {ukm.activities && (
-                    <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
-                      <span className="font-semibold text-foreground/85">Kegiatan: </span>
-                      {ukm.activities}
-                    </p>
+            {visible.length === 0 && (
+              <p className="text-sm text-muted-foreground md:col-span-3">
+                Informasi organisasi mahasiswa akan segera hadir.
+              </p>
+            )}
+            {visible.map((ukm) => {
+              const Icon = pickIcon(ukm)
+              const showLogo = hasRealLogo(ukm)
+              return (
+                <article
+                  key={ukm.id}
+                  className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)]"
+                >
+                  {showLogo ? (
+                    <div className="relative flex h-40 items-center justify-center overflow-hidden bg-white">
+                      <Image
+                        src={ukm.logo}
+                        alt={`Logo ${ukm.name}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-contain object-center p-4"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : (
+                    <div className="bg-blueprint-grid relative flex h-32 items-center justify-center bg-gradient-to-br from-[#00624a] via-[#003c32] to-[#00150f]">
+                      <span className="grid h-14 w-14 place-items-center rounded-2xl border border-emerald-300/30 bg-emerald-50/10 text-emerald-200 transition-colors duration-300 group-hover:bg-emerald-200 group-hover:text-emerald-900">
+                        <Icon className="h-6 w-6" aria-hidden="true" />
+                      </span>
+                    </div>
                   )}
-                </div>
-              </article>
-            )
-          })}
-        </div>
+                  <div className="flex flex-col p-5">
+                    <h3 className="line-clamp-2 text-base font-semibold text-foreground">{ukm.name}</h3>
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                      {ukm.description}
+                    </p>
+                    {ukm.activities && (
+                      <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+                        <span className="font-semibold text-foreground/85">Kegiatan: </span>
+                        {ukm.activities}
+                      </p>
+                    )}
+                  </div>
+                </article>
+              )
+            })}
+          </div>
         </ScrollReveal>
       </Container>
     </section>

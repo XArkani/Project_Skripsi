@@ -2,7 +2,8 @@
 
 import { useState, useTransition } from "react"
 import Link from "next/link"
-import { unstable_rethrow } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -29,6 +30,7 @@ interface CrudFormProps {
 }
 
 export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {} }: CrudFormProps) {
+  const router = useRouter()
   const [formData, setFormData] = useState<Record<string, unknown>>(initialData)
   const [error, setError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
@@ -62,7 +64,9 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
       if (f.required) {
         const val = formData[f.name]
         if (val == null || String(val).trim() === "") {
-          setError(`"${f.label}" wajib diisi.`)
+          const msg = `"${f.label}" wajib diisi.`
+          setError(msg)
+          toast.error(msg)
           return
         }
       }
@@ -72,12 +76,17 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
       try {
         if (mode === "edit" && id) {
           await updateRecord(modelName, id, base, formData)
+          toast.success("Perubahan berhasil disimpan.")
         } else {
           await createRecord(modelName, base, formData)
+          toast.success("Data berhasil ditambahkan.")
         }
+        router.push(base)
+        router.refresh()
       } catch (err) {
-        unstable_rethrow(err)
-        setError(err instanceof Error ? err.message : "Gagal menyimpan.")
+        const msg = err instanceof Error ? err.message : "Gagal menyimpan."
+        setError(msg)
+        toast.error(msg)
       }
     })
   }

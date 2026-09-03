@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { useUploadThing } from "@/lib/uploadthing-client";
 import { CloudUpload, Loader2, X } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 export function ImageUpload() {
@@ -17,11 +18,13 @@ export function ImageUpload() {
     onClientUploadComplete: (res) => {
       if (res?.[0]) {
         setImageUrl(res[0].ufsUrl);
+        toast.success("Gambar berhasil diunggah.");
       }
       setUploading(false);
     },
     onUploadError: (err) => {
       setError(err.message);
+      toast.error(err.message || "Gagal mengunggah gambar.");
       setUploading(false);
     },
   });
@@ -35,6 +38,7 @@ export function ImageUpload() {
     if (!file) return;
     if (!file.type.startsWith("image/")) {
       setError("Silakan pilih file gambar.");
+      toast.error("Silakan pilih file gambar.");
       return;
     }
 

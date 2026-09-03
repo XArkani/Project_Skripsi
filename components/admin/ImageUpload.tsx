@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { UploadButton } from "@/lib/uploadthing-client"
+import { toast } from "sonner"
 import { ImagePlus, RefreshCw, X } from "lucide-react"
 
 interface ImageUploadProps {
@@ -17,9 +18,15 @@ export function ImageUpload({ value, onChange }: ImageUploadProps) {
       endpoint="imageUploader"
       onClientUploadComplete={(res) => {
         setError(null)
-        if (res?.[0]?.ufsUrl) onChange(res[0].ufsUrl)
+        if (res?.[0]?.ufsUrl) {
+          onChange(res[0].ufsUrl)
+          toast.success("Gambar berhasil diunggah.")
+        }
       }}
-      onUploadError={(err) => setError(err.message)}
+      onUploadError={(err) => {
+        setError(err.message)
+        toast.error(err.message || "Gagal mengunggah gambar.")
+      }}
       appearance={{
         button:
           "flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer",

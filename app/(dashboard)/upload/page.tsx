@@ -10,6 +10,11 @@ export default function UploadPage() {
         title="Upload"
         description="Unggah dan kelola gambar serta dokumen untuk konten fakultas."
       />
+      <p className="rounded-xl border border-border bg-card px-4 py-3 text-sm text-muted-foreground">
+        Catatan: file yang diunggah di sini belum otomatis masuk ke daftar data. Salin URL-nya lalu
+        tempel ke kolom Gambar/Logo pada form Tambah/Edit di halaman dashboard agar tampil realtime
+        di daftar dan halaman publik.
+      </p>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <section className="rounded-xl border border-border bg-card p-5">
           <h2 className="text-lg font-semibold tracking-tight text-foreground">Media / Gambar</h2>

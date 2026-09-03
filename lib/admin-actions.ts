@@ -1,10 +1,9 @@
 "use server"
 
-import { revalidateTag, updateTag } from "next/cache"
+import { refresh, updateTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
-import { redirect } from "next/navigation"
 import { slugify } from "@/lib/utils"
 import { fieldConfigMap } from "@/lib/admin-field-configs"
 
@@ -102,7 +101,7 @@ async function deleteOnModel(modelName: ModelName, id: string) {
   }
 }
 
-export async function createRecord(modelName: ModelName, base: string, data: Record<string, unknown>) {
+export async function createRecord(modelName: ModelName, _base: string, data: Record<string, unknown>) {
   await checkAdmin()
   if (modelName === "event" || modelName === "news") {
     const title = String(data.title ?? "")
@@ -110,15 +109,19 @@ export async function createRecord(modelName: ModelName, base: string, data: Rec
   }
   const normalized = normalizeEmptyStrings(modelName, data)
   await createOnModel(modelName, normalized)
-  revalidateTag(modelTags[modelName], "max")
+  // updateTag = expire seketika (read-your-own-writes). Jangan pakai
+  // revalidateTag di sini karena itu stale-while-revalidate (butuh 1x
+  // refresh tambahan sebelum data baru terlihat).
+  updateTag(modelTags[modelName])
   updateTag("home")
-  redirect(base)
+  refresh()
+  return { success: true }
 }
 
 export async function updateRecord(
   modelName: ModelName,
   id: string,
-  base: string,
+  _base: string,
   data: Record<string, unknown>
 ) {
   await checkAdmin()
@@ -128,33 +131,36 @@ export async function updateRecord(
         ? await prisma.event.findUnique({ where: { id } })
         : await prisma.news.findUnique({ where: { id } })
     if (previous) {
-      revalidateTag(`${modelName}-${previous.slug}`, "max")
+      updateTag(`${modelName}-${previous.slug}`)
     }
     const title = String(data.title ?? "")
     data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title, undefined, id)
   }
   const normalized = normalizeEmptyStrings(modelName, data)
   const record = await updateOnModel(modelName, id, normalized)
-  revalidateTag(modelTags[modelName], "max")
+  updateTag(modelTags[modelName])
   updateTag("home")
   if (modelName === "event" || modelName === "news") {
     const slug = (record as { slug: string }).slug
-    revalidateTag(`${modelName}-${slug}`, "max")
+    updateTag(`${modelName}-${slug}`)
   }
-  redirect(base)
+  refresh()
+  return { success: true }
 }
 
 export async function markMessageRead(id: string) {
   await checkAdmin()
   const record = await prisma.message.update({ where: { id }, data: { isRead: true } })
-  revalidateTag(modelTags.message, "max")
+  updateTag(modelTags.message)
+  refresh()
   return { success: true, data: JSON.parse(JSON.stringify(record)) }
 }
 
 export async function deleteRecord(modelName: ModelName, id: string) {
   await checkAdmin()
   await deleteOnModel(modelName, id)
-  revalidateTag(modelTags[modelName], "max")
+  updateTag(modelTags[modelName])
   updateTag("home")
+  refresh()
   return { success: true }
 }
