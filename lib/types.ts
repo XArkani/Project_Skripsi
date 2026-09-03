@@ -53,6 +53,9 @@ export interface News {
   excerpt: string
   content: string
   image: string
+  category?: string | null
+  source?: string | null
+  sourceUrl?: string | null
 }
 
 export interface FAQ {

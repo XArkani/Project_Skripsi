@@ -1,4 +1,4 @@
-const CACHE_NAME = "ft-hamzanwadi-v1";
+const CACHE_NAME = "ft-hamzanwadi-v2";
 const OFFLINE_URL = "/offline";
 const PRECACHE_URLS = ["/", OFFLINE_URL, "/icon-192x192.png", "/icon-512x512.png"];
 
@@ -22,8 +22,12 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
 
   if (url.origin !== self.location.origin) return;
+  // Jangan pernah intercept chunk/statis Next.js (/_next/) — selalu biarkan ke
+  // network. Chunk basi dari cache adalah penyebab error
+  // "module factory is not available" saat dev (Turbopack) maupun production.
+  if (url.pathname.startsWith("/_next/")) return;
   if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/admin") || url.pathname.startsWith("/dashboard")) return;
-  if (req.headers.get("RSC") === "1" || url.searchParams.has("_rsc")) return;
+  if (req.headers.get("RSC") === "1" || req.headers.get("Next-Router-Prefetch") === "1" || url.searchParams.has("_rsc")) return;
 
   if (req.mode === "navigate") {
     event.respondWith(

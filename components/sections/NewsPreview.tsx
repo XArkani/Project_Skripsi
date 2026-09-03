@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import type { News } from "@/lib/types"
@@ -5,6 +6,14 @@ import Container from "@/components/ui/container"
 import SectionHeading from "@/components/ui/section-heading"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 import ScrollReveal from "@/components/shared/ScrollReveal"
+
+function isStockImage(src: string) {
+  try {
+    return new URL(src).hostname.includes("unsplash")
+  } catch {
+    return false
+  }
+}
 
 export default function NewsPreview({ items }: { items: News[] }) {
   const [featured, ...rest] = items
@@ -29,8 +38,19 @@ export default function NewsPreview({ items }: { items: News[] }) {
             href={`/berita/${featured.slug}`}
             className="group lg:col-span-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[20px]">
-              <ImagePlaceholder label={featured.title} className="h-full w-full" />
+            <div className="relative aspect-[16/10] overflow-hidden rounded-[20px] bg-muted">
+              {featured.image && !isStockImage(featured.image) ? (
+                <Image
+                  src={featured.image}
+                  alt={featured.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              ) : (
+                <ImagePlaceholder label={featured.title} className="h-full w-full" />
+              )}
             </div>
             <div className="mt-5 max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">

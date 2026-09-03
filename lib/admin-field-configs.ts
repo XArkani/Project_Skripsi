@@ -43,8 +43,11 @@ export const newsFields: FieldConfig[] = [
   { name: "title", label: "Judul Berita", type: "text", required: true, group: "Informasi Utama" },
   { name: "slug", label: "Slug URL", type: "slug", group: "Informasi Utama" },
   { name: "date", label: "Tanggal", type: "text", group: "Informasi Utama" },
+  { name: "category", label: "Kategori", type: "select", options: ["Akademik", "Kegiatan", "Prestasi"], group: "Informasi Utama" },
   { name: "excerpt", label: "Ringkasan", type: "textarea", required: true, group: "Informasi Utama" },
   { name: "content", label: "Konten", type: "textarea", required: true, group: "Detail" },
+  { name: "source", label: "Sumber", type: "text", group: "Sumber" },
+  { name: "sourceUrl", label: "URL Sumber", type: "text", group: "Sumber" },
   { name: "image", label: "Gambar", type: "image", group: "Gambar" },
 ]
 

@@ -8,91 +8,91 @@ const blueprintSamples = [
   {
     title: "Ruangan A1",
     category: "Ruang Kelas",
-    description: "Ruang kuliah 36 kursi di lantai 1, sisi lorong utara dekat pintu masuk.",
+    description: "Ruang kelas 25 kursi di lantai 1 dengan kipas angin, proyektor, dan papan tulis — nyaman untuk perkuliahan dan diskusi.",
     details: "Papan tulis putih 4m, proyektor Epson, AC 2 unit, colokan lantai tiap baris. Dipakai untuk mata kuliah teori angkatan awal.",
     image: "",
   },
   {
     title: "Ruangan A2",
     category: "Ruang Kelas",
-    description: "Ruang 40 kursi lantai 1, sebelah A1, jendela menghadap taman.",
+    description: "Ruang kelas 25 kursi di lantai 1 dengan kipas angin, proyektor, dan papan tulis — nyaman untuk perkuliahan dan diskusi.",
     details: "Meja lipat individu, sound kecil untuk presentasi, papan tulis geser. Jadwal padat pagi sampai jam 15.00.",
     image: "",
   },
   {
     title: "Ruangan A3",
     category: "Ruang Kelas",
-    description: "Ruang 32 kursi lantai 1, paling ujung timur, lebih senyap.",
+    description: "Ruang kelas 25 kursi di lantai 1 dengan kipas angin, proyektor, dan papan tulis — nyaman untuk perkuliahan dan diskusi.",
     details: "Sering dipakai ujian dan bimbingan kelompok kecil. AC 1 unit besar, tirai blackout, stopkontak dinding penuh.",
     image: "",
   },
   {
     title: "Ruangan A4",
     category: "Ruang Kelas",
-    description: "Ruang 38 kursi lantai 1, dekat tangga ke lantai 2.",
+    description: "Ruang kelas 25 kursi di lantai 1 dengan kipas angin, proyektor, dan papan tulis — nyaman untuk perkuliahan dan diskusi.",
     details: "Dua pintu akses, sirkulasi cepat saat pergantian jam. Papan tulis kaca, proyektor ceiling mount.",
     image: "",
   },
   {
     title: "Ruangan B1",
     category: "Ruang Kelas",
-    description: "Ruang 40 kursi lantai 2, atas A1, akses tangga utama.",
+    description: "Ruang 25 kursi dengan meja panjang dan TV layar sentuh interaktif, plus proyektor dan papan tulis — ideal untuk presentasi dan kerja kelompok.",
     details: "Jendela tinggi, cahaya pagi terang. Dipakai kelas reguler dan rapat himpunan sore hari.",
     image: "",
   },
   {
     title: "Ruangan B2",
     category: "Ruang Kelas",
-    description: "Ruang 36 kursi lantai 2, sebelah B1, menghadap selasar.",
+    description: "Ruang 25 kursi dengan meja panjang dan TV layar sentuh interaktif, plus proyektor dan papan tulis — ideal untuk presentasi dan kerja kelompok.",
     details: "Kursi plastik besi, meja setengah lingkaran untuk diskusi. Whiteboard dan proyektor portabel.",
     image: "",
   },
   {
     title: "Ruangan C1",
     category: "Ruang Kelas",
-    description: "Ruang 30 kursi lantai 3, sudut barat, angin paling kencang.",
+    description: "Ruang kelas 25 kursi di lantai 3 dengan kipas angin, proyektor, dan papan tulis — tenang dengan suasana terbuka, nyaman untuk perkuliahan dan diskusi.",
     details: "Plafon tinggi, kipas + AC. Dipakai kelas sore dan pelatihan singkat.",
     image: "",
   },
   {
     title: "Ruangan C2",
     category: "Ruang Kelas",
-    description: "Ruang 34 kursi lantai 3, tengah, dekat Aula.",
+    description: "Ruang kelas 25 kursi di lantai 3 dengan kipas angin, proyektor, dan papan tulis — tenang dengan suasana terbuka, nyaman untuk perkuliahan dan diskusi.",
     details: "Dinding kedap tipis, sering jadi ruang cadangan saat Aula dipakai. Proyektor 4000 lumen.",
     image: "",
   },
   {
     title: "Ruangan C3",
     category: "Ruang Kelas",
-    description: "Ruang 32 kursi lantai 3, sebelah C2, view lapangan.",
+    description: "Ruang kelas 25 kursi di lantai 3 dengan kipas angin, proyektor, dan papan tulis — tenang dengan suasana terbuka, nyaman untuk perkuliahan dan diskusi.",
     details: "Meja panjang 4 orang, cocok untuk kerja kelompok. Colokan di tengah meja.",
     image: "",
   },
   {
     title: "Ruangan C4",
     category: "Ruang Kelas",
-    description: "Ruang 28 kursi lantai 3, paling ujung, paling sepi.",
+    description: "Ruang kelas 25 kursi di lantai 3 dengan kipas angin, proyektor, dan papan tulis — tenang dengan suasana terbuka, nyaman untuk perkuliahan dan diskusi.",
     details: "Dipakai bimbingan skripsi dan kelas kecil. Karpet tipis, papan tulis kecil 2m.",
     image: "",
   },
   {
     title: "Lab 1",
     category: "Laboratorium",
-    description: "Lab komputer dasar lantai 1, 30 PC untuk praktikum semester 1-2.",
+    description: "Lab komputer lantai 1 dengan 30 PC, proyektor, papan tulis, dan AC — siap untuk praktikum dan pelatihan.",
     details: "PC i5, RAM 16GB, VS Code dan MySQL terpasang. Jadwal praktikum Senin–Kamis, Jumat perawatan.",
     image: "",
   },
   {
     title: "Lab 2",
     category: "Laboratorium",
-    description: "Lab jaringan lantai 2, 20 PC + rak mikrotik dan switch.",
+    description: "Ruang praktik jaringan dan IoT lantai 2 dengan konsep lesehan agar leluasa praktik, dilengkapi proyektor, papan tulis, dan AC.",
     details: "Kabel crimping, access point, dan server mini. Dipakai konfigurasi jaringan dan keamanan.",
     image: "",
   },
   {
     title: "Lab 3",
     category: "Laboratorium",
-    description: "Lab IoT & robotika lantai 3, meja kerja tinggi dan solder station.",
+    description: "Lab komputer lantai 3 dengan 30 PC, proyektor, papan tulis, dan AC untuk praktikum dan riset.",
     details: "Arduino, ESP32, sensor suhu dan kelembapan, 3D printer kecil. Proyek mahasiswa dipajang di rak kaca.",
     image: "",
   },
@@ -106,21 +106,21 @@ const blueprintSamples = [
   {
     title: "Lab 5",
     category: "Laboratorium",
-    description: "Lab riset lantai 3, 12 workstation untuk tugas akhir.",
+    description: "Lab komputer lantai 3 dengan 30 PC, AC, proyektor, dan papan tulis — nyaman untuk riset dan pengerjaan tugas akhir.",
     details: "Monitor dual, lisensi MATLAB dan AutoCAD. Booking via admin lab, maksimal 4 jam per sesi.",
     image: "",
   },
   {
     title: "Kantin",
     category: "Fasilitas",
-    description: "Kantin lantai 1, 8 lapak, kapasitas 80 duduk, buka 07.00–16.00.",
+    description: "Kantin lantai 1 dekat musholla dengan 3 lapak, 3 meja bundar, dan 4 meja panjang — tempat favorit untuk istirahat dan diskusi santai.",
     details: "Menu harian nasi campur, gorengan, kopi. Meja besi panjang, wastafel dua titik, dekat musholla.",
     image: "",
   },
   {
     title: "Musholla",
     category: "Fasilitas",
-    description: "Musholla lantai 1, muat 40 jamaah, tempat wudu terpisah putra-putri.",
+    description: "Satu musholla dengan dua area terpisah: sisi kanan untuk jamaah putra dan sisi kiri untuk jamaah putri.",
     details: "Karpet hijau, kipas plafon, lemari mukena dan sarung. Dibersihkan tiap selesai Dzuhur.",
     image: "",
   },
@@ -585,34 +585,88 @@ const eventSamples = [
 
 const newsSamples = [
   {
-    title: "Mahasiswa Teknik Raih Juara Nasional Robotika",
-    slug: "mahasiswa-teknik-raih-juara-nasional-robotika",
-    date: "2026-07-30",
+    title: "Pastikan Lulusan Kompeten dan Profesional, Fakultas Teknik Universitas Hamzanwadi Gelar Uji Kompetensi",
+    slug: "pastikan-lulusan-kompeten-dan-profesional-fakultas-teknik-universitas-hamzanwadi-gelar-uji-kompetensi",
+    date: "19 Agustus 2026",
     excerpt:
-      "Tim robotika Fakultas Teknik berhasil meraih juara pertama pada kontes robot nasional yang digelar di Jakarta.",
+      "Fakultas Teknik Universitas Hamzanwadi menyelenggarakan Uji Kompetensi Mahasiswa pada 19–20 Agustus 2026. Kegiatan tersebut ditujukan untuk mengukur kesiapan mahasiswa tingkat akhir dalam bidang keahlian yang sesuai dengan program studi serta meningkatkan daya saing lulusan sebelum memasuki dunia kerja.",
     content:
-      "Tim Robotik Hamzanwadi berhasil membawa pulang gelar juara pertama kategori line follower pada Kontes Robot Nasional 2026. Setelah melalui babak penyisihan yang ketat, tim yang terdiri dari lima mahasiswa Teknik Informatika ini unggul dengan waktu tempuh tercepat.\n\nDekan Fakultas Teknik menyampaikan apresiasi atas pencapaian tersebut dan berharap prestasi ini menjadi motivasi bagi mahasiswa lain untuk terus berkarya.\n\nTim berencana mewakili provinsi pada kompetisi internasional yang akan diselenggarakan akhir tahun ini.",
+      "Fakultas Teknik Universitas Hamzanwadi melaksanakan Uji Kompetensi Mahasiswa selama dua hari dengan melibatkan ratusan mahasiswa tingkat akhir. Kegiatan ini tidak hanya mengukur pemahaman akademik mahasiswa, tetapi juga kemampuan teknis dan keterampilan praktis yang berkaitan langsung dengan kebutuhan dunia industri.\n\nPengujian mencakup delapan bidang kompetensi, yaitu Rekayasa Perangkat Lunak, Internet of Things dan Robotika, Mikrokontroler, Data Mining/Data Science, Multimedia, Jaringan Komputer, Manajemen Lingkungan, serta Rekayasa Lingkungan. Pada bidang Rekayasa Perangkat Lunak, mahasiswa diuji dalam perancangan, pemrograman, dan pengujian aplikasi. Bidang IoT dan Robotika menilai kemampuan integrasi sensor, otomatisasi, dan pemrograman robot. Sementara Data Science mencakup analisis data, pemodelan prediktif, dan visualisasi informasi.\n\nBidang lingkungan menguji kemampuan mahasiswa dalam pengelolaan lingkungan, mitigasi risiko, pengelolaan limbah, penyediaan air bersih, serta penerapan solusi rekayasa yang berkelanjutan. Pengujian dilakukan oleh tim yang memiliki kompetensi pada bidang masing-masing.\n\nFakultas berharap kegiatan ini dapat meningkatkan kesiapan lulusan menghadapi kebutuhan industri dan memperbesar peluang alumni memperoleh pekerjaan.",
     image: "",
+    category: "Akademik",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/id/news/details/pastikan-lulusan-kompeten-dan-profesional-fakultas/",
+    createdAt: new Date("2026-08-19T00:00:00.000Z"),
   },
   {
-    title: "Kerja Sama Industri dengan Perusahaan Teknologi",
-    slug: "kerja-sama-industri-dengan-perusahaan-teknologi",
-    date: "2026-07-10",
+    title: "Asah Kreativitas dan Inovasi Digital Pelajar, Fakultas Teknik Universitas Hamzanwadi Gelar IT Competition",
+    slug: "asah-kreativitas-dan-inovasi-digital-pelajar-fakultas-teknik-universitas-hamzanwadi-gelar-it-competition",
+    date: "9 Juli 2026",
     excerpt:
-      "Fakultas Teknik menandatangani nota kesepahaman dengan perusahaan teknologi nasional untuk magang dan riset bersama.",
+      "Fakultas Teknik Universitas Hamzanwadi menyelenggarakan IT Competition IX sebagai wadah bagi pelajar dan masyarakat untuk mengembangkan kemampuan, kreativitas, dan inovasi pada bidang teknologi informasi. Kompetisi diikuti lebih dari 50 peserta dari berbagai daerah di Pulau Lombok.",
     content:
-      "Fakultas Teknik Universitas Hamzanwadi resmi menjalin kerja sama dengan perusahaan teknologi nasional dalam bidang pengembangan perangkat lunak dan kecerdasan buatan.\n\nKerja sama ini mencakup program magang bersertifikat, riset bersama dosen dan mahasiswa, serta pemberian beasiswa praktik industri.\n\nPendaftaran program magang dibuka setiap awal semester melalui bagian kemahasiswaan.",
+      "IT Competition IX dibuka di Gedung Fakultas Teknik Universitas Hamzanwadi pada 6 Juli 2026. Kegiatan tahunan yang telah memasuki penyelenggaraan kesembilan tersebut bertujuan memberikan ruang kepada generasi muda untuk mengembangkan bakat digital sekaligus menguji kemampuan mereka melalui kompetisi.\n\nLebih dari 50 peserta dari berbagai wilayah Pulau Lombok mengikuti kegiatan ini. Fakultas Teknik menekankan bahwa kompetisi tersebut bukan hanya untuk menentukan pemenang, tetapi juga sebagai sarana menumbuhkan kreativitas, inovasi, kemampuan berpikir kritis, dan kemampuan memecahkan masalah.\n\nIT Competition IX mempertandingkan lima bidang, yaitu Lomba Cerdas Cermat IT dan Lingkungan untuk tingkat SMA/sederajat, kompetisi robotik dengan kategori Robot Sumo dan Robot Soccer, Cyber Security, sayembara poster, serta E-Sport Mobile Legends. Kompetisi robotik memperoleh antusiasme peserta paling tinggi.\n\nPanitia pada awalnya mempertimbangkan membawa kompetisi robotik ke skala nasional. Namun, karena waktu persiapan relatif terbatas, penyelenggara memilih mengoptimalkan kompetisi tingkat provinsi terlebih dahulu.\n\nPada penyelenggaraan berikutnya, Fakultas Teknik berencana melakukan persiapan lebih awal sehingga jangkauan peserta dapat diperluas sampai tingkat nasional.",
     image: "",
+    category: "Kegiatan",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/id/news/details/asah-kreativitas-dan-inovasi-digital-pelajar-fakul/",
+    createdAt: new Date("2026-07-09T00:00:00.000Z"),
   },
   {
-    title: "Penerimaan Mahasiswa Baru 2026 Telah Dibuka",
-    slug: "penerimaan-mahasiswa-baru-2026-telah-dibuka",
-    date: "2026-06-25",
+    title: "Mahasiswa Fakultas Teknik Universitas Hamzanwadi Berlaga di Kompetisi Robot Internasional PIRC 2026 Malaysia",
+    slug: "mahasiswa-fakultas-teknik-universitas-hamzanwadi-berlaga-di-kompetisi-robot-internasional-pirc-2026-malaysia",
+    date: "21 April 2026",
     excerpt:
-      "Pendaftaran mahasiswa baru tahun akademik 2026/2027 telah resmi dibuka untuk seluruh program studi.",
+      "Universitas Hamzanwadi melepas tim robotik Fakultas Teknik untuk mengikuti Perak International Robotic Competition (PIRC) 2026 di Malaysia. Empat mahasiswa dari Teknik Komputer dan Teknik Informatika dikirim dalam dua tim untuk berkompetisi pada bidang robotika tingkat internasional.",
     content:
-      "Penerimaan mahasiswa baru tahun akademik 2026/2027 telah resmi dibuka untuk Program Studi Teknik Informatika dan Teknik Industri.\n\nJalur pendaftaran yang tersedia meliputi jalur prestasi, jalur tes, dan beasiswa afirmasi daerah terdepan.\n\nInformasi lengkap mengenai persyaratan, jadwal, dan tata cara pendaftaran dapat diakses melalui layanan pertanyaan terpadu fakultas atau menghubungi nomor layanan resmi.",
+      "Universitas Hamzanwadi secara resmi melepas mahasiswa Fakultas Teknik yang akan mengikuti Perak International Robotic Competition 2026 pada 24–26 April 2026 di ADTEC Taiping, Perak, Malaysia.\n\nPelepasan dilakukan oleh Wakil Rektor III Universitas Hamzanwadi sebagai bentuk dukungan institusi terhadap prestasi dan pengembangan kompetensi mahasiswa pada bidang teknologi.\n\nPeserta berasal dari ORION UNHAZ ROBOTIC Team yang dibina oleh alumni Teknik Komputer, Wahyu Rian Pratama. Universitas Hamzanwadi mengirimkan dua tim dengan jumlah keseluruhan empat mahasiswa yang berasal dari Program Studi Teknik Komputer dan Teknik Informatika.\n\nKompetisi yang diikuti menuntut kemampuan dalam desain mekanik, algoritma, navigasi robot secara otomatis, pemrograman, dan strategi kompetisi. PIRC merupakan kompetisi yang mempertemukan peserta dari beberapa negara Asia Tenggara.\n\nKeikutsertaan mahasiswa dalam kompetisi internasional tersebut juga dipandang sebagai implementasi pembelajaran berbasis kompetensi. Mahasiswa tidak hanya mendapatkan teori dalam perkuliahan, tetapi juga memperoleh kesempatan menguji kemampuan teknis dalam lingkungan kompetitif internasional.\n\nFakultas berharap pengalaman ini dapat meningkatkan inovasi, mental kompetitif, serta daya saing global mahasiswa.",
     image: "",
+    category: "Prestasi",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/news/details/mahasiswa-fakultas-teknik-universitas-hamzanwadi-b/",
+    createdAt: new Date("2026-04-21T00:00:00.000Z"),
+  },
+  {
+    title: "Dua Mahasiswa Teknik Informatika Universitas Hamzanwadi Lolos Digital Career Bootcamp Berskala Nasional",
+    slug: "dua-mahasiswa-teknik-informatika-universitas-hamzanwadi-lolos-digital-career-bootcamp-berskala-nasional",
+    date: "20 April 2026",
+    excerpt:
+      "Dua mahasiswa Teknik Informatika Fakultas Teknik Universitas Hamzanwadi, Sahrul dan Abimanyu Herdiansyah, berhasil lolos Digital Career Bootcamp yang diselenggarakan Maxy Academy melalui program beasiswa penuh.",
+    content:
+      "Dua mahasiswa Program Studi Teknik Informatika Fakultas Teknik Universitas Hamzanwadi berhasil lolos seleksi Digital Career Bootcamp berskala nasional. Keduanya adalah Sahrul dan Abimanyu Herdiansyah.\n\nProgram tersebut diselenggarakan Maxy Academy dalam bentuk bootcamp online yang kemudian dilanjutkan dengan kegiatan magang secara langsung. Program dimulai pada 20 April 2026 dan dirancang untuk meningkatkan kompetensi profesional peserta pada bidang digital.\n\nPeserta mengikuti pembelajaran intensif selama sekitar dua hingga dua setengah bulan. Setelah menyelesaikan bootcamp, peserta akan menjalani magang atau mengerjakan proyek industri selama sekitar tiga sampai enam bulan.\n\nMelalui program tersebut mahasiswa memperoleh kesempatan belajar langsung dari praktisi industri, mengerjakan proyek yang berhubungan dengan kebutuhan perusahaan, meningkatkan keterampilan profesional, serta memperoleh pengalaman kerja sebelum lulus.\n\nKeberhasilan kedua mahasiswa tersebut menunjukkan bahwa mahasiswa Fakultas Teknik mampu bersaing dalam program pengembangan talenta digital tingkat nasional.\n\nFakultas berharap pengalaman tersebut dapat mempersiapkan mahasiswa menjadi lulusan yang memiliki kompetensi teknis, pengalaman industri, dan kemampuan beradaptasi terhadap perkembangan teknologi.",
+    image: "",
+    category: "Prestasi",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/id/news/details/dua-mahasiswa-teknik-informatika-universitas-hamza/",
+    createdAt: new Date("2026-04-20T00:00:00.000Z"),
+  },
+  {
+    title: "Diskusi Kelompok Terfokus (FGD) tentang Kurikulum OBE untuk Teknik Komputer di Hamzanwadi Melibatkan Industri, Memperkuat Kompetensi IoT, Jaringan, dan Kompetensi Komputasi Awan",
+    slug: "diskusi-kelompok-terfokus-fgd-tentang-kurikulum-obe-untuk-teknik-komputer-di-hamzanwadi-melibatkan-industri-memperkuat-kompetensi-iot-jaringan-dan-kompetensi-komputasi-awan",
+    date: "18 April 2026",
+    excerpt:
+      "Program Studi Teknik Komputer Fakultas Teknik Universitas Hamzanwadi melaksanakan FGD untuk melakukan validasi dan penyempurnaan Kurikulum Outcome-Based Education (OBE) 2026 dengan melibatkan akademisi, mahasiswa, alumni, dan praktisi industri.",
+    content:
+      "FGD dilaksanakan di Ruang B2 Fakultas Teknik Universitas Hamzanwadi pada 18 April 2026. Kegiatan difokuskan pada evaluasi serta penyempurnaan kurikulum OBE Program Studi Teknik Komputer agar kompetensi mahasiswa semakin sesuai dengan perkembangan teknologi dan kebutuhan dunia kerja.\n\nKurikulum OBE 2026 merupakan pengembangan berikutnya setelah kurikulum 2016, 2021, dan Kurikulum MBKM 2022. Dalam penyusunannya, program studi tidak hanya melibatkan unsur internal kampus, tetapi juga alumni dan praktisi industri seperti Lombok Center IT, PT Solah Solution Indonesia, dan CV RoboKids Academy.\n\nFGD menghasilkan sejumlah rekomendasi penting. Kompetensi mahasiswa perlu diperkuat pada bidang embedded system, Internet of Things, jaringan komputer, keamanan siber, fabrikasi digital, dan desain 3D. Selain itu, pembelajaran berbasis proyek dan praktik perlu diperluas.\n\nKolaborasi dengan industri juga direkomendasikan melalui program magang, kuliah praktisi, kemitraan teknologi, kegiatan MBKM, serta penelitian terapan yang melibatkan dosen dan mahasiswa.\n\nHasil FGD selanjutnya digunakan sebagai dasar penyempurnaan kurikulum agar lulusan Teknik Komputer memiliki kompetensi yang relevan dan mampu beradaptasi dengan perubahan industri teknologi.",
+    image: "",
+    category: "Akademik",
+    source: "Website Resmi Universitas Hamzanwadi",
+    sourceUrl: "https://hamzanwadi.ac.id/id/news/details/diskusi-kelompok-terfokus-fgd-tentang-kurikulum-ob/",
+    createdAt: new Date("2026-04-18T00:00:00.000Z"),
+  },
+  {
+    title: "Fakultas Teknik Universitas Hamzanwadi Sukses Gelar IRIC 2026: Ajang Unjuk Inovasi Robotika Tingkat Provinsi",
+    slug: "fakultas-teknik-universitas-hamzanwadi-sukses-gelar-iric-2026-ajang-unjuk-inovasi-robotika-tingkat-provinsi",
+    date: "28 Januari 2026",
+    excerpt:
+      "Program Studi Informatika Fakultas Teknik Universitas Hamzanwadi menyelenggarakan Informatics Robotic Innovation Cup (IRIC) 2026 sebagai kompetisi robotika tingkat provinsi yang melibatkan mahasiswa serta pelajar SMP dan SMA dari berbagai wilayah di Nusa Tenggara Barat.",
+    content:
+      "IRIC 2026 dilaksanakan selama dua hari pada 23–24 Januari 2026 di Aula Fakultas Teknik Universitas Hamzanwadi dengan tema \"Cipta, Karya, Teknologi\". Kompetisi tersebut menjadi salah satu kegiatan Program Studi Informatika untuk mendorong kreativitas dan inovasi generasi muda dalam bidang robotika.\n\nPeserta berasal dari kalangan mahasiswa serta pelajar SMP/SMA atau sederajat dari berbagai daerah di Nusa Tenggara Barat. Kompetisi dibagi dalam kategori Robot Soccer untuk mahasiswa dan Robot Avoider untuk pelajar.\n\nSelama kegiatan, peserta dituntut menggunakan kemampuan perancangan robot, pemrograman, logika, strategi, dan penyelesaian masalah. Selain sebagai kompetisi, IRIC juga menjadi sarana memperkenalkan bidang robotika serta perkembangan teknologi kepada generasi muda.\n\nPimpinan Fakultas Teknik memberikan dukungan terhadap penyelenggaraan IRIC dan menempatkannya sebagai salah satu kegiatan strategis Program Studi Informatika. Kegiatan ini juga dimanfaatkan sebagai sarana memperkenalkan Fakultas Teknik kepada sekolah dan masyarakat.\n\nRangkaian acara ditutup dengan pemberian penghargaan kepada pemenang. Fakultas berharap IRIC dapat terus dikembangkan sehingga mampu menghasilkan generasi muda yang inovatif, adaptif terhadap perkembangan teknologi, serta memiliki kemampuan bersaing pada kompetisi tingkat nasional.",
+    image: "",
+    category: "Kegiatan",
+    source: "Website Resmi Fakultas Teknik Universitas Hamzanwadi",
+    sourceUrl: "https://ft.hamzanwadi.ac.id/in/galeri/detail/fakultas-teknik-universitas-hamzanwadi-sukses-gela/",
+    createdAt: new Date("2026-01-28T00:00:00.000Z"),
   },
 ]
 
@@ -746,13 +800,10 @@ async function seedEvents() {
 }
 
 async function seedNews() {
-  const count = await prisma.news.count()
-  if (count > 0) {
-    console.log("Berita: data sudah ada, dilewati.")
-    return
+  for (const item of newsSamples) {
+    await prisma.news.upsert({ where: { slug: item.slug }, update: {}, create: item })
   }
-  await prisma.news.createMany({ data: newsSamples, skipDuplicates: true })
-  console.log(`Berita: ${newsSamples.length} data dibuat.`)
+  console.log(`Berita: ${newsSamples.length} data dipastikan ada (upsert by slug, tanpa duplikat).`)
 }
 
 async function seedFaq() {

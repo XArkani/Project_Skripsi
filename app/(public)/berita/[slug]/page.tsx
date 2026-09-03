@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getNewsBySlug, getNews } from "@/lib/faculty"
-import { Calendar, ArrowLeft } from "lucide-react"
+import { Calendar, ArrowLeft, ExternalLink } from "lucide-react"
 import EmptyState from "@/components/shared/EmptyState"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
@@ -50,7 +50,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
 
       <div className="bg-card rounded-3xl overflow-hidden border border-border/80 shadow-sm p-6 sm:p-10">
         <div className="space-y-4 mb-6">
-          <span className="text-xs text-emerald-800 font-extrabold bg-emerald-50 px-3 py-1 rounded-md">Warta Fakultas</span>
+          <span className="text-xs text-emerald-800 font-extrabold bg-emerald-50 px-3 py-1 rounded-md">{article.category || "Warta Fakultas"}</span>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground leading-tight">{article.title}</h1>
           <div className="flex items-center space-x-3 text-muted-foreground text-xs">
             <span className="inline-flex items-center gap-1">
@@ -73,6 +73,27 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
         <div className="prose max-w-none text-muted-foreground text-sm sm:text-base leading-relaxed space-y-6 whitespace-pre-line">
           {article.content}
         </div>
+
+        {article.source && (
+          <div className="mt-8 rounded-2xl border border-border bg-muted/40 px-5 py-4 text-sm">
+            <p className="text-muted-foreground">
+              <span className="font-bold text-foreground">Sumber: </span>
+              {article.sourceUrl ? (
+                <a
+                  href={article.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
+                >
+                  {article.source}
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              ) : (
+                <span className="font-semibold text-foreground">{article.source}</span>
+              )}
+            </p>
+          </div>
+        )}
       </div>
 
       {related.length > 0 && (

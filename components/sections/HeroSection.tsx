@@ -17,7 +17,7 @@ export default function HeroSection() {
       <div className="relative mx-auto w-full max-w-4xl px-4 sm:px-6">
         <div aria-hidden="true" className="h-[96px] sm:h-[112px] lg:h-[128px]" />
         <h1 className="animate-hero-rise text-[clamp(2.5rem,6vw,4.25rem)] font-bold leading-[1.07] tracking-[-0.03em] text-white [animation-delay:0.05s]">
-          Membangun Masa Depan <span className="text-emerald-300">Teknologi Berintegritas</span>
+          Berdaya Saing Global <span className="text-emerald-300">dan Berbudaya Santri</span>
         </h1>
 
         <p
