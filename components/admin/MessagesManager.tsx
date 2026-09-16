@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
-import { Inbox, Search, Trash2, MailCheck } from "lucide-react"
+import { Inbox, Search, Trash2, MailCheck, RotateCcw } from "lucide-react"
 import { markMessageRead, deleteRecord } from "@/lib/admin-actions"
 import DetailSheet, { type DetailField } from "@/components/dashboard/detail-sheet"
 import DeleteDialog from "@/components/dashboard/delete-dialog"
@@ -81,6 +81,11 @@ export function MessagesManager({ initialData }: { initialData: Row[] }) {
     }
   }
 
+  function resetFilters() {
+    setSearch("")
+    setStatus("semua")
+  }
+
   function handleDelete() {
     if (!deleteTarget) return
     setDeleteError(null)
@@ -117,10 +122,10 @@ export function MessagesManager({ initialData }: { initialData: Row[] }) {
       <DataTableToolbar
         searchValue={search}
         onSearchChange={setSearch}
-        placeholder="Cari nama, email, atau isi pesan..."
+        placeholder="Cari pesan..."
       />
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="scrollbar-none -mt-1 flex items-center gap-2 overflow-x-auto pb-0.5">
         {filterTabs.map((tab) => {
           const count = tab.value === "semua" ? data.length : tab.value === "belum" ? unread : data.length - unread
           const isActive = status === tab.value
@@ -132,8 +137,8 @@ export function MessagesManager({ initialData }: { initialData: Row[] }) {
               aria-pressed={isActive}
               className={
                 isActive
-                  ? "inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-sm font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-100"
-                  : "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted"
+                  ? "inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-50 px-3.5 text-sm font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:ring-emerald-900"
+                  : "inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-border bg-card px-3.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted"
               }
             >
               {tab.label}
@@ -152,11 +157,22 @@ export function MessagesManager({ initialData }: { initialData: Row[] }) {
       ) : filtered.length === 0 ? (
         <EmptyState
           icon={Search}
-          title="Pesan tidak ditemukan"
-          description="Tidak ada pesan yang cocok dengan filter atau pencarian saat ini."
+          title="Pesan tidak ditemukan untuk pencarian ini"
+          description="Ubah kata kunci atau reset filter untuk melihat semua pesan."
+          action={
+            <Button
+              type="button"
+              variant="outline"
+              onClick={resetFilters}
+              className="min-h-11 cursor-pointer md:min-h-9"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Reset filter
+            </Button>
+          }
         />
       ) : (
-        <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border">
+        <ul className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
           {filtered.map((item) => {
             const isUnread = !item.isRead
             const meta = timeAgo(item.createdAt)
@@ -212,7 +228,7 @@ export function MessagesManager({ initialData }: { initialData: Row[] }) {
                 <Button
                   type="button"
                   variant="secondary"
-                  className="cursor-pointer"
+                  className="min-h-11 cursor-pointer sm:min-h-9"
                   onClick={() => openMessage(selected)}
                 >
                   <MailCheck className="h-4 w-4" />
@@ -222,7 +238,7 @@ export function MessagesManager({ initialData }: { initialData: Row[] }) {
               <Button
                 type="button"
                 variant="destructive"
-                className="cursor-pointer"
+                className="min-h-11 cursor-pointer sm:min-h-9"
                 onClick={() => selected && setDeleteTarget({ id: selected.id, label: selected.subject || "pesan ini" })}
               >
                 <Trash2 className="h-4 w-4" />

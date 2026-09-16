@@ -101,19 +101,45 @@ Indonesia sederhana, hijau strategis, tombol/target sentuh ≥44px.
 
 ## Dashboard admin — Minimal Institutional Dashboard (mode Operate)
 
+Sistem admin mobile-first yang lebih padat daripada situs publik; desktop (sidebar `md+` + tabel) tidak berubah.
+
 - **Token**: `--primary` global = hijau `#008f5a` (tombol/checkbox); netral zinc/slate; merah hanya
-  untuk destructive (delete/error); icon menu **netral** (hijau hanya saat aktif).
-- **Shell**: sidebar `w-64` netral + footer admin/sign-out; main fluid `min-w-0` (`PageContainer`,
-  max 1400px); mobile pakai drawer kiri (`MobileSidebar` — focus, Escape, aria-modal) + top bar.
-- **Halaman**: satu `PageHeader` (judul + deskripsi + aksi); tanpa judul ganda.
-- **DataTable** (custom, tanpa dependency baru): search 300–400px, filter kontekstual (Select),
-  sort header, pagination `10/h`, dropdown aksi `[…]` (Lihat Detail / Edit / Hapus), **DeleteDialog**
-  konfirmasi, **DetailSheet** sisi kanan (radix Dialog), mobile → **list-card** (<md).
-- **Konfigurasi per model** di `lib/admin-columns.tsx` (client): kolom terpilih, status badge
-  (Info/`Akan Datang`, Sukses/`Berlangsung`, Netral/`Selesai`), tanggal eksplisit, avatar dosen,
-  info panjang hanya di detail sheet.
-- **Pesan**: mental model inbox (filter belum/sudah dibaca, dot unread, relative time, Sheet detail,
-  tandai dibaca, delete dialog).
-- **Dashboard home**: 4 KPI utama (StatCard) + status event + Aktivitas Terbaru / Pesan Terbaru.
-- **State**: `LoadingTable` (skeleton), `EmptyState`, `ErrorState` + `error.tsx` (retry), `loading.tsx`.
-- PWA prompt compact, z-index di bawah sheet/dialog, dismiss persisten.
+  untuk destructive (delete/error); icon menu **netral** (hijau hanya saat aktif, termasuk varian `dark:`). Semua kartu admin memakai token (`--card`/`--border`/`--muted`), tanpa warna hardcode dark-only.
+- **Gutter & rhythm**: `PageContainer` memakai token `--page-gutter` (16/20/24/32) + `pt-7 pb-24 md:py-8`
+  (ruang bawah 96px agar pagination tak tertutup kontrol floating).
+- **Shell mobile**: topbar 56px sticky (`backdrop-blur-md`, border halus) — hamburger 44px, logo 32px,
+  brand 14px/700, theme toggle 44px dengan border subtle; desktop sidebar `w-64` + footer admin tak berubah.
+- **Navigasi mobile — drawer kiri** (dipertahankan seperti semula): panel `w-72 max-w-[85vw]` meluncur dari kiri
+  200ms, backdrop `slate-950/50`, `aria-modal`, Escape menutup, scroll-lock body, fokus pindah ke tombol tutup;
+  menutup saat rute berubah **dan** saat item menu ditekan (termasuk halaman yang sedang aktif) serta saat backdrop
+  ditekan. Isi: Dashboard + KELOLA KONTEN (Blueprint, Dosen, UKM, Event, Berita, FAQ, Struktur, Pesan) + footer
+  email/Sign Out. Item aktif hijau subtle dengan varian `dark:`; drawer menyembunyikan `ScrollToTop` via `ui-chrome`.
+- **PageHeader**: eyebrow 12px hijau (varian dark), title 26px→30px/700, deskripsi 14–15px; spacing
+  nav→heading 28px, eyebrow→title 8px, title→desc 8px.
+- **Toolbar** (`DataTableToolbar`): baris 1 search 44px (md: 36px) + ikon 18px, placeholder pendek per model;
+  baris 2 filter `flex-1` + tombol tambah (`h-11 md:h-9`, ikon Plus 16px) — vertikal di ≤340px. Filter
+  mobile = Select 44px; desktop tetap `w-44`.
+- **Kartu mobile** (`DataTable`, `md:hidden`): radius 16px, padding 14px, gap 12px, tanpa shadow berat;
+  judul `line-clamp-2`, metadata 13px `line-clamp-2`, `min-w-0` + `break-words`; kolom mobile per model
+  (Blueprint: kategori • deskripsi; Dosen: avatar 48px + NUPTK di sel utama + prodi + jabatan; Event:
+  tanggal + badge status; Berita: tanggal + ringkasan; FAQ: jawaban; Struktur: jabatan). Desktop tetap
+  tabel `rounded-xl` + sort header.
+- **Aksi baris**: trigger `MoreHorizontal` 40px; **mobile → action bottom sheet** (Lihat Detail / Edit /
+  Hapus destructive setelah divider), **desktop → dropdown** `[…]` seperti sebelumnya. Konfirmasi hapus
+  (`DeleteDialog`) berjudul "Hapus {scope} ini?" dengan tombol `min-h-11` di mobile.
+- **Pagination**: kontrol 44px mobile dengan indikator `x / y`, ringkasan `1–10 dari 36 data` (desktop:
+  `Menampilkan …` + nomor halaman 32px); `pb-24` memastikan tidak tertutup.
+- **Dashboard**: 4 stat `grid-cols-2` (≥360px; 1 kolom <340px), kartu min-h 120px, value 28–32px, ikon
+  36–40px; status event 3 kartu compact (item ketiga `col-span-2` di mobile sempit); Aktivitas/Pesan berupa
+  list row `py-2.5` + divider; empty pesan compact 120–150px dengan CTA text-link.
+- **Pesan**: tab segmented horizontal-scroll (44px, `shrink-0`, jumlah) dengan varian dark; baris pesan
+  compact (avatar 40px, dot unread); empty state 180–220px; empty terfilter menampilkan tombol
+  **Reset filter**.
+- **Form & upload**: `CrudForm` `rounded-2xl p-4 sm:p-6`, input 44px mobile, footer aksi full-width ≥44px,
+  error `break-words`; dropzone upload `min-h-[180px] sm:min-h-[250px]`; tombol hapus file/gambar selalu
+  terlihat (bukan hover-only) dengan target 40px.
+- **State**: `LoadingTable` punya versi kartu mobile yang mengikuti bentuk akhir; bedakan database kosong
+  ("Belum ada …") vs hasil filter kosong ("Tidak ditemukan … untuk pencarian ini" + Reset); `EmptyState`
+  mobile `py-10`.
+- **Floating**: `ScrollToTop` publik (44px, ring progres 2px, threshold 600px) dipasang juga di layout admin.
+- **Utilitas**: `scrollbar-none` kini terdefinisi di `globals.css` (dipakai baris carousel/tab).

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils"
+
 export default function PageContainer({
   children,
   className = "",
@@ -6,7 +8,12 @@ export default function PageContainer({
   className?: string
 }) {
   return (
-    <div className={`mx-auto w-full max-w-[1400px] px-4 py-6 sm:px-6 md:py-8 lg:px-8 ${className}`}>
+    <div
+      className={cn(
+        "page-gutter mx-auto w-full max-w-[1400px] pt-7 pb-24 md:py-8",
+        className
+      )}
+    >
       {children}
     </div>
   )

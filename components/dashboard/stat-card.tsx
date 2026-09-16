@@ -20,16 +20,16 @@ export default function StatCard({
   badge,
 }: StatCardProps) {
   const body = (
-    <div className="flex h-full items-start justify-between gap-4 rounded-xl border border-border bg-card p-5 transition-colors group-hover:border-foreground/20">
+    <div className="flex h-full min-h-[120px] items-start justify-between gap-3 rounded-2xl border border-border bg-card p-4 transition-colors group-hover:border-foreground/20 sm:min-h-0 sm:gap-4 sm:p-5">
       <div className="min-w-0">
-        <p className="truncate text-sm font-medium text-muted-foreground">{label}</p>
-        <p className="mt-1.5 text-3xl font-semibold tabular-nums tracking-tight text-foreground">
+        <p className="truncate text-[13px] font-medium text-muted-foreground sm:text-sm">{label}</p>
+        <p className="mt-1.5 text-[28px] font-semibold leading-none tabular-nums tracking-tight text-foreground sm:text-3xl">
           {value}
         </p>
-        {context && <p className="mt-1 truncate text-xs text-muted-foreground">{context}</p>}
+        {context && <p className="mt-1.5 line-clamp-2 text-xs text-muted-foreground">{context}</p>}
       </div>
-      <div className="flex flex-col items-end gap-2">
-        <span className="grid h-10 w-10 place-items-center rounded-lg bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
+      <div className="flex shrink-0 flex-col items-end gap-2">
+        <span className="grid h-9 w-9 place-items-center rounded-lg bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:ring-emerald-900 sm:h-10 sm:w-10">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         {badge != null && badge > 0 && (

@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Plus, Inbox, SearchX } from "lucide-react"
+import { Plus, Inbox, SearchX, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Select,
@@ -120,6 +120,12 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
     setPage(1)
   }
 
+  function resetFilters() {
+    setSearch("")
+    setFilterValue("all")
+    setPage(1)
+  }
+
   function handleDelete() {
     if (!deleteTarget) return
     setDeleteError(null)
@@ -150,7 +156,7 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
           setPage(1)
         }}
         placeholder={config.searchPlaceholder ?? "Cari..."}
-        left={
+        filter={
           filterOptions && filterOptions.options.length > 0 ? (
             <Select
               value={filterValue}
@@ -159,7 +165,7 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
                 setPage(1)
               }}
             >
-              <SelectTrigger aria-label={filterOptions.label} className="w-full sm:w-44">
+              <SelectTrigger aria-label={filterOptions.label} className="h-11 w-full md:h-9">
                 <SelectValue placeholder={filterOptions.label} />
               </SelectTrigger>
               <SelectContent>
@@ -173,14 +179,15 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
             </Select>
           ) : null
         }
-      >
-        <Button asChild size="sm" className="w-full sm:w-auto cursor-pointer">
-          <Link href={`${baseUrl}/new`}>
-            <Plus />
-            {config.addLabel}
-          </Link>
-        </Button>
-      </DataTableToolbar>
+        action={
+          <Button asChild className="h-11 w-full cursor-pointer px-4 md:h-9 min-[341px]:w-auto">
+            <Link href={`${baseUrl}/new`} aria-label={config.addLabel}>
+              <Plus />
+              {config.addLabel}
+            </Link>
+          </Button>
+        }
+      />
 
       {data.length === 0 ? (
         <EmptyState
@@ -191,8 +198,19 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
       ) : filtered.length === 0 ? (
         <EmptyState
           icon={SearchX}
-          title="Data tidak ditemukan"
-          description="Tidak ada data yang cocok dengan pencarian atau filter saat ini."
+          title={`Tidak ditemukan ${config.scopeLabel} untuk pencarian ini`}
+          description="Ubah kata kunci atau reset filter untuk melihat semua data."
+          action={
+            <Button
+              type="button"
+              variant="outline"
+              onClick={resetFilters}
+              className="min-h-11 cursor-pointer md:min-h-9"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Reset filter
+            </Button>
+          }
         />
       ) : (
         <>
@@ -248,18 +266,28 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
             {pageRows.map((row) => {
               const id = String(row.id)
               return (
-                <div key={id} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4">
+                <div
+                  key={id}
+                  className="flex items-start gap-3 rounded-2xl border border-border bg-card p-3.5"
+                >
                   <button
                     type="button"
                     onClick={() => setViewRow(row)}
                     className="min-w-0 flex-1 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                   >
-                    <span className="block font-medium text-foreground">
+                    <span className="block font-medium leading-snug text-foreground">
                       {titleColumn.render ? titleColumn.render(row) : String(row[titleColumn.key] ?? "—")}
                     </span>
                     {secondaryColumns.map((col) => (
-                      <span key={col.key} className="mt-1 block text-sm text-muted-foreground">
-                        {col.render ? col.render(row) : String(row[col.key] ?? "")}
+                      <span
+                        key={col.key}
+                        className="mt-1.5 block min-w-0 text-[13px] leading-relaxed text-muted-foreground"
+                      >
+                        {col.render ? (
+                          col.render(row)
+                        ) : (
+                          <span className="line-clamp-2 break-words">{String(row[col.key] ?? "")}</span>
+                        )}
                       </span>
                     ))}
                   </button>

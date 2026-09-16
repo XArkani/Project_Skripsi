@@ -59,7 +59,7 @@ export function ImageUpload() {
 
       {/* Uploaded State */}
       {imageUrl ? (
-        <div className="relative group w-full flex-1 min-h-[250px] rounded-xl overflow-hidden border border-border/50 bg-muted/20">
+        <div className="relative group w-full flex-1 min-h-[180px] sm:min-h-[250px] rounded-xl overflow-hidden border border-border/50 bg-muted/20">
           <Image
             src={imageUrl}
             alt="Gambar terunggah"
@@ -67,18 +67,16 @@ export function ImageUpload() {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
-          {/* Subtle overlay gradient for the remove button */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          
           <button
             onClick={(e) => {
               e.stopPropagation();
               setImageUrl(null);
             }}
-            className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-destructive text-white rounded-full opacity-0 transition-all duration-300 group-hover:opacity-100 transform translate-y-[-10px] group-hover:translate-y-0"
+            className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-black/55 text-white transition-colors hover:bg-destructive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             title="Hapus gambar"
+            aria-label="Hapus gambar"
           >
-            <X className="w-4 h-4" />
+            <X className="size-4" />
           </button>
         </div>
       ) : (
@@ -96,7 +94,7 @@ export function ImageUpload() {
           }}
           onClick={handleSelect}
           className={cn(
-            "relative flex flex-col items-center justify-center w-full flex-1 min-h-[250px] py-10 px-4 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-300 ease-out-quint group overflow-hidden",
+            "relative flex flex-col items-center justify-center w-full flex-1 min-h-[180px] sm:min-h-[250px] py-10 px-4 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-300 ease-out-quint group overflow-hidden",
             isDragging 
               ? "border-primary bg-primary/5" 
               : "border-border/60 hover:border-primary/50 hover:bg-muted/30"

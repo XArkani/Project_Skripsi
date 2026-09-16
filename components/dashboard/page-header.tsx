@@ -15,15 +15,17 @@ export default function PageHeader({
     <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div className="min-w-0 max-w-2xl">
         {eyebrow && (
-          <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+          <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
             {eyebrow}
           </p>
         )}
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+        <h1 className="mt-2 text-[26px] font-bold leading-[1.15] tracking-[-0.02em] text-foreground sm:text-3xl">
           {title}
         </h1>
         {description && (
-          <p className="mt-1.5 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
+            {description}
+          </p>
         )}
       </div>
       {children && (

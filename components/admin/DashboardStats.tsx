@@ -28,8 +28,8 @@ export async function DashboardStats() {
   const latestUpcoming = upcoming.slice(0, 3)
 
   return (
-    <div className="space-y-6">
-      <section aria-label="Ringkasan utama" className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="space-y-4 sm:space-y-6">
+      <section aria-label="Ringkasan utama" className="grid grid-cols-2 gap-3 max-[339px]:grid-cols-1 sm:gap-4 xl:grid-cols-4">
         <StatCard
           icon={Files}
           label="Total Konten"
@@ -61,53 +61,53 @@ export async function DashboardStats() {
         />
       </section>
 
-      <section aria-label="Status event" className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <section aria-label="Status event" className="grid grid-cols-2 gap-3 max-[339px]:grid-cols-1 sm:grid-cols-3 sm:gap-4">
         {(["Akan Datang", "Sedang Berlangsung", "Selesai"] as const).map((status) => (
           <Link
             key={status}
             href="/dashboard/event"
-            className="group flex items-center justify-between rounded-xl border border-border bg-card px-5 py-4 transition-colors group-hover:border-foreground/20"
+            className="group flex items-center justify-between gap-2 rounded-2xl border border-border bg-card px-3.5 py-3 transition-colors group-hover:border-foreground/20 max-sm:last:col-span-2 sm:px-4 sm:py-3.5"
           >
-            <span className="flex items-center gap-2.5">
-              <span className={`h-2 w-2 rounded-full ${statusDot[status]}`} aria-hidden="true" />
-              <span className="text-sm font-medium text-muted-foreground">{status}</span>
+            <span className="flex min-w-0 items-center gap-2">
+              <span className={`h-2 w-2 shrink-0 rounded-full ${statusDot[status]}`} aria-hidden="true" />
+              <span className="truncate text-[13px] font-medium text-muted-foreground sm:text-sm">{status}</span>
             </span>
-            <span className="text-2xl font-semibold tabular-nums tracking-tight text-foreground">
+            <span className="shrink-0 text-xl font-semibold tabular-nums tracking-tight text-foreground sm:text-2xl">
               {events.filter((e) => e.status === status).length}
             </span>
           </Link>
         ))}
       </section>
 
-      <section aria-label="Aktivitas dan pesan" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="rounded-xl border border-border bg-card p-5 lg:col-span-2">
+      <section aria-label="Aktivitas dan pesan" className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
+        <div className="rounded-2xl border border-border bg-card p-4 lg:col-span-2 sm:p-5">
           <h2 className="text-sm font-semibold text-foreground">Aktivitas Terbaru</h2>
           <p className="mt-0.5 text-xs text-muted-foreground">Berita dan agenda terbaru fakultas.</p>
 
-          <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Berita</p>
-              <ul className="mt-3 space-y-4">
+              <ul className="mt-1 divide-y divide-border/60">
                 {latestNews.map((n) => (
                   <li key={n.id}>
-                    <Link href="/dashboard/berita" className="block">
-                      <p className="line-clamp-1 text-sm font-medium text-foreground transition-colors hover:text-emerald-700">
+                    <Link href="/dashboard/berita" className="block py-2.5">
+                      <p className="line-clamp-1 text-sm font-medium text-foreground transition-colors hover:text-emerald-700 dark:hover:text-emerald-300">
                         {n.title}
                       </p>
                       <p className="mt-0.5 text-xs text-muted-foreground">{n.date}</p>
                     </Link>
                   </li>
                 ))}
-                {latestNews.length === 0 && <li className="text-sm text-muted-foreground">Belum ada berita.</li>}
+                {latestNews.length === 0 && <li className="py-2.5 text-sm text-muted-foreground">Belum ada berita.</li>}
               </ul>
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Event Terdekat</p>
-              <ul className="mt-3 space-y-4">
+              <ul className="mt-1 divide-y divide-border/60">
                 {latestUpcoming.map((e) => (
                   <li key={e.id}>
-                    <Link href="/dashboard/event" className="block">
-                      <p className="line-clamp-1 text-sm font-medium text-foreground transition-colors hover:text-emerald-700">
+                    <Link href="/dashboard/event" className="block py-2.5">
+                      <p className="line-clamp-1 text-sm font-medium text-foreground transition-colors hover:text-emerald-700 dark:hover:text-emerald-300">
                         {e.title}
                       </p>
                       <p className="mt-0.5 text-xs text-muted-foreground">{e.date}</p>
@@ -115,38 +115,38 @@ export async function DashboardStats() {
                   </li>
                 ))}
                 {latestUpcoming.length === 0 && (
-                  <li className="text-sm text-muted-foreground">Belum ada event mendatang.</li>
+                  <li className="py-2.5 text-sm text-muted-foreground">Belum ada event mendatang.</li>
                 )}
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col rounded-xl border border-border bg-card p-5">
+        <div className="flex flex-col rounded-2xl border border-border bg-card p-4 sm:p-5">
           <div className="flex items-center justify-between gap-3">
-            <div>
+            <div className="min-w-0">
               <h2 className="text-sm font-semibold text-foreground">Pesan Terbaru</h2>
-              <p className="mt-0.5 text-xs text-muted-foreground">
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">
                 {unread.length > 0 ? `${unread.length} belum dibaca` : "Semua pesan sudah dibaca"}
               </p>
             </div>
             {unread.length > 0 && (
-              <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-emerald-600 px-1.5 text-[11px] font-semibold text-white tabular-nums">
+              <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 px-1.5 text-[11px] font-semibold text-white tabular-nums">
                 {unread.length}
               </span>
             )}
           </div>
 
           {unread.length === 0 ? (
-            <p className="mt-6 flex-1 rounded-lg border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground">
+            <p className="mt-4 flex-1 rounded-xl border border-dashed border-border px-4 py-6 text-center text-[13px] text-muted-foreground">
               Tidak ada pesan baru.
             </p>
           ) : (
-            <ul className="mt-4 flex-1 space-y-4">
+            <ul className="mt-1 flex-1 divide-y divide-border/60">
               {unread.slice(0, 4).map((m) => (
                 <li key={m.id}>
-                  <Link href="/dashboard/messages" className="group flex items-start gap-3">
-                    <Mail className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                  <Link href="/dashboard/messages" className="group flex items-start gap-3 py-2.5">
+                    <Mail className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                     <span className="min-w-0">
                       <span className="block line-clamp-1 text-sm font-medium text-foreground">
                         {m.subject || "(tanpa subjek)"}
@@ -163,7 +163,7 @@ export async function DashboardStats() {
 
           <Link
             href="/dashboard/messages"
-            className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-emerald-700 transition-colors hover:text-emerald-800"
+            className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-emerald-700 transition-colors hover:text-emerald-800 dark:text-emerald-300 dark:hover:text-emerald-200"
           >
             Lihat semua pesan
             <ArrowUpRight className="h-4 w-4" />

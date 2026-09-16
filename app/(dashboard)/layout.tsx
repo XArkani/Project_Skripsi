@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { NavLinks } from "./nav-links";
 import { MobileSidebar } from "./mobile-sidebar";
 import PageContainer from "@/components/dashboard/page-container";
+import ScrollToTop from "@/components/shared/ScrollToTop";
 
 async function SessionCheck({ children }: { children: React.ReactNode }) {
   const session = await auth.api.getSession({
@@ -63,6 +64,7 @@ async function SessionCheck({ children }: { children: React.ReactNode }) {
       <main className="flex-1 min-w-0 md:pl-64">
         <MobileSidebar email={session.user.email} />
         <PageContainer>{children}</PageContainer>
+        <ScrollToTop />
       </main>
     </div>
   );

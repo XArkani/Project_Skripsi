@@ -39,7 +39,7 @@ export default function DeleteDialog({
           <AlertDialogMedia className="bg-destructive/10 text-destructive">
             <Trash2 aria-hidden="true" />
           </AlertDialogMedia>
-          <AlertDialogTitle>Hapus data ini?</AlertDialogTitle>
+          <AlertDialogTitle>Hapus {scopeLabel} ini?</AlertDialogTitle>
           <AlertDialogDescription>
             {itemLabel ? (
               <>
@@ -57,7 +57,7 @@ export default function DeleteDialog({
           </p>
         )}
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending} className="cursor-pointer">
+          <AlertDialogCancel disabled={pending} className="min-h-11 cursor-pointer md:min-h-9">
             Batal
           </AlertDialogCancel>
           <AlertDialogAction
@@ -66,7 +66,7 @@ export default function DeleteDialog({
               e.preventDefault()
               onConfirm()
             }}
-            className="cursor-pointer bg-destructive text-white hover:bg-destructive/90 disabled:opacity-50"
+            className="min-h-11 cursor-pointer bg-destructive text-white hover:bg-destructive/90 disabled:opacity-50 md:min-h-9"
           >
             {pending ? <Loader2 className="size-4 animate-spin" /> : <Trash2 className="size-4" />}
             Hapus

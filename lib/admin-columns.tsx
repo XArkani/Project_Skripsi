@@ -29,12 +29,12 @@ function readableDate(value: Date | string | null | undefined) {
 function StatusBadge({ status }: { status: string }) {
   const cls =
     status === "Sedang Berlangsung"
-      ? "bg-emerald-50 text-emerald-700 ring-emerald-100"
+      ? "bg-emerald-50 text-emerald-700 ring-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:ring-emerald-900"
       : status === "Akan Datang"
-        ? "bg-blue-500/15 text-blue-700 ring-blue-500/30"
+        ? "bg-blue-500/15 text-blue-700 ring-blue-500/30 dark:text-blue-300 dark:ring-blue-500/40"
         : "bg-muted text-muted-foreground ring-border"
   return (
-    <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset", cls)}>
+    <span className={cn("inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset", cls)}>
       {status}
     </span>
   )
@@ -65,14 +65,18 @@ function DosenCell({ row }: { row: Row }) {
   return (
     <span className="flex items-center gap-3">
       {src ? (
-        <img src={src} alt={`Foto ${name}`} className="h-9 w-9 shrink-0 rounded-full object-cover ring-1 ring-border" />
+        <img
+          src={src}
+          alt={`Foto ${name}`}
+          className="h-12 w-12 shrink-0 rounded-full object-cover ring-1 ring-border md:h-9 md:w-9"
+        />
       ) : (
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#008f5a] to-[#00231d] text-[11px] font-semibold text-white">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#008f5a] to-[#00231d] text-sm font-semibold text-white md:h-9 md:w-9 md:text-[11px]">
           {initialsOf(name) || "?"}
         </span>
       )}
       <span className="min-w-0">
-        <span className="block truncate font-medium text-foreground">{name}</span>
+        <span className="line-clamp-2 break-words font-medium text-foreground">{name}</span>
         {nuptk && (
           <span className="block truncate text-xs tabular-nums text-muted-foreground">NUPTK · {nuptk}</span>
         )}
@@ -86,7 +90,7 @@ function primaryCell(key: string) {
     sortable: true,
     className: "max-w-[300px]",
     render: (row: Row) => (
-      <span className="block truncate font-medium text-foreground">{text(row, key) ?? "—"}</span>
+      <span className="line-clamp-2 break-words font-medium text-foreground">{text(row, key) ?? "—"}</span>
     ),
   }
 }
@@ -135,16 +139,16 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
         ...base,
         columns: [
           { key: "title", label: "Ruangan", ...primaryCell("title") },
-          { key: "category", label: "Kategori", hideOnMobile: true, render: (row) => <Chip>{text(row, "category") ?? "—"}</Chip> },
+          { key: "category", label: "Kategori", render: (row) => <Chip>{text(row, "category") ?? "—"}</Chip> },
           {
             key: "description",
             label: "Deskripsi",
             className: "max-w-[420px]",
-            render: (row) => <span className="line-clamp-2 block text-muted-foreground">{text(row, "description") ?? "—"}</span>,
+            render: (row) => <span className="line-clamp-2 break-words block text-muted-foreground">{text(row, "description") ?? "—"}</span>,
           },
         ],
         searchKeys: ["title", "category", "description"],
-        searchPlaceholder: "Cari ruangan, kategori...",
+        searchPlaceholder: "Cari ruangan...",
         filter: { key: "category", label: "Kategori" },
         addLabel: "Tambah Ruangan",
         scopeLabel: "ruangan",
@@ -165,12 +169,12 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
         ...base,
         columns: [
           { key: "name", label: "Dosen", sortable: true, className: "max-w-[320px]", render: (row) => <DosenCell row={row} /> },
-          { key: "prodi", label: "Program Studi", hideOnMobile: true, render: (row) => <Chip>{text(row, "prodi") ?? "—"}</Chip> },
+          { key: "prodi", label: "Program Studi", render: (row) => <Chip>{text(row, "prodi") ?? "—"}</Chip> },
           { key: "position", label: "Jabatan", render: (row) => <span className="block max-w-[240px] truncate">{text(row, "position") ?? "—"}</span> },
           { key: "nuptk", label: "NUPTK", hideOnMobile: true, className: "max-w-[180px]", render: (row) => <span className="tabular-nums text-muted-foreground">{text(row, "nuptk") ?? "—"}</span> },
         ],
         searchKeys: ["name", "prodi", "position", "nuptk", "email", "expertise"],
-        searchPlaceholder: "Cari nama, prodi, posisi...",
+        searchPlaceholder: "Cari dosen...",
         filter: { key: "prodi", label: "Program Studi" },
         addLabel: "Tambah Dosen",
         scopeLabel: "dosen",
@@ -205,11 +209,11 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
         ...base,
         columns: [
           { key: "name", label: "Nama UKM", ...primaryCell("name") },
-          { key: "description", label: "Deskripsi", className: "max-w-[480px]", render: (row) => <span className="line-clamp-2 block text-muted-foreground">{text(row, "description") ?? "—"}</span> },
+          { key: "description", label: "Deskripsi", className: "max-w-[480px]", render: (row) => <span className="line-clamp-2 break-words block text-muted-foreground">{text(row, "description") ?? "—"}</span> },
           { key: "contact", label: "Kontak", hideOnMobile: true, className: "max-w-[240px]", render: (row) => <span className="block truncate">{text(row, "contact") ?? "—"}</span> },
         ],
         searchKeys: ["name", "description", "activities", "contact"],
-        searchPlaceholder: "Cari UKM atau kegiatan...",
+        searchPlaceholder: "Cari UKM...",
         addLabel: "Tambah UKM",
         scopeLabel: "UKM",
         emptyTitle: "Belum ada UKM",
@@ -232,7 +236,6 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
           {
             key: "date",
             label: "Tanggal",
-            hideOnMobile: true,
             className: "max-w-[180px] whitespace-nowrap",
             render: (row) => (
               <span className="whitespace-nowrap tabular-nums text-muted-foreground">
@@ -243,7 +246,7 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
           { key: "status", label: "Status", render: (row) => <StatusBadge status={text(row, "status") ?? "—"} /> },
         ],
         searchKeys: ["title", "location", "status", "date"],
-        searchPlaceholder: "Cari acara, lokasi...",
+        searchPlaceholder: "Cari event...",
         filter: { key: "status", label: "Status" },
         addLabel: "Tambah Event",
         scopeLabel: "acara",
@@ -276,7 +279,6 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
           {
             key: "date",
             label: "Tanggal",
-            hideOnMobile: true,
             className: "max-w-[180px] whitespace-nowrap",
             render: (row) => (
               <span className="whitespace-nowrap tabular-nums text-muted-foreground">
@@ -284,10 +286,10 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
               </span>
             ),
           },
-          { key: "excerpt", label: "Ringkasan", className: "max-w-[420px]", render: (row) => <span className="line-clamp-2 block text-muted-foreground">{text(row, "excerpt") ?? "—"}</span> },
+          { key: "excerpt", label: "Ringkasan", className: "max-w-[420px]", render: (row) => <span className="line-clamp-2 break-words block text-muted-foreground">{text(row, "excerpt") ?? "—"}</span> },
         ],
         searchKeys: ["title", "excerpt", "content", "date"],
-        searchPlaceholder: "Cari judul berita...",
+        searchPlaceholder: "Cari berita...",
         addLabel: "Tambah Berita",
         scopeLabel: "berita",
         emptyTitle: "Belum ada berita",
@@ -306,11 +308,11 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
       return {
         ...base,
         columns: [
-          { key: "question", label: "Pertanyaan", className: "max-w-[380px]", sortable: true, render: (row) => <span className="block truncate font-medium text-foreground">{text(row, "question") ?? "—"}</span> },
-          { key: "answer", label: "Jawaban", className: "max-w-[460px]", render: (row) => <span className="line-clamp-2 block text-muted-foreground">{text(row, "answer") ?? "—"}</span> },
+          { key: "question", label: "Pertanyaan", className: "max-w-[380px]", sortable: true, render: (row) => <span className="line-clamp-2 break-words font-medium text-foreground">{text(row, "question") ?? "—"}</span> },
+          { key: "answer", label: "Jawaban", className: "max-w-[460px]", render: (row) => <span className="line-clamp-2 break-words block text-muted-foreground">{text(row, "answer") ?? "—"}</span> },
         ],
         searchKeys: ["question", "answer"],
-        searchPlaceholder: "Cari pertanyaan...",
+        searchPlaceholder: "Cari FAQ...",
         addLabel: "Tambah FAQ",
         scopeLabel: "FAQ",
         emptyTitle: "Belum ada FAQ",
@@ -326,12 +328,12 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
       return {
         ...base,
         columns: [
-          { key: "name", label: "Nama", className: "max-w-[300px]", sortable: true, render: (row) => <span className="block truncate font-medium text-foreground">{text(row, "name") ?? "—"}</span> },
-          { key: "role", label: "Jabatan", hideOnMobile: true, className: "max-w-[260px]", render: (row) => <span className="block truncate">{text(row, "role") ?? "—"}</span> },
+          { key: "name", label: "Nama", className: "max-w-[300px]", sortable: true, render: (row) => <span className="line-clamp-2 break-words font-medium text-foreground">{text(row, "name") ?? "—"}</span> },
+          { key: "role", label: "Jabatan", className: "max-w-[260px]", render: (row) => <span className="block truncate">{text(row, "role") ?? "—"}</span> },
           { key: "parentId", label: "Atasan", hideOnMobile: true, className: "max-w-[220px]", render: (row) => <span className="block truncate text-muted-foreground">{parentOf(row) ?? "—"}</span> },
         ],
         searchKeys: ["name", "role", "details"],
-        searchPlaceholder: "Cari nama atau jabatan...",
+        searchPlaceholder: "Cari nama...",
         addLabel: "Tambah Struktur",
         scopeLabel: "struktur",
         emptyTitle: "Belum ada struktur organisasi",

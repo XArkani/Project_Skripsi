@@ -49,7 +49,7 @@ function SheetContent({
           side === "top" &&
             "inset-x-0 top-0 h-auto border-b data-open:slide-in-from-top data-closed:slide-out-to-top",
           side === "bottom" &&
-            "inset-x-0 bottom-0 h-auto border-t data-open:slide-in-from-bottom data-closed:slide-out-to-bottom",
+            "inset-x-0 bottom-0 h-auto border-t duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] data-open:slide-in-from-bottom data-closed:slide-out-to-bottom",
           className
         )}
         {...props}
@@ -119,7 +119,7 @@ function SheetCloseButton({
       data-slot="sheet-close-button"
       aria-label={label}
       className={cn(
-        "absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+        "absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 md:h-8 md:w-8",
         className
       )}
       {...props}

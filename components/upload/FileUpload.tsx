@@ -54,7 +54,7 @@ export function FileUpload() {
 
       {/* Uploaded State */}
       {fileUrl && fileName ? (
-        <div className="relative group flex flex-col items-center justify-center w-full flex-1 min-h-[250px] rounded-xl border border-border/50 bg-muted/10 transition-colors hover:bg-muted/30">
+        <div className="relative group flex flex-col items-center justify-center w-full flex-1 min-h-[180px] sm:min-h-[250px] rounded-xl border border-border/50 bg-muted/10 transition-colors hover:bg-muted/30">
           <div className="flex flex-col items-center space-y-4 text-center p-6">
             <div className="p-4 rounded-full bg-primary/10 text-primary">
               <FileText className="w-10 h-10" />
@@ -75,10 +75,11 @@ export function FileUpload() {
               setFileUrl(null);
               setFileName(null);
             }}
-            className="absolute top-4 right-4 p-2 bg-muted hover:bg-destructive hover:text-white text-muted-foreground rounded-full opacity-0 transition-all duration-300 group-hover:opacity-100 transform translate-y-[-10px] group-hover:translate-y-0"
+            className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-destructive hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             title="Hapus file"
+            aria-label="Hapus file"
           >
-            <X className="w-4 h-4" />
+            <X className="size-4" />
           </button>
         </div>
       ) : (
@@ -96,7 +97,7 @@ export function FileUpload() {
           }}
           onClick={handleSelect}
           className={cn(
-            "relative flex flex-col items-center justify-center w-full flex-1 min-h-[250px] py-10 px-4 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-300 ease-out-quint group overflow-hidden",
+            "relative flex flex-col items-center justify-center w-full flex-1 min-h-[180px] sm:min-h-[250px] py-10 px-4 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-300 ease-out-quint group overflow-hidden",
             isDragging 
               ? "border-primary bg-primary/5" 
               : "border-border/60 hover:border-primary/50 hover:bg-muted/30"

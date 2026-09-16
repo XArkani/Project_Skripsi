@@ -103,6 +103,7 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
           value={value}
           onChange={(e) => handleChange(field.name, e.target.value)}
           placeholder="Otomatis dari judul, bisa diedit"
+          className="h-11 md:h-9"
         />
       )
     }
@@ -122,7 +123,7 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
           value={value}
           onValueChange={(v) => handleChange(field.name, v)}
         >
-          <SelectTrigger id={inputId} className="w-full" aria-label={field.label}>
+          <SelectTrigger id={inputId} className="h-11 w-full md:h-9" aria-label={field.label}>
             <SelectValue placeholder="Pilih..." />
           </SelectTrigger>
           <SelectContent>
@@ -145,7 +146,7 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
     }
     if (field.type === "checkbox") {
       return (
-        <label className="flex items-center gap-2 text-sm text-foreground">
+        <label className="flex min-h-11 items-center gap-2 text-sm text-foreground">
           <input
             type="checkbox"
             checked={Boolean(formData[field.name])}
@@ -167,6 +168,7 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
           type="date"
           value={dateValue}
           onChange={(e) => handleChange(field.name, e.target.value)}
+          className="h-11 md:h-9"
         />
       )
     }
@@ -176,6 +178,7 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
         type={field.type === "number" ? "number" : "text"}
         value={value}
         onChange={(e) => handleChange(field.name, e.target.value)}
+        className="h-11 md:h-9"
       />
     )
   }
@@ -184,23 +187,20 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
     <div className="mx-auto max-w-2xl">
       <Link
         href={base}
-        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+        className="mb-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 sm:mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
         Kembali ke daftar
       </Link>
 
-      <form onSubmit={handleSubmit} className="rounded-xl border border-border bg-card p-5 sm:p-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="rounded-2xl border border-border bg-card p-4 sm:p-6">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
           {groups.map((group) => (
-            <fieldset
-              key={group}
-              className={group.includes("Gambar") || group.includes("Poster") || group.includes("Logo") || group === "Detail" ? "sm:col-span-2" : "sm:col-span-2"}
-            >
-              <legend className="mb-4 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            <fieldset key={group} className="sm:col-span-2">
+              <legend className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
                 {group}
               </legend>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                 {editableFields
                   .filter((f) => (f.group ?? "Informasi Utama") === group)
                   .map((field) => (
@@ -227,10 +227,10 @@ export function CrudForm({ modelName, baseUrl, fields, mode, id, initialData = {
           ))}
         </div>
 
-        {error && <p className="mt-5 text-sm font-medium text-destructive" role="alert">{error}</p>}
+        {error && <p className="mt-5 break-words text-sm font-medium text-destructive" role="alert">{error}</p>}
 
         <div className="mt-6 flex flex-col-reverse gap-2 border-t border-border/50 pt-5 sm:flex-row sm:justify-end">
-          <Button type="button" variant="ghost" asChild className="cursor-pointer">
+          <Button type="button" variant="ghost" asChild className="min-h-11 w-full cursor-pointer sm:min-h-9 sm:w-auto">
             <Link href={base}>Batal</Link>
           </Button>
           <Button type="submit" disabled={pending} className="min-h-11 w-full cursor-pointer sm:w-auto">

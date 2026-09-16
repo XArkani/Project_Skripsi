@@ -18,7 +18,7 @@ export function LogoutButton() {
       variant="ghost" 
       size="default" 
       onClick={handleLogout} 
-      className="w-full justify-start gap-3 px-3 py-2.5 h-auto text-destructive hover:text-destructive hover:bg-destructive/10 transition-colors cursor-pointer"
+      className="min-h-11 w-full justify-start gap-3 px-3 py-2.5 h-auto text-destructive hover:text-destructive hover:bg-destructive/10 transition-colors cursor-pointer"
     >
       <LogOut className="h-4 w-4" />
       Sign Out
