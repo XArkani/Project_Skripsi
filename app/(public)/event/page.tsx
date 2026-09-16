@@ -10,9 +10,9 @@ export default async function EventPage() {
   const events = await getEvents()
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 sm:pb-24">
+    <div className="max-w-7xl mx-auto page-gutter pt-20 sm:pt-28 pb-16 sm:pb-24">
       <div className="pb-8 mb-6">
-        <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
+        <span className="text-xs uppercase font-extrabold text-emerald-700 dark:text-emerald-400 tracking-wider">
           Kalender Akademik
         </span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mt-1.5">Agenda & Event Teknik</h1>

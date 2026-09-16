@@ -13,7 +13,7 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
   const visible = items.slice(0, 5)
 
   return (
-    <section className="bg-muted py-16 sm:py-24">
+    <section className="section-y bg-muted">
       <Container>
         <ScrollReveal className="mx-auto max-w-3xl">
           <div className="text-center">
@@ -37,7 +37,7 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
                     aria-controls={`faq-panel-${faq.id}`}
                     className="group flex w-full items-center justify-between gap-6 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                   >
-                    <span className="text-sm font-semibold leading-snug text-foreground transition-colors group-hover:text-emerald-800 sm:text-base">
+                    <span className="text-sm font-semibold leading-snug text-foreground transition-colors group-hover:text-emerald-800 dark:group-hover:text-emerald-300 sm:text-base">
                       {faq.question}
                     </span>
                     <span
@@ -45,7 +45,7 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
                         "grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-200",
                         isOpen
                           ? "border-emerald-700 bg-emerald-700 text-white"
-                          : "border-border text-muted-foreground group-hover:border-emerald-700 group-hover:text-emerald-700"
+                          : "border-border text-muted-foreground group-hover:border-emerald-700 group-hover:text-emerald-700 dark:group-hover:border-emerald-400 dark:group-hover:text-emerald-400"
                       )}
                     >
                       <Plus

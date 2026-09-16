@@ -46,23 +46,23 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
   const isPast = evt.status === "Selesai"
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-24">
+    <div className="max-w-4xl mx-auto page-gutter pt-20 sm:pt-28 pb-16 sm:pb-24">
       <Link
         href="/event"
-        className="inline-flex items-center gap-1.5 min-h-11 text-sm font-bold text-muted-foreground hover:text-emerald-700 mb-6 transition-colors"
+        className="inline-flex items-center gap-1.5 min-h-11 text-sm font-bold text-muted-foreground hover:text-emerald-700 dark:hover:text-emerald-300 mb-6 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" aria-hidden="true" />
         Kembali ke Daftar Acara
       </Link>
 
       <div className="bg-card rounded-3xl overflow-hidden border border-border/80 shadow-sm">
-        <div className="relative h-64 sm:h-96 overflow-hidden bg-muted">
+        <div className="relative aspect-[4/3] overflow-hidden bg-muted sm:aspect-auto sm:h-96">
           {evt.image && !isStockImage(evt.image) ? (
             <Image src={evt.image} alt={evt.title} fill sizes="(min-width: 768px) 896px, 100vw" className="object-cover" priority />
           ) : (
             <ImagePlaceholder label="Poster belum tersedia" className="w-full h-full" />
           )}
-          <span className={`absolute top-6 left-6 text-white text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider ${badge.badge}`}>
+          <span className={`absolute top-4 left-4 sm:top-6 sm:left-6 max-w-[calc(100%-2rem)] truncate text-white text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider ${badge.badge}`}>
             {evt.status}
           </span>
         </div>
@@ -115,7 +115,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
                     href={evt.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
+                    className="inline-flex min-h-11 items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline dark:text-emerald-300 dark:hover:text-emerald-200"
                   >
                     {evt.source}
                     <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
@@ -167,7 +167,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
                   <h3 className="font-bold text-foreground text-sm mt-1.5 line-clamp-1">{item.title}</h3>
                   <p className="text-muted-foreground text-xs mt-2 line-clamp-2">{item.description}</p>
                 </div>
-                <span className="text-emerald-700 text-sm font-semibold mt-4 block">Lihat Detail &rarr;</span>
+                <span className="text-emerald-700 dark:text-emerald-300 text-sm font-semibold mt-4 block">Lihat Detail &rarr;</span>
               </Link>
             ))}
           </div>

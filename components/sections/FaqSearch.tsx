@@ -28,7 +28,7 @@ function FAQItem({ faq, isOpen, onToggle }: { faq: FAQ; isOpen: boolean; onToggl
         hidden={!isOpen}
         className={cn(!isOpen && "hidden")}
       >
-        <p className="text-muted-foreground text-xs sm:text-sm px-5 pb-5 pl-11 leading-relaxed">{faq.answer}</p>
+        <p className="text-muted-foreground text-sm px-5 pb-5 pl-11 leading-relaxed">{faq.answer}</p>
       </div>
     </div>
   )
@@ -66,7 +66,8 @@ export default function FaqSearch({ faqs }: FaqSearchProps) {
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground font-bold"
+              aria-label="Bersihkan pencarian"
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 items-center rounded-full px-3 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             >
               CLEAR
             </button>

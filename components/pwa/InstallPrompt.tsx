@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Download, X } from "lucide-react";
+import { useUiChrome } from "@/components/shared/ui-chrome";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -13,6 +14,7 @@ const DISMISS_KEY = "ft-install-dismissed";
 export default function InstallPrompt() {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [visible, setVisible] = useState(false);
+  const { setInstallPromptOpen } = useUiChrome();
 
   useEffect(() => {
     try {
@@ -24,13 +26,15 @@ export default function InstallPrompt() {
       e.preventDefault();
       setDeferred(e as BeforeInstallPromptEvent);
       setVisible(true);
+      setInstallPromptOpen(true);
     };
     window.addEventListener("beforeinstallprompt", handler);
     return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
+  }, [setInstallPromptOpen]);
 
   function dismiss(forever = false) {
     setVisible(false);
+    setInstallPromptOpen(false);
     setDeferred(null);
     if (forever) {
       try {

@@ -52,7 +52,7 @@ function NewsCard({ item, animate }: { item: News; animate: boolean }) {
       viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
       className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
     >
-      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-muted">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted sm:aspect-auto sm:h-48">
         <NewsMedia src={item.image} alt={item.title} />
       </div>
 
@@ -63,7 +63,7 @@ function NewsCard({ item, animate }: { item: News; animate: boolean }) {
         </span>
 
         <Link href={`/berita/${item.slug}`}>
-          <h3 className="font-bold text-foreground leading-snug group-hover:text-emerald-700 transition-colors line-clamp-2">
+          <h3 className="font-bold text-foreground leading-snug group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors line-clamp-2">
             {item.title}
           </h3>
         </Link>
@@ -106,7 +106,7 @@ export default function NewsList({ items }: NewsListProps) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm">
+      <div className="sticky top-(--header-h) z-20 mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
@@ -139,7 +139,7 @@ export default function NewsList({ items }: NewsListProps) {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:text-emerald-200 dark:hover:bg-emerald-950/60 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Reset
@@ -157,7 +157,7 @@ export default function NewsList({ items }: NewsListProps) {
             {query.trim() !== "" ? (
               <>
                 Tidak ada berita yang cocok untuk pencarian{" "}
-                <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>.
+                <span className="font-bold text-emerald-700 dark:text-emerald-300">&quot;{query.trim()}&quot;</span>.
               </>
             ) : (
               "Belum ada berita yang cocok."

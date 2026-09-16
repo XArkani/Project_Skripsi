@@ -1,5 +1,6 @@
 import { cacheTag } from "next/cache"
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getNewsBySlug, getNews } from "@/lib/faculty"
@@ -34,23 +35,23 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
   const related = news.filter((n) => n.slug !== article.slug).slice(0, 2)
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-24">
-      <div className="text-xs text-muted-foreground mb-6 flex items-center space-x-2">
-        <Link href="/" className="hover:text-emerald-700">Beranda</Link>
+    <div className="max-w-4xl mx-auto page-gutter pt-20 sm:pt-28 pb-16 sm:pb-24">
+      <div className="text-xs text-muted-foreground mb-1 sm:mb-6 flex items-center space-x-2">
+        <Link href="/" className="inline-flex min-h-11 items-center hover:text-emerald-700 dark:hover:text-emerald-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">Beranda</Link>
         <span>/</span>
-        <Link href="/berita" className="hover:text-emerald-700">Berita</Link>
+        <Link href="/berita" className="inline-flex min-h-11 items-center hover:text-emerald-700 dark:hover:text-emerald-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">Berita</Link>
         <span>/</span>
         <span className="text-muted-foreground truncate">{article.title}</span>
       </div>
 
-      <Link href="/berita" className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-emerald-700 mb-6">
+      <Link href="/berita" className="inline-flex min-h-11 items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-emerald-700 dark:hover:text-emerald-300 mb-5 sm:mb-6">
         <ArrowLeft className="w-3.5 h-3.5" />
         Kembali ke Daftar Berita
       </Link>
 
       <div className="bg-card rounded-3xl overflow-hidden border border-border/80 shadow-sm p-6 sm:p-10">
         <div className="space-y-4 mb-6">
-          <span className="text-xs text-emerald-800 font-extrabold bg-emerald-50 px-3 py-1 rounded-md">{article.category || "Warta Fakultas"}</span>
+          <span className="text-xs text-emerald-800 font-extrabold bg-emerald-50 px-3 py-1 rounded-md dark:text-emerald-300 dark:bg-emerald-950/60">{article.category || "Warta Fakultas"}</span>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground leading-tight">{article.title}</h1>
           <div className="flex items-center space-x-3 text-muted-foreground text-xs">
             <span className="inline-flex items-center gap-1">
@@ -62,9 +63,15 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
           </div>
         </div>
 
-        <div className="rounded-2xl overflow-hidden mb-8 aspect-video">
+        <div className="rounded-2xl overflow-hidden mb-8 aspect-video relative">
           {article.image ? (
-            <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+            <Image
+              src={article.image}
+              alt={article.title}
+              fill
+              sizes="(min-width: 768px) 896px, 100vw"
+              className="object-cover"
+            />
           ) : (
             <ImagePlaceholder label="Gambar Berita" className="w-full h-full" />
           )}
@@ -83,7 +90,7 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
                   href={article.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
+                  className="inline-flex min-h-11 items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline dark:text-emerald-300 dark:hover:text-emerald-200"
                 >
                   {article.source}
                   <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
@@ -107,10 +114,10 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
                 className="bg-card p-5 rounded-2xl border border-border shadow-sm hover:border-emerald-300 transition-colors flex flex-col justify-between"
               >
                 <div>
-                  <span className="text-[10px] text-muted-foreground font-bold block mb-1">{item.date}</span>
+                  <span className="text-xs text-muted-foreground font-bold block mb-1">{item.date}</span>
                   <h4 className="font-bold text-foreground text-sm line-clamp-2">{item.title}</h4>
                 </div>
-                <span className="text-emerald-700 text-xs font-bold mt-4 block">Baca Berita →</span>
+                <span className="text-emerald-700 dark:text-emerald-300 text-xs font-bold mt-4 block">Baca Berita →</span>
               </Link>
             ))}
           </div>

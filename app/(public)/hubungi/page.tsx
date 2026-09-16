@@ -68,11 +68,11 @@ export default function HubungiPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 sm:pb-20">
+    <div className="max-w-7xl mx-auto page-gutter pt-20 sm:pt-28 pb-16 sm:pb-24">
       <Toast message={toastMessage} type={toastType} />
 
-      <div className="text-center md:text-left mb-12">
-        <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">Hubungi Kami</span>
+      <div className="text-center md:text-left pb-8 mb-6">
+        <span className="text-xs uppercase font-extrabold text-emerald-700 dark:text-emerald-400 tracking-wider">Hubungi Kami</span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mt-2 tracking-tight">
           Layanan Pertanyaan Terpadu
         </h1>
@@ -239,13 +239,13 @@ export default function HubungiPage() {
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT_INFO.mapsQuery)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer shrink-0"
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer shrink-0"
           >
             Buka di Google Maps
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
-        <div className="h-96 sm:h-[480px] relative">
+        <div className="h-72 sm:h-[480px] relative">
           <MapWithFallback />
         </div>
       </div>

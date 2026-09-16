@@ -18,9 +18,9 @@ function StrukturFallback() {
 
 export default function StrukturPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 sm:pb-24">
+    <div className="max-w-7xl mx-auto page-gutter pt-20 sm:pt-28 pb-16 sm:pb-24">
       <div className="pb-8 mb-6">
-        <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">Tata Pamong</span>
+        <span className="text-xs uppercase font-extrabold text-emerald-700 dark:text-emerald-400 tracking-wider">Tata Pamong</span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mt-1.5">Struktur Organisasi</h1>
         <p className="text-muted-foreground text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
           Bagan kepemimpinan, koordinasi struktural, dan penanggung jawab mutu Fakultas Teknik.

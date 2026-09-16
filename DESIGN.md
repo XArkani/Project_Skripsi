@@ -38,10 +38,18 @@ Netral: latar `#ffffff`, latar sekunder `#f7f9fa`, teks `#111827` (slate-950), t
 
 ## Komponen UI publik
 
-- `Container` — `max-w-[1280px]`, `px-4/6/8`.
+- `Container` — `max-w-[1280px]` + gutter token `--page-gutter` (16/20/24/32px); irama section via `section-y`.
 - `SectionHeading` — judul + deskripsi + tautan aksi opsional.
 - `ButtonLink` — varian primary (hijau solid), secondary (outline), on-dark (putih `#003c32`).
 - `ImagePlaceholder` — panel gradasi hijau-hitam + blueprint-grid halus + ikon, pengganti foto.
+- `MobileCarousel` — pembungkus carousel mobile (<768px): baris scroll-snap + progress bar emerald
+  (spring) + hint `MoveHorizontal` "Geser" (16px/11px, memudar setelah interaksi atau ±4,5 dtk); md+ kembali grid biasa.
+- `HorizontalScrollHint` — pill kaca kecil `MoveHorizontal` + "Geser" di tepi baris chip yang meluap
+  (pointer-events-none; hanya muncul bila konten benar-benar overflow).
+- `MobileNavSheet` — top sheet menu: turun dari tepi atas, `rounded-b-3xl`, drag handle di tepi bawah.
+- `ScrollToTop` — tombol 44px kembali ke atas (mobile + desktop) dengan ring progres halaman 2px:
+  muncul setelah `scrollY > 600`, surface `bg-card/95` + `backdrop-blur-md` + border; sembunyi saat
+  top sheet navigasi / prompt PWA terbuka dan saat footer mendekat.
 - Radius: 12–16px (kartu/panel), 8px (kontrol kecil). Shadow minimal: `shadow-sm` dan
   `shadow-[0_8px_24px_rgba(2,6,23,0.06)]` saat hover kartu.
 - Hover: `-translate-y-1` + border hijau + shadow ringan, durasi 200–300ms.
@@ -49,15 +57,17 @@ Netral: latar `#ffffff`, latar sekunder `#f7f9fa`, teks `#111827` (slate-950), t
 ## Beranda (13 section)
 
 Navbar 72px **putih solid** → **Hero penuh-latar gradasi hijau-hitam, teks di tengah** (H1
-`clamp(2.5rem,6vw,4.25rem)` + deskripsi + 2 CTA; tanpa badge, tanpa panel kanan, tanpa statistik)
+`clamp(2.5rem,6vw,4.25rem)` + deskripsi + 2 CTA; tanpa badge, tanpa panel kanan, tanpa statistik;
+cue gulir `ChevronDown` halus di dasar hero)
 digeser ke bawah di bawah baris navigasi dengan **zona langit tetap** (spacer `96/112/128px`)
 sehingga celah nav→heading terjamin di semua breakpoint → Quick Access (4 tautan) →
 Tentang Fakultas (teks + pilar Tridharma) → Engineering in Numbers (band hijau pekat, 4 angka
 dinamis **count-up**) → Blueprint & Fasilitas (1 featured + grid) → Tenaga Pendidik (4, avatar
 dominan) → Agenda & Event (featured + agenda list + status) → Berita (1 featured + 2 secondary) →
 Kehidupan Mahasiswa (3 UKM) → FAQ (accordion satu-buka) → Contact CTA (band hijau, tombol putih) →
-Footer 4 kolom (hijau-tua). Latar home berselang putih / `#f7f9fa`; navbar **putih solid** (72px)
-dengan hero **di bawah** baris navigasi — tidak lagi transparan/overlap.
+Footer 4 kolom (hijau-tua). Latar home berselang putih / `#f7f9fa`; navbar **putih solid** (64px mobile /
+72px sm+) sticky dengan blur halus saat scroll. Tiga kelompok kartu (fasilitas, tenaga pendidik, UKM)
+memakai **carousel scroll-snap** di mobile (kartu `84vw` + progress bar + hint "Geser") dan kembali grid di md+.
 
 ## Gerak
 
@@ -66,7 +76,15 @@ Ringan & profesional (hormati `prefers-reduced-motion`):
 - Section: `ScrollReveal` (IntersectionObserver, fade + naik 24px, 500ms ease-out, sekali jalan).
 - Angka stats: **count-up** (easing cubic-out, 1.3s) saat band terlihat; SSR menampilkan nilai asli.
 - Footer menu: icon panah dengan hover geser; tombol/kartu hover translate-1 + border hijau.
-- Drawer mobile + dropdown pakai spring pendek; accordion FAQ `grid-template-rows` native 300ms.
+- Top sheet navigasi mobile: `translateY(-100%) → 0` 300ms `cubic-bezier(0.22,1,0.36,1)`, backdrop fade 220ms.
+- Carousel mobile: progress bar mengikuti `useScroll` + `useSpring` (stiffness 300); hint `MoveHorizontal`
+  "Geser" adalah cue onboarding yang memudar setelah scroll pertama atau ±4,5 dtk.
+- Hero: cue gulir `ChevronDown` 20px (stroke 2) di dasar hero — translateY 0→5px, opacity 0.5→1,
+  2s tenang; hanya beranda, bukan halaman listing.
+- Back to top: masuk 220ms ease-out (opacity + translateY 8px + scale 0.95); ring progres dari
+  `useScroll` (spring hanya bila motion diizinkan) tanpa re-render; hover desktop `translateY(-2px)`
+  + border/ikon hijau, press mobile `scale(0.96)`.
+- Drawer/dropdown desktop pakai spring pendek; accordion FAQ `grid-template-rows` native 300ms.
 Tanpa blur-scroll, parallax, atau entrance per-teks.
 
 ## Batasan teknis

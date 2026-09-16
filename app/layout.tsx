@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import RegisterSW from "@/components/pwa/RegisterSW";
 import InstallPrompt from "@/components/pwa/InstallPrompt";
 import { Toaster } from "@/components/ui/sonner";
+import { UiChromeProvider } from "@/components/shared/ui-chrome";
 
 const inter = localFont({
   src: [
@@ -69,6 +70,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
@@ -93,6 +95,7 @@ export default function RootLayout({
           {`(function(){try{var t=localStorage.getItem("theme")||"system";var r=t==="system"?(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):t;document.documentElement.classList.add(r);document.documentElement.style.colorScheme=r;}catch(e){}})();`}
         </Script>
         <CustomThemeProvider>
+        <UiChromeProvider>
         <div
           hidden
           data-design-contract="FT_HOMEPAGE_REDESIGN"
@@ -111,6 +114,7 @@ export default function RootLayout({
         <Toaster />
         <RegisterSW />
         <InstallPrompt />
+        </UiChromeProvider>
         {process.env.NODE_ENV === "development" && <Agentation />}
         </CustomThemeProvider>
       </body>

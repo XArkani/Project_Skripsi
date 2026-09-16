@@ -8,6 +8,7 @@ import { Search, X, RotateCcw, ArrowRight, Clock, MapPin, CalendarDays } from "l
 import type { Event } from "@/lib/types"
 import { EVENT_STATUSES, statusConfig } from "@/lib/status"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
+import HorizontalScrollHint from "@/components/shared/ScrollHint"
 import { cn } from "@/lib/utils"
 
 interface EventListProps {
@@ -79,24 +80,24 @@ function EventCard({ evt, animate }: CardProps) {
       viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
       className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
     >
-      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-muted">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted sm:aspect-auto sm:h-48">
         <EventMedia src={evt.image} alt={evt.title} />
         <span
           className={cn(
-            "absolute top-3 left-3 text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm",
+            "absolute top-3 left-3 max-w-[calc(100%-1.5rem)] truncate text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm",
             badge.badge
           )}
         >
           {evt.status}
         </span>
-        <span className="absolute bottom-3 left-3 flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur px-2.5 py-1.5 text-emerald-700 border border-emerald-100 shadow-sm">
+        <span className="absolute bottom-3 left-3 flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur px-2.5 py-1.5 text-emerald-700 border border-emerald-100 shadow-sm dark:text-emerald-300 dark:border-emerald-900">
           <span className="text-lg font-extrabold leading-none">{day || "?"}</span>
-          <span className="text-[11px] font-bold uppercase leading-tight">{month}</span>
+          <span className="text-xs font-bold uppercase leading-tight">{month}</span>
         </span>
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <h3 className="font-bold text-foreground leading-snug group-hover:text-emerald-700 transition-colors line-clamp-2">
+        <h3 className="font-bold text-foreground leading-snug group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors line-clamp-2">
           {evt.title}
         </h3>
 
@@ -159,7 +160,7 @@ export default function EventList({ events }: EventListProps) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
+      <div className="sticky top-(--header-h) z-20 mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
@@ -182,7 +183,7 @@ export default function EventList({ events }: EventListProps) {
           )}
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <HorizontalScrollHint rowClassName="flex items-center gap-2 overflow-x-auto overscroll-x-contain scrollbar-none mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0">
           {["Semua", ...EVENT_STATUSES].map((status) => {
             const isActive = activeStatus === status
             return (
@@ -192,10 +193,10 @@ export default function EventList({ events }: EventListProps) {
                 onClick={() => setActiveStatus(status)}
                 aria-pressed={isActive}
                 className={cn(
-                  "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                  "shrink-0 inline-flex min-h-11 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                   isActive
                     ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700"
+                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-300"
                 )}
               >
                 {status === "Semua" ? "Semua" : <span className="inline-flex items-center gap-1.5"><span className={cn("w-2 h-2 rounded-full", statusConfig[status as keyof typeof statusConfig].dot)} />{status}</span>}
@@ -210,7 +211,7 @@ export default function EventList({ events }: EventListProps) {
               </button>
             )
           })}
-        </div>
+        </HorizontalScrollHint>
       </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -222,7 +223,7 @@ export default function EventList({ events }: EventListProps) {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:text-emerald-200 dark:hover:bg-emerald-950/60 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Reset
@@ -240,13 +241,13 @@ export default function EventList({ events }: EventListProps) {
             Tidak ada acara yang cocok{query.trim() !== "" && (
               <>
                 {" "}
-                untuk pencarian <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>
+                untuk pencarian <span className="font-bold text-emerald-700 dark:text-emerald-300">&quot;{query.trim()}&quot;</span>
               </>
             )}
             {activeStatus !== "Semua" && (
               <>
                 {" "}
-                dengan status <span className="font-bold text-emerald-700">{activeStatus}</span>
+                dengan status <span className="font-bold text-emerald-700 dark:text-emerald-300">{activeStatus}</span>
               </>
             )}
             .

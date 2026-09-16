@@ -11,7 +11,7 @@ export default function ContactCTA() {
         className="absolute -right-20 -top-24 h-80 w-80 rounded-full bg-emerald-400/20 blur-3xl"
         aria-hidden="true"
       />
-      <Container className="relative py-16 text-center sm:py-24">
+      <Container className="section-y relative text-center">
         <ScrollReveal>
           <h2 className="text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.1] tracking-[-0.02em]">
             Punya Pertanyaan?

@@ -2,10 +2,11 @@ import { Suspense } from "react"
 import Header from "@/components/shared/Header"
 import Footer from "@/components/shared/Footer"
 import PageTransition from "@/components/shared/PageTransition"
+import ScrollToTop from "@/components/shared/ScrollToTop"
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground font-sans">
+    <div className="flex min-h-screen flex-col overflow-x-clip bg-background text-foreground font-sans">
       <Header />
       <main className="flex-grow">
         <PageTransition>{children}</PageTransition>
@@ -13,6 +14,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <Suspense>
         <Footer />
       </Suspense>
+      <ScrollToTop />
     </div>
   )
 }

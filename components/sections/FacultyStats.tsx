@@ -75,7 +75,7 @@ export default function FacultyStats({ stats }: { stats: Stat[] }) {
   }, [])
 
   return (
-    <section className="relative overflow-hidden bg-[#003c32] py-14 text-white sm:py-20">
+    <section className="section-y relative overflow-hidden bg-[#003c32] text-white">
       <div className="bg-blueprint-grid absolute inset-0 opacity-30" aria-hidden="true" />
       <div
         className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"
@@ -83,7 +83,7 @@ export default function FacultyStats({ stats }: { stats: Stat[] }) {
       />
       <div
         ref={ref}
-        className="relative mx-auto grid w-full max-w-[1280px] grid-cols-2 gap-x-6 gap-y-10 px-4 sm:px-6 lg:grid-cols-4 lg:px-8"
+        className="page-gutter relative mx-auto grid w-full max-w-[1280px] grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4"
       >
         {stats.map((s) => (
           <StatCell key={s.label} stat={s} start={inView} />

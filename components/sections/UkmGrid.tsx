@@ -30,6 +30,7 @@ import {
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import type { UKM } from "@/lib/types"
+import HorizontalScrollHint from "@/components/shared/ScrollHint"
 import { cn } from "@/lib/utils"
 
 interface UkmGridProps {
@@ -216,11 +217,11 @@ function UkmCard({ ukm, animate }: CardProps) {
       viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
       className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
     >
-      <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-white">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-white sm:aspect-auto sm:h-56">
         <UkmMedia ukm={ukm} />
-        <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-background/95 backdrop-blur border border-emerald-100 px-2.5 py-1 rounded-full shadow-sm">
+        <span className="absolute top-3 left-3 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-1.5 text-xs font-bold text-emerald-700 bg-background/95 backdrop-blur border border-emerald-100 px-2.5 py-1 rounded-full shadow-sm dark:text-emerald-300 dark:border-emerald-900">
           <Tag className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-          {category}
+          <span className="truncate">{category}</span>
         </span>
       </div>
 
@@ -232,12 +233,12 @@ function UkmCard({ ukm, animate }: CardProps) {
           <h2 className="min-w-0 flex-1 font-bold text-base text-foreground leading-snug line-clamp-2">{ukm.name}</h2>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed">{ukm.description}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{ukm.description}</p>
 
         {ukm.activities && (
           <div className="flex items-start gap-2.5">
             <Zap className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" aria-hidden="true" />
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
               <span className="font-bold text-foreground">Kegiatan:</span> {ukm.activities}
             </p>
           </div>
@@ -253,7 +254,7 @@ function UkmCard({ ukm, animate }: CardProps) {
                     key={`${link.href}-${i}`}
                     href={link.href}
                     {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="w-full flex items-center justify-center gap-2 min-h-11 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50/50 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                    className="w-full flex items-center justify-center gap-2 min-h-11 px-4 py-2.5 rounded-xl border border-border bg-card text-sm font-bold text-foreground/80 hover:border-emerald-300 hover:text-emerald-800 hover:bg-emerald-50/50 dark:hover:text-emerald-300 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/60 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                   >
                     <Icon className="w-4 h-4 shrink-0 text-emerald-600" aria-hidden="true" />
                     <span className="truncate">{link.label}</span>
@@ -266,7 +267,7 @@ function UkmCard({ ukm, animate }: CardProps) {
           <div className="mt-auto pt-3 border-t border-border">
             <Link
               href="/hubungi"
-              className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-sm font-bold transition-colors cursor-pointer"
+              className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-950/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-sm font-bold transition-colors cursor-pointer"
             >
               <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
               Hubungi Selengkapnya
@@ -324,7 +325,7 @@ export default function UkmGrid({ items }: UkmGridProps) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
+      <div className="sticky top-(--header-h) z-20 mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
@@ -347,7 +348,7 @@ export default function UkmGrid({ items }: UkmGridProps) {
           )}
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <HorizontalScrollHint rowClassName="flex items-center gap-2 overflow-x-auto overscroll-x-contain scrollbar-none mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0">
           {categories.map((category) => {
             const isActive = activeCategory === category
             return (
@@ -357,10 +358,10 @@ export default function UkmGrid({ items }: UkmGridProps) {
                 onClick={() => setActiveCategory(category)}
                 aria-pressed={isActive}
                 className={cn(
-                  "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                  "shrink-0 inline-flex min-h-11 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                   isActive
                     ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700"
+                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-300"
                 )}
               >
                 {category}
@@ -375,7 +376,7 @@ export default function UkmGrid({ items }: UkmGridProps) {
               </button>
             )
           })}
-        </div>
+        </HorizontalScrollHint>
       </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -387,7 +388,7 @@ export default function UkmGrid({ items }: UkmGridProps) {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:text-emerald-200 dark:hover:bg-emerald-950/60 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Reset
@@ -405,13 +406,13 @@ export default function UkmGrid({ items }: UkmGridProps) {
             Tidak ada unit kegiatan yang cocok{query.trim() !== "" && (
               <>
                 {" "}
-                untuk pencarian <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>
+                untuk pencarian <span className="font-bold text-emerald-700 dark:text-emerald-300">&quot;{query.trim()}&quot;</span>
               </>
             )}
             {activeCategory !== "Semua" && (
               <>
                 {" "}
-                pada kategori <span className="font-bold text-emerald-700">{activeCategory}</span>
+                pada kategori <span className="font-bold text-emerald-700 dark:text-emerald-300">{activeCategory}</span>
               </>
             )}
             .

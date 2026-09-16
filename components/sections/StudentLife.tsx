@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react"
 import type { UKM } from "@/lib/types"
 import Container from "@/components/ui/container"
 import SectionHeading from "@/components/ui/section-heading"
+import MobileCarousel from "@/components/shared/MobileCarousel"
 import ScrollReveal from "@/components/shared/ScrollReveal"
 
 const ICON_RULES: { keywords: string[]; icon: LucideIcon }[] = [
@@ -35,7 +36,7 @@ export default function StudentLife({ items }: { items: UKM[] }) {
   const visible = items.slice(0, 3)
 
   return (
-    <section className="bg-background py-16 sm:py-24">
+    <section className="section-y bg-background">
       <Container>
         <ScrollReveal>
           <SectionHeading
@@ -46,7 +47,12 @@ export default function StudentLife({ items }: { items: UKM[] }) {
         </ScrollReveal>
 
         <ScrollReveal delay={120}>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <MobileCarousel
+            label="Kehidupan Mahasiswa"
+            count={visible.length}
+            className="mt-10"
+            rowClassName="max-md:mx-[calc(-1*var(--page-gutter))] max-md:flex max-md:snap-x max-md:snap-mandatory max-md:scroll-px-(--page-gutter) max-md:gap-4 max-md:overflow-x-auto max-md:overscroll-x-contain max-md:scroll-smooth max-md:px-(--page-gutter) max-md:scrollbar-none max-md:pb-2 md:grid md:grid-cols-3 md:gap-5"
+          >
             {visible.length === 0 && (
               <p className="text-sm text-muted-foreground md:col-span-3">
                 Informasi organisasi mahasiswa akan segera hadir.
@@ -58,21 +64,21 @@ export default function StudentLife({ items }: { items: UKM[] }) {
               return (
                 <article
                   key={ukm.id}
-                  className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)]"
+                  className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] max-md:w-[84vw] max-md:max-w-[340px] max-md:shrink-0 max-md:snap-start"
                 >
                   {showLogo ? (
-                    <div className="relative flex h-40 items-center justify-center overflow-hidden bg-white">
+                    <div className="relative flex aspect-[16/9] items-center justify-center overflow-hidden bg-white sm:aspect-auto sm:h-40">
                       <Image
                         src={ukm.logo}
                         alt={`Logo ${ukm.name}`}
                         fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        sizes="(max-width: 768px) 84vw, 33vw"
                         className="object-contain object-center p-4"
                         loading="lazy"
                       />
                     </div>
                   ) : (
-                    <div className="bg-blueprint-grid relative flex h-32 items-center justify-center bg-gradient-to-br from-[#00624a] via-[#003c32] to-[#00150f]">
+                    <div className="bg-blueprint-grid relative flex aspect-[16/9] items-center justify-center bg-gradient-to-br from-[#00624a] via-[#003c32] to-[#00150f] sm:aspect-auto sm:h-32">
                       <span className="grid h-14 w-14 place-items-center rounded-2xl border border-emerald-300/30 bg-emerald-50/10 text-emerald-200 transition-colors duration-300 group-hover:bg-emerald-200 group-hover:text-emerald-900">
                         <Icon className="h-6 w-6" aria-hidden="true" />
                       </span>
@@ -93,7 +99,7 @@ export default function StudentLife({ items }: { items: UKM[] }) {
                 </article>
               )
             })}
-          </div>
+          </MobileCarousel>
         </ScrollReveal>
       </Container>
     </section>

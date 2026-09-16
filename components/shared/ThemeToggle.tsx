@@ -44,7 +44,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       onClick={cycleTheme}
       aria-label={THEME_LABEL[theme ?? "system"] ?? "Ganti tema"}
       className={cn(
-        "grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:text-emerald-700",
+        "grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:text-emerald-700 dark:hover:text-emerald-300",
         className
       )}
     >

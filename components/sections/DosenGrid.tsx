@@ -7,6 +7,7 @@ import { Search, X, Briefcase, GraduationCap, RotateCcw, UsersRound, ExternalLin
 import type { Dosen } from "@/lib/types"
 import { PRODI_LIST } from "@/lib/prodi"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
+import HorizontalScrollHint from "@/components/shared/ScrollHint"
 import { cn } from "@/lib/utils"
 
 interface DosenGridProps {
@@ -58,15 +59,15 @@ function DosenCard({ dosen, animate }: { dosen: Dosen; animate: boolean }) {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="font-bold text-base text-foreground leading-snug">{dosen.name}</h3>
-          <span className="inline-flex items-center gap-1.5 mt-2 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-full">
+          <h3 className="font-bold text-base text-foreground leading-snug line-clamp-2">{dosen.name}</h3>
+          <span className="inline-flex items-center gap-1.5 mt-2 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-full dark:text-emerald-300 dark:bg-emerald-950/60 dark:border-emerald-900">
             <GraduationCap className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
             {dosen.prodi}
           </span>
           {dosen.position && (
             <p className="mt-2.5 text-sm font-semibold text-muted-foreground flex items-start gap-1.5">
               <Briefcase className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" aria-hidden="true" />
-              <span className="min-w-0">{dosen.position}</span>
+              <span className="min-w-0 line-clamp-2">{dosen.position}</span>
             </p>
           )}
           {dosen.nuptk && (
@@ -135,7 +136,7 @@ export default function DosenGrid({ items }: DosenGridProps) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm">
+      <div className="sticky top-(--header-h) z-20 mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm">
         <div className="flex flex-col gap-3">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
@@ -152,14 +153,14 @@ export default function DosenGrid({ items }: DosenGridProps) {
                 type="button"
                 onClick={() => setQuery("")}
                 aria-label="Bersihkan pencarian"
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <HorizontalScrollHint rowClassName="flex items-center gap-2 overflow-x-auto overscroll-x-contain scrollbar-none mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0">
             {filterChips.map((chip) => {
               const isActive = activeProdi === chip.label
               return (
@@ -169,10 +170,10 @@ export default function DosenGrid({ items }: DosenGridProps) {
                   onClick={() => setActiveProdi(chip.label)}
                   aria-pressed={isActive}
                   className={cn(
-                    "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                    "shrink-0 inline-flex min-h-11 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                     isActive
                       ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                      : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700"
+                      : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-300"
                   )}
                 >
                   {chip.label}
@@ -187,7 +188,7 @@ export default function DosenGrid({ items }: DosenGridProps) {
                 </button>
               )
             })}
-          </div>
+          </HorizontalScrollHint>
         </div>
       </div>
 
@@ -203,7 +204,7 @@ export default function DosenGrid({ items }: DosenGridProps) {
               setQuery("")
               setActiveProdi("Semua")
             }}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:text-emerald-200 dark:hover:bg-emerald-950/60 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Reset
@@ -220,12 +221,12 @@ export default function DosenGrid({ items }: DosenGridProps) {
           <p className="max-w-sm mx-auto text-sm text-muted-foreground mt-1.5">
             Tidak ada dosen yang cocok{query.trim() !== "" && (
               <>
-                {" "}untuk pencarian <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>
+                {" "}untuk pencarian <span className="font-bold text-emerald-700 dark:text-emerald-300">&quot;{query.trim()}&quot;</span>
               </>
             )}
             {activeProdi !== "Semua" && (
               <>
-                {" "}pada prodi <span className="font-bold text-emerald-700">{activeProdi}</span>
+                {" "}pada prodi <span className="font-bold text-emerald-700 dark:text-emerald-300">{activeProdi}</span>
               </>
             )}
             .

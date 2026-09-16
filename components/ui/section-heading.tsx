@@ -42,7 +42,7 @@ export default function SectionHeading({
       {action && (
         <Link
           href={action.href}
-          className="group inline-flex items-center gap-1.5 rounded-lg py-2 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          className="group inline-flex min-h-11 items-center gap-1.5 rounded-lg py-2 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:text-emerald-300 dark:hover:text-emerald-200"
         >
           {action.label}
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />

@@ -22,8 +22,8 @@ const pillars = [
 
 export default function FacultyIntro() {
   return (
-    <section className="bg-muted py-16 sm:py-24">
-      <ScrollReveal className="mx-auto grid w-full max-w-[1280px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+    <section className="section-y bg-muted">
+      <ScrollReveal className="page-gutter mx-auto grid w-full max-w-[1280px] items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-foreground">
             Membangun Talenta Teknologi untuk Masa Depan
@@ -53,7 +53,7 @@ export default function FacultyIntro() {
             className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-emerald-500/20 blur-3xl"
             aria-hidden="true"
           />
-          <p className="relative text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-300">
+          <p className="relative text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">
             Tiga Pilar Tridharma
           </p>
           <div className="relative mt-8 space-y-8">
@@ -72,9 +72,9 @@ export default function FacultyIntro() {
               )
             })}
           </div>
-          <div className="relative mt-10 flex items-center justify-between rounded-xl border border-white/10 bg-black/25 px-5 py-3.5 backdrop-blur-sm">
+          <div className="relative mt-10 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-xl border border-white/10 bg-black/25 px-5 py-3.5 backdrop-blur-sm">
             <p className="text-sm font-semibold text-white">Universitas Hamzanwadi</p>
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-300">Selong, NTB</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-300">Selong, NTB</p>
           </div>
         </div>
       </ScrollReveal>

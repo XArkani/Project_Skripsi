@@ -8,6 +8,7 @@ import { Dialog as DialogPrimitive } from "radix-ui"
 import { Search, X, Building2, RotateCcw, ArrowRight, Maximize2, MapPin } from "lucide-react"
 import type { Blueprint } from "@/lib/types"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
+import HorizontalScrollHint from "@/components/shared/ScrollHint"
 import { cn } from "@/lib/utils"
 
 interface BlueprintListProps {
@@ -70,9 +71,9 @@ function FacilityRow({ bp, index, animate, onOpen }: RowProps) {
           className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-lg bg-muted cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
         >
           <FacilityMedia src={bp.image} alt={bp.title} />
-          <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
+          <span className="absolute top-4 left-4 inline-flex max-w-[calc(100%-2rem)] items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
             <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-            {bp.category}
+            <span className="truncate">{bp.category}</span>
           </span>
           <span className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
             <span className="inline-flex items-center gap-1.5 text-white text-sm font-bold">
@@ -91,7 +92,7 @@ function FacilityRow({ bp, index, animate, onOpen }: RowProps) {
           type="button"
           onClick={onOpen}
           aria-haspopup="dialog"
-          className="inline-flex items-center gap-2 min-h-11 py-2 text-sm font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          className="inline-flex items-center gap-2 min-h-11 py-2 text-sm font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-300 dark:hover:text-emerald-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
         >
           Selengkapnya
           <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -178,7 +179,7 @@ export default function BlueprintList({ items }: BlueprintListProps) {
 
   return (
     <div className="space-y-8">
-      <div className="sticky top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
+      <div className="sticky top-(--header-h) z-20 mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
@@ -194,14 +195,14 @@ export default function BlueprintList({ items }: BlueprintListProps) {
               type="button"
               onClick={() => setQuery("")}
               aria-label="Bersihkan pencarian"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <HorizontalScrollHint rowClassName="flex items-center gap-2 overflow-x-auto overscroll-x-contain scrollbar-none mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0">
           {categories.map((category) => {
             const isActive = activeCategory === category
             return (
@@ -211,10 +212,10 @@ export default function BlueprintList({ items }: BlueprintListProps) {
                 onClick={() => updateUrl(query, category)}
                 aria-pressed={isActive}
                 className={cn(
-                  "shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+                  "shrink-0 inline-flex min-h-11 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                   isActive
                     ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700"
+                    : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-300"
                 )}
               >
                 {category}
@@ -229,7 +230,7 @@ export default function BlueprintList({ items }: BlueprintListProps) {
               </button>
             )
           })}
-        </div>
+        </HorizontalScrollHint>
       </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -241,7 +242,7 @@ export default function BlueprintList({ items }: BlueprintListProps) {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:text-emerald-200 dark:hover:bg-emerald-950/60 px-3 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Reset
@@ -259,13 +260,13 @@ export default function BlueprintList({ items }: BlueprintListProps) {
             Tidak ada fasilitas yang cocok{query.trim() !== "" && (
               <>
                 {" "}
-                untuk pencarian <span className="font-bold text-emerald-700">&quot;{query.trim()}&quot;</span>
+                untuk pencarian <span className="font-bold text-emerald-700 dark:text-emerald-300">&quot;{query.trim()}&quot;</span>
               </>
             )}
             {activeCategory !== "Semua" && (
               <>
                 {" "}
-                pada kategori <span className="font-bold text-emerald-700">{activeCategory}</span>
+                pada kategori <span className="font-bold text-emerald-700 dark:text-emerald-300">{activeCategory}</span>
               </>
             )}
             .
@@ -290,14 +291,14 @@ export default function BlueprintList({ items }: BlueprintListProps) {
       <DialogPrimitive.Root open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
-          <DialogPrimitive.Content className="fixed top-1/2 left-1/2 z-50 w-full max-w-2xl max-h-[85vh] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-card shadow-2xl border border-border outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
+          <DialogPrimitive.Content className="fixed top-1/2 left-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl max-h-[85dvh] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-card shadow-2xl border border-border outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
             {selected && (
               <>
                 <div className="relative aspect-video w-full overflow-hidden bg-muted">
                   <FacilityMedia src={selected.image} alt={selected.title} />
-                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                  <span className="absolute top-4 left-4 inline-flex max-w-[calc(100%-2rem)] items-center gap-1.5 bg-emerald-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
                     <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                    {selected.category}
+                    <span className="truncate">{selected.category}</span>
                   </span>
                   <button
                     type="button"

@@ -39,7 +39,7 @@ function OrganizationCard({
     return (
       <div className="relative bg-[#0f3d2e] text-white rounded-2xl border border-emerald-800 shadow-[0_2px_16px_rgba(0,0,0,0.08)] px-6 py-7 sm:px-8 sm:py-8 text-center overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-[3px] bg-emerald-400" />
-        <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/10 text-emerald-100 text-[10px] font-bold tracking-[0.14em] uppercase px-3 py-1 rounded-full">
+        <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/10 text-emerald-100 text-[11px] font-bold tracking-[0.14em] uppercase px-3 py-1 rounded-full">
           <Crown className="w-3 h-3" aria-hidden="true" />
           Dekan Fakultas Teknik
         </span>
@@ -54,29 +54,29 @@ function OrganizationCard({
   }
   if (variant === "vice") {
     return (
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-[0_1px_8px_rgba(0,0,0,0.04)] px-5 py-6 sm:px-6 sm:py-7 text-center flex flex-col items-center gap-3">
-        <span className="bg-zinc-50 border border-zinc-200 text-zinc-600 text-[10px] font-bold tracking-[0.12em] uppercase px-2.5 py-1 rounded-full">
+      <div className="bg-card rounded-2xl border border-border shadow-[0_1px_8px_rgba(0,0,0,0.04)] px-5 py-6 sm:px-6 sm:py-7 text-center flex flex-col items-center gap-3">
+        <span className="bg-muted border border-border text-muted-foreground text-[11px] font-bold tracking-[0.12em] uppercase px-2.5 py-1 rounded-full">
           {role}
         </span>
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-700 font-extrabold text-[17px]">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-700 font-extrabold text-[17px] dark:bg-emerald-950/60 dark:border-emerald-900 dark:text-emerald-300">
           {initials || icon}
         </div>
-        <h3 className="font-bold text-zinc-900 text-sm leading-snug">{name}</h3>
-        {detail && <p className="text-zinc-500 text-xs font-medium">{detail}</p>}
+        <h3 className="font-bold text-foreground text-sm leading-snug">{name}</h3>
+        {detail && <p className="text-muted-foreground text-xs font-medium">{detail}</p>}
       </div>
     )
   }
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-[0_1px_8px_rgba(0,0,0,0.04)] px-5 py-5 sm:py-6 text-center flex flex-col items-center gap-3">
-      <span className="bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-bold tracking-[0.12em] uppercase px-2.5 py-1 rounded-full">
+    <div className="bg-card rounded-2xl border border-border shadow-[0_1px_8px_rgba(0,0,0,0.04)] px-5 py-5 sm:py-6 text-center flex flex-col items-center gap-3">
+      <span className="bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-bold tracking-[0.12em] uppercase px-2.5 py-1 rounded-full dark:bg-emerald-950/60 dark:border-emerald-900 dark:text-emerald-300">
         Ketua Program Studi
       </span>
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-700 font-extrabold text-[15px]">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted border border-border text-foreground/80 font-extrabold text-[15px]">
         {initials || icon}
       </div>
-      <h3 className="font-bold text-zinc-900 text-sm leading-snug">{name}</h3>
-      {detail && <p className="text-emerald-700 text-xs font-semibold">{detail}</p>}
-      <p className="text-zinc-400 text-[11px] hidden">{role}</p>
+      <h3 className="font-bold text-foreground text-sm leading-snug">{name}</h3>
+      {detail && <p className="text-emerald-700 dark:text-emerald-300 text-xs font-semibold">{detail}</p>}
+      <p className="text-muted-foreground text-[11px] hidden">{role}</p>
     </div>
   )
 }
@@ -118,15 +118,15 @@ export default function StrukturChart({ items }: StrukturChartProps) {
       )}
 
       <div className="flex flex-col items-center w-full" aria-hidden="true">
-        <div className="h-8 w-px bg-zinc-200" />
-        <div className="h-2 w-2 rounded-full bg-emerald-600 ring-4 ring-emerald-50" />
+        <div className="h-8 w-px bg-border" />
+        <div className="h-2 w-2 rounded-full bg-emerald-600 ring-4 ring-emerald-50 dark:ring-emerald-950/60" />
         <div className="hidden sm:block relative w-full max-w-[520px] h-8">
-          <div className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-zinc-200" />
-          <div className="absolute left-[25%] right-[25%] top-4 h-px bg-zinc-200" />
-          <div className="absolute left-[25%] top-4 h-4 w-px bg-zinc-200" />
-          <div className="absolute right-[25%] top-4 h-4 w-px bg-zinc-200" />
+          <div className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-border" />
+          <div className="absolute left-[25%] right-[25%] top-4 h-px bg-border" />
+          <div className="absolute left-[25%] top-4 h-4 w-px bg-border" />
+          <div className="absolute right-[25%] top-4 h-4 w-px bg-border" />
         </div>
-        <div className="sm:hidden h-8 w-px bg-zinc-200" />
+        <div className="sm:hidden h-8 w-px bg-border" />
       </div>
 
       {wakilDekan.length > 0 && (
@@ -154,22 +154,22 @@ export default function StrukturChart({ items }: StrukturChartProps) {
 
       <div className="flex flex-col items-center w-full" aria-hidden="true">
         <div className="hidden lg:block relative w-full max-w-6xl h-10">
-          <div className="absolute left-1/2 top-0 h-5 w-px -translate-x-1/2 bg-zinc-200" />
-          <div className="absolute left-[12.5%] right-[12.5%] top-5 h-px bg-zinc-200" />
-          <div className="absolute left-[12.5%] top-5 h-5 w-px bg-zinc-200" />
-          <div className="absolute left-[37.5%] top-5 h-5 w-px bg-zinc-200" />
-          <div className="absolute right-[37.5%] top-5 h-5 w-px bg-zinc-200" />
-          <div className="absolute right-[12.5%] top-5 h-5 w-px bg-zinc-200" />
+          <div className="absolute left-1/2 top-0 h-5 w-px -translate-x-1/2 bg-border" />
+          <div className="absolute left-[12.5%] right-[12.5%] top-5 h-px bg-border" />
+          <div className="absolute left-[12.5%] top-5 h-5 w-px bg-border" />
+          <div className="absolute left-[37.5%] top-5 h-5 w-px bg-border" />
+          <div className="absolute right-[37.5%] top-5 h-5 w-px bg-border" />
+          <div className="absolute right-[12.5%] top-5 h-5 w-px bg-border" />
         </div>
         <div className="hidden sm:block lg:hidden relative w-full max-w-3xl h-14">
-          <div className="absolute left-1/2 top-0 h-5 w-px -translate-x-1/2 bg-zinc-200" />
-          <div className="absolute left-[25%] right-[25%] top-5 h-px bg-zinc-200" />
-          <div className="absolute left-[25%] top-5 h-4 w-px bg-zinc-200" />
-          <div className="absolute right-[25%] top-5 h-4 w-px bg-zinc-200" />
-          <div className="absolute left-[25%] top-9 h-px w-[50%] bg-zinc-200 sm:hidden" />
+          <div className="absolute left-1/2 top-0 h-5 w-px -translate-x-1/2 bg-border" />
+          <div className="absolute left-[25%] right-[25%] top-5 h-px bg-border" />
+          <div className="absolute left-[25%] top-5 h-4 w-px bg-border" />
+          <div className="absolute right-[25%] top-5 h-4 w-px bg-border" />
+          <div className="absolute left-[25%] top-9 h-px w-[50%] bg-border sm:hidden" />
         </div>
-        <div className="sm:hidden h-8 w-px bg-zinc-200" />
-        <div className="hidden sm:block lg:hidden h-5 w-px bg-zinc-200 -mt-0" />
+        <div className="sm:hidden h-8 w-px bg-border" />
+        <div className="hidden sm:block lg:hidden h-5 w-px bg-border -mt-0" />
       </div>
 
       {kaprodi.length > 0 && (
@@ -197,22 +197,22 @@ export default function StrukturChart({ items }: StrukturChartProps) {
 
       <div className="flex flex-col items-center" aria-hidden="true">
         <div className="hidden lg:block relative w-full h-10">
-          <div className="absolute left-[12.5%] right-[12.5%] top-0 h-px bg-zinc-200" />
-          <div className="absolute left-[12.5%] top-0 h-5 w-px bg-zinc-200" />
-          <div className="absolute left-[37.5%] top-0 h-5 w-px bg-zinc-200" />
-          <div className="absolute right-[37.5%] top-0 h-5 w-px bg-zinc-200" />
-          <div className="absolute right-[12.5%] top-0 h-5 w-px bg-zinc-200" />
-          <div className="absolute left-1/2 top-5 h-5 w-px -translate-x-1/2 bg-zinc-200" />
+          <div className="absolute left-[12.5%] right-[12.5%] top-0 h-px bg-border" />
+          <div className="absolute left-[12.5%] top-0 h-5 w-px bg-border" />
+          <div className="absolute left-[37.5%] top-0 h-5 w-px bg-border" />
+          <div className="absolute right-[37.5%] top-0 h-5 w-px bg-border" />
+          <div className="absolute right-[12.5%] top-0 h-5 w-px bg-border" />
+          <div className="absolute left-1/2 top-5 h-5 w-px -translate-x-1/2 bg-border" />
         </div>
         <div className="hidden sm:block lg:hidden relative w-[50vw] max-w-3xl h-10">
-          <div className="absolute left-[25%] right-[25%] top-0 h-px bg-zinc-200" />
-          <div className="absolute left-[25%] top-0 h-5 w-px bg-zinc-200" />
-          <div className="absolute right-[25%] top-0 h-5 w-px bg-zinc-200" />
-          <div className="absolute left-1/2 top-5 h-5 w-px -translate-x-1/2 bg-zinc-200" />
+          <div className="absolute left-[25%] right-[25%] top-0 h-px bg-border" />
+          <div className="absolute left-[25%] top-0 h-5 w-px bg-border" />
+          <div className="absolute right-[25%] top-0 h-5 w-px bg-border" />
+          <div className="absolute left-1/2 top-5 h-5 w-px -translate-x-1/2 bg-border" />
         </div>
-        <div className="sm:hidden h-8 w-px bg-zinc-200" />
-        <div className="h-2 w-2 rounded-full bg-emerald-600 ring-4 ring-emerald-50 sm:mt-0" />
-        <div className="h-8 w-px bg-zinc-200" />
+        <div className="sm:hidden h-8 w-px bg-border" />
+        <div className="h-2 w-2 rounded-full bg-emerald-600 ring-4 ring-emerald-50 dark:ring-emerald-950/60 sm:mt-0" />
+        <div className="h-8 w-px bg-border" />
       </div>
 
       <motion.div
