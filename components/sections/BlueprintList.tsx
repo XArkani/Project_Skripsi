@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState, useCallback, useEffect } from "react"
 import Image from "next/image"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import { motion, useReducedMotion } from "framer-motion"
+import { useReducedMotion } from "@/lib/use-reduced-motion"
 import { Dialog as DialogPrimitive } from "radix-ui"
 import { Search, X, Building2, RotateCcw, ArrowRight, Maximize2, MapPin } from "lucide-react"
 import type { Blueprint } from "@/lib/types"
@@ -13,13 +13,6 @@ import { cn } from "@/lib/utils"
 
 interface BlueprintListProps {
   items: Blueprint[]
-}
-
-const EASE = [0.22, 1, 0.36, 1] as const
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
 }
 
 function isStockImage(src: string) {
@@ -56,12 +49,8 @@ interface RowProps {
 function FacilityRow({ bp, index, animate, onOpen }: RowProps) {
   const isEven = index % 2 === 0
   return (
-    <motion.div
-      variants={animate ? cardVariants : undefined}
-      initial={animate ? "hidden" : false}
-      whileInView={animate ? "visible" : undefined}
-      viewport={animate ? { once: true, margin: "-40px", amount: 0.15 } : undefined}
-      className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center"
+    <div
+      className={`${animate ? "card-enter " : ""}grid md:grid-cols-2 gap-6 sm:gap-8 items-center`}
     >
       <div className={cn("group", isEven ? "" : "md:order-2")}>
         <button
@@ -98,7 +87,7 @@ function FacilityRow({ bp, index, animate, onOpen }: RowProps) {
           <ArrowRight className="w-4 h-4" aria-hidden="true" />
         </button>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -214,7 +203,7 @@ export default function BlueprintList({ items }: BlueprintListProps) {
                 className={cn(
                   "shrink-0 inline-flex min-h-11 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                   isActive
-                    ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                    ? "bg-emerald-700 text-white border-emerald-700 shadow-sm"
                     : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-300"
                 )}
               >
@@ -222,7 +211,7 @@ export default function BlueprintList({ items }: BlueprintListProps) {
                 <span
                   className={cn(
                     "text-xs font-bold rounded-full px-1.5 py-0.5",
-                    isActive ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+                    isActive ? "bg-white text-emerald-800" : "bg-muted text-muted-foreground"
                   )}
                 >
                   {counts.get(category) ?? 0}
@@ -274,7 +263,7 @@ export default function BlueprintList({ items }: BlueprintListProps) {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-2 mt-5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex items-center gap-2 mt-5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Tampilkan Semua Fasilitas

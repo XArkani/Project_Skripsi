@@ -178,7 +178,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-[14px] font-bold tracking-[-0.01em] shadow-[0_8px_20px_rgba(16,122,65,0.25)] hover:shadow-[0_10px_24px_rgba(16,122,65,0.3)] active:shadow-none transition-all disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-[14px] font-bold tracking-[-0.01em] shadow-[0_8px_20px_rgba(16,122,65,0.25)] hover:shadow-[0_10px_24px_rgba(16,122,65,0.3)] active:shadow-none transition-all disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                 >
                   {loading ? (
                     <>

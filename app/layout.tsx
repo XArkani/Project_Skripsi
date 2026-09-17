@@ -7,49 +7,11 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import RegisterSW from "@/components/pwa/RegisterSW";
 import InstallPrompt from "@/components/pwa/InstallPrompt";
-import { Toaster } from "@/components/ui/sonner";
 import { UiChromeProvider } from "@/components/shared/ui-chrome";
 
 const inter = localFont({
-  src: [
-    { path: "./fonts/inter-latin.woff2", weight: "100 900", style: "normal" },
-    {
-      path: "./fonts/inter-latin-ext.woff2",
-      weight: "100 900",
-      style: "normal",
-    },
-  ],
+  src: [{ path: "./fonts/inter-latin.woff2", weight: "100 900", style: "normal" }],
   variable: "--font-sans",
-  display: "swap",
-});
-
-const geistSans = localFont({
-  src: [
-    { path: "./fonts/geist-latin.woff2", weight: "100 900", style: "normal" },
-    {
-      path: "./fonts/geist-latin-ext.woff2",
-      weight: "100 900",
-      style: "normal",
-    },
-  ],
-  variable: "--font-geist-sans",
-  display: "swap",
-});
-
-const geistMono = localFont({
-  src: [
-    {
-      path: "./fonts/geist-mono-latin.woff2",
-      weight: "100 900",
-      style: "normal",
-    },
-    {
-      path: "./fonts/geist-mono-latin-ext.woff2",
-      weight: "100 900",
-      style: "normal",
-    },
-  ],
-  variable: "--font-geist-mono",
   display: "swap",
 });
 
@@ -84,9 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={cn("font-sans", inter.variable)} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         {/* Blocking theme script: sets the theme class before hydration to
             prevent a flash of the wrong theme. Handled by Next.js infrastructure
             (not rendered inside a React component tree), so it never triggers
@@ -111,7 +71,6 @@ export default function RootLayout({
           FINISH: reviewed and documented with DESIGN.md before the run is called complete.
         </div>
         {children}
-        <Toaster />
         <RegisterSW />
         <InstallPrompt />
         </UiChromeProvider>

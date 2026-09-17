@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import Header from "@/components/shared/Header"
 import Footer from "@/components/shared/Footer"
 import PageTransition from "@/components/shared/PageTransition"
-import ScrollToTop from "@/components/shared/ScrollToTop"
+import ScrollToTopLazy from "@/components/shared/ScrollToTopLazy"
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +14,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <Suspense>
         <Footer />
       </Suspense>
-      <ScrollToTop />
+      <ScrollToTopLazy />
     </div>
   )
 }

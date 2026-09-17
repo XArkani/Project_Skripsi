@@ -3,20 +3,13 @@
 import { useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, useReducedMotion } from "framer-motion"
+import { useReducedMotion } from "@/lib/use-reduced-motion"
 import { Search, X, RotateCcw, ArrowRight, Calendar, Newspaper } from "lucide-react"
 import type { News } from "@/lib/types"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 
 interface NewsListProps {
   items: News[]
-}
-
-const EASE = [0.22, 1, 0.36, 1] as const
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
 }
 
 function isStockImage(src: string) {
@@ -45,12 +38,8 @@ function NewsMedia({ src, alt }: { src: string; alt: string }) {
 
 function NewsCard({ item, animate }: { item: News; animate: boolean }) {
   return (
-    <motion.div
-      variants={animate ? cardVariants : undefined}
-      initial={animate ? "hidden" : false}
-      whileInView={animate ? "visible" : undefined}
-      viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
-      className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
+    <div
+      className={`${animate ? "card-enter " : ""}group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl`}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted sm:aspect-auto sm:h-48">
         <NewsMedia src={item.image} alt={item.title} />
@@ -73,14 +62,14 @@ function NewsCard({ item, animate }: { item: News; animate: boolean }) {
         <div className="mt-auto pt-3">
           <Link
             href={`/berita/${item.slug}`}
-            className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors"
+            className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors"
           >
             Baca Selengkapnya
             <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -167,7 +156,7 @@ export default function NewsList({ items }: NewsListProps) {
             <button
               type="button"
               onClick={resetFilters}
-              className="inline-flex items-center gap-2 mt-5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              className="inline-flex items-center gap-2 mt-5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             >
               <RotateCcw className="w-4 h-4" aria-hidden="true" />
               Tampilkan Semua Berita

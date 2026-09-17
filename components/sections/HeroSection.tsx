@@ -6,11 +6,11 @@ export default function HeroSection() {
     <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-gradient-to-br from-[#00624a] via-[#003c32] to-[#00120c] pb-16 text-center sm:pb-20 lg:pb-24">
       <div className="bg-blueprint-grid absolute inset-0 opacity-40" aria-hidden="true" />
       <div
-        className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-emerald-500/25 blur-3xl"
+        className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[radial-gradient(circle_at_center,rgba(21,154,108,0.28)_0%,rgba(21,154,108,0)_70%)]"
         aria-hidden="true"
       />
       <div
-        className="absolute -bottom-28 -left-24 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl"
+        className="absolute -bottom-28 -left-24 h-96 w-96 rounded-full bg-[radial-gradient(circle_at_center,rgba(65,180,136,0.14)_0%,rgba(65,180,136,0)_70%)]"
         aria-hidden="true"
       />
 

@@ -1,7 +1,6 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { ScrollHintLabel } from "@/components/shared/ScrollHint"
 
@@ -21,38 +20,56 @@ export default function MobileCarousel({
   children,
 }: MobileCarouselProps) {
   const rowRef = useRef<HTMLDivElement>(null)
+  const fillRef = useRef<HTMLSpanElement>(null)
+  const stepRef = useRef(0)
   const [index, setIndex] = useState(0)
   const [hintVisible, setHintVisible] = useState(true)
-  const reduceMotion = useReducedMotion()
 
-  const { scrollXProgress } = useScroll({ container: rowRef, axis: "x" })
   const safeCount = Math.max(count, 1)
-  const fillTarget = useTransform(scrollXProgress, [0, 1], [1 / safeCount, 1])
-  const fillSpring = useSpring(fillTarget, { stiffness: 300, damping: 40, mass: 0.8 })
-  const fill = reduceMotion ? fillTarget : fillSpring
 
+  // Ukur lebar satu kartu + gap SEKALI (mount/resize), bukan tiap event scroll —
+  // getComputedStyle/offsetWidth di dalam handler scroll memicu forced reflow.
+  const measure = useCallback(() => {
+    const row = rowRef.current
+    if (!row) return
+    const first = row.firstElementChild as HTMLElement | null
+    if (!first) return
+    const gap = parseFloat(getComputedStyle(row).columnGap || "0") || 0
+    stepRef.current = first.offsetWidth + gap
+  }, [])
+
+  // Satu handler scroll: baca scrollLeft (murah), tulis index + transform progress
+  // bar langsung ke DOM tanpa re-render React.
   const update = useCallback(() => {
     const row = rowRef.current
     if (!row) return
     if (row.scrollLeft > 8) setHintVisible(false)
 
-    const first = row.firstElementChild as HTMLElement | null
-    if (first) {
-      const gap = parseFloat(getComputedStyle(row).columnGap || "0") || 0
-      const step = first.offsetWidth + gap
-      const nextIndex = step > 0 ? Math.round(row.scrollLeft / step) : 0
-      setIndex(Math.min(Math.max(nextIndex, 0), safeCount - 1))
+    const step = stepRef.current
+    if (step > 0) {
+      setIndex(Math.min(Math.max(Math.round(row.scrollLeft / step), 0), safeCount - 1))
     }
+
+    const max = row.scrollWidth - row.clientWidth
+    const ratio = max > 0 ? Math.min(1, Math.max(row.scrollLeft / max, 1 / safeCount)) : 1
+    if (fillRef.current) fillRef.current.style.transform = `scaleX(${ratio})`
   }, [safeCount])
 
   useEffect(() => {
-    const frame = requestAnimationFrame(update)
-    window.addEventListener("resize", update)
+    const frame = requestAnimationFrame(() => {
+      measure()
+      update()
+    })
+    const onResize = () => {
+      measure()
+      update()
+    }
+    window.addEventListener("resize", onResize)
     return () => {
       cancelAnimationFrame(frame)
-      window.removeEventListener("resize", update)
+      window.removeEventListener("resize", onResize)
     }
-  }, [update])
+  }, [measure, update])
 
   useEffect(() => {
     const timer = setTimeout(() => setHintVisible(false), 4500)
@@ -70,9 +87,10 @@ export default function MobileCarousel({
           className="relative h-1 flex-1 overflow-hidden rounded-full bg-border"
           aria-hidden="true"
         >
-          <motion.span
-            className="absolute inset-0 origin-left rounded-full bg-emerald-600"
-            style={{ scaleX: fill }}
+          <span
+            ref={fillRef}
+            className="absolute inset-0 origin-left rounded-full bg-emerald-600 transition-transform duration-150 ease-out"
+            style={{ transform: `scaleX(${1 / safeCount})` }}
           />
         </div>
         <ScrollHintLabel

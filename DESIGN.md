@@ -43,7 +43,8 @@ Netral: latar `#ffffff`, latar sekunder `#f7f9fa`, teks `#111827` (slate-950), t
 - `ButtonLink` — varian primary (hijau solid), secondary (outline), on-dark (putih `#003c32`).
 - `ImagePlaceholder` — panel gradasi hijau-hitam + blueprint-grid halus + ikon, pengganti foto.
 - `MobileCarousel` — pembungkus carousel mobile (<768px): baris scroll-snap + progress bar emerald
-  (spring) + hint `MoveHorizontal` "Geser" (16px/11px, memudar setelah interaksi atau ±4,5 dtk); md+ kembali grid biasa.
+  (scroll-driven CSS transform, tanpa library animasi) + hint `MoveHorizontal` "Geser" (16px/11px, memudar
+  setelah interaksi atau ±4,5 dtk); md+ kembali grid biasa.
 - `HorizontalScrollHint` — pill kaca kecil `MoveHorizontal` + "Geser" di tepi baris chip yang meluap
   (pointer-events-none; hanya muncul bila konten benar-benar overflow).
 - `MobileNavSheet` — top sheet menu: turun dari tepi atas, `rounded-b-3xl`, drag handle di tepi bawah.
@@ -73,11 +74,16 @@ memakai **carousel scroll-snap** di mobile (kartu `84vw` + progress bar + hint "
 
 Ringan & profesional (hormati `prefers-reduced-motion`):
 - Hero: `hero-rise` (fade + naik 24px) dengan stagger saat load.
-- Section: `ScrollReveal` (IntersectionObserver, fade + naik 24px, 500ms ease-out, sekali jalan).
+- Section: `ScrollReveal` — reveal **tanpa JavaScript**: keyframes `reveal-up` (fade + naik 24px, 500ms)
+  dengan `animation-timeline: view()` (scroll-driven) bila didukung; fallback animasi saat load.
+  Section di bawah fold memakai `section-lazy` (`content-visibility: auto` + `contain-intrinsic-size`)
+  agar style/paint awal lebih murah.
 - Angka stats: **count-up** (easing cubic-out, 1.3s) saat band terlihat; SSR menampilkan nilai asli.
 - Footer menu: icon panah dengan hover geser; tombol/kartu hover translate-1 + border hijau.
 - Top sheet navigasi mobile: `translateY(-100%) → 0` 300ms `cubic-bezier(0.22,1,0.36,1)`, backdrop fade 220ms.
-- Carousel mobile: progress bar mengikuti `useScroll` + `useSpring` (stiffness 300); hint `MoveHorizontal`
+- Carousel mobile: progress bar digerakkan `scrollLeft` → `scaleX` via `requestAnimationFrame` (tanpa
+  framer-motion, tanpa re-render); kartu masuk dengan animasi CSS `card-enter` (450ms, `both`) sehingga
+  konten sudah terlihat sejak render awal; hint `MoveHorizontal`
   "Geser" adalah cue onboarding yang memudar setelah scroll pertama atau ±4,5 dtk.
 - Hero: cue gulir `ChevronDown` 20px (stroke 2) di dasar hero — translateY 0→5px, opacity 0.5→1,
   2s tenang; hanya beranda, bukan halaman listing.

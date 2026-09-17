@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, useReducedMotion } from "framer-motion"
+import { useReducedMotion } from "@/lib/use-reduced-motion"
 import { Search, X, RotateCcw, ArrowRight, Clock, MapPin, CalendarDays } from "lucide-react"
 import type { Event } from "@/lib/types"
 import { EVENT_STATUSES, statusConfig } from "@/lib/status"
@@ -13,13 +13,6 @@ import { cn } from "@/lib/utils"
 
 interface EventListProps {
   events: Event[]
-}
-
-const EASE = [0.22, 1, 0.36, 1] as const
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
 }
 
 const MONTHS_ID = [
@@ -73,12 +66,8 @@ function EventCard({ evt, animate }: CardProps) {
   const badge = statusConfig[evt.status]
 
   return (
-    <motion.div
-      variants={animate ? cardVariants : undefined}
-      initial={animate ? "hidden" : false}
-      whileInView={animate ? "visible" : undefined}
-      viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
-      className="group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl"
+    <div
+      className={`${animate ? "card-enter " : ""}group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl`}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted sm:aspect-auto sm:h-48">
         <EventMedia src={evt.image} alt={evt.title} />
@@ -117,14 +106,14 @@ function EventCard({ evt, animate }: CardProps) {
         <div className="mt-auto pt-3">
           <Link
             href={`/event/${evt.slug}`}
-            className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors"
+            className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors"
           >
             Lihat Detail
             <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -195,7 +184,7 @@ export default function EventList({ events }: EventListProps) {
                 className={cn(
                   "shrink-0 inline-flex min-h-11 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                   isActive
-                    ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                    ? "bg-emerald-700 text-white border-emerald-700 shadow-sm"
                     : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-300"
                 )}
               >
@@ -203,7 +192,7 @@ export default function EventList({ events }: EventListProps) {
                 <span
                   className={cn(
                     "text-xs font-bold rounded-full px-1.5 py-0.5",
-                    isActive ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+                    isActive ? "bg-white text-emerald-800" : "bg-muted text-muted-foreground"
                   )}
                 >
                   {counts.get(status) ?? 0}
@@ -255,7 +244,7 @@ export default function EventList({ events }: EventListProps) {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-2 mt-5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex items-center gap-2 mt-5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Tampilkan Semua Acara

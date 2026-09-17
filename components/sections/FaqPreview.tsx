@@ -13,7 +13,7 @@ export default function FaqPreview({ items }: { items: FAQ[] }) {
   const visible = items.slice(0, 5)
 
   return (
-    <section className="section-y bg-muted">
+    <section className="section-y section-lazy bg-muted">
       <Container>
         <ScrollReveal className="mx-auto max-w-3xl">
           <div className="text-center">

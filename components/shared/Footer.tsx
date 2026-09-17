@@ -116,7 +116,7 @@ export default function Footer() {
   const [openId, setOpenId] = useState<string | null>(null)
 
   return (
-    <footer className="bg-[#001a15] text-emerald-100/65">
+    <footer className="section-lazy bg-[#001a15] text-emerald-100/65">
       <div className="page-gutter mx-auto w-full max-w-[1280px] py-12 sm:py-16">
         <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-12 lg:gap-8">
           <div className="order-1 lg:col-span-4">

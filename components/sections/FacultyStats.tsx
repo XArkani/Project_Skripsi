@@ -75,10 +75,9 @@ export default function FacultyStats({ stats }: { stats: Stat[] }) {
   }, [])
 
   return (
-    <section className="section-y relative overflow-hidden bg-[#003c32] text-white">
-      <div className="bg-blueprint-grid absolute inset-0 opacity-30" aria-hidden="true" />
+    <section className="section-y section-lazy relative overflow-hidden bg-[#003c32] text-white">
       <div
-        className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"
+        className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,rgba(21,154,108,0.18)_0%,rgba(21,154,108,0)_70%)]"
         aria-hidden="true"
       />
       <div

@@ -42,7 +42,7 @@ export default function DosenHighlight({ items }: { items: Dosen[] }) {
   const visible = items.slice(0, 4)
 
   return (
-    <section className="section-y bg-muted">
+    <section className="section-y section-lazy bg-muted">
       <Container>
         <ScrollReveal>
           <SectionHeading

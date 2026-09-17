@@ -14,7 +14,7 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
   if (!featured) return null
 
   return (
-    <section className="section-y bg-background">
+    <section className="section-y section-lazy bg-background">
       <Container>
         <ScrollReveal>
           <SectionHeading

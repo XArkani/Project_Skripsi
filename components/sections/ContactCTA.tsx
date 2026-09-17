@@ -5,10 +5,9 @@ import ScrollReveal from "@/components/shared/ScrollReveal"
 
 export default function ContactCTA() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#005f45] via-[#003c32] to-[#00150f] text-white">
-      <div className="bg-blueprint-grid absolute inset-0 opacity-40" aria-hidden="true" />
+    <section className="section-lazy relative overflow-hidden bg-gradient-to-br from-[#005f45] via-[#003c32] to-[#00150f] text-white">
       <div
-        className="absolute -right-20 -top-24 h-80 w-80 rounded-full bg-emerald-400/20 blur-3xl"
+        className="absolute -right-20 -top-24 h-80 w-80 rounded-full bg-[radial-gradient(circle_at_center,rgba(65,180,136,0.22)_0%,rgba(65,180,136,0)_70%)]"
         aria-hidden="true"
       />
       <Container className="section-y relative text-center">

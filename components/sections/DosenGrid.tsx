@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import Image from "next/image"
-import { motion, useReducedMotion } from "framer-motion"
+import { useReducedMotion } from "@/lib/use-reduced-motion"
 import { Search, X, Briefcase, GraduationCap, RotateCcw, UsersRound, ExternalLink } from "lucide-react"
 import type { Dosen } from "@/lib/types"
 import { PRODI_LIST } from "@/lib/prodi"
@@ -12,13 +12,6 @@ import { cn } from "@/lib/utils"
 
 interface DosenGridProps {
   items: Dosen[]
-}
-
-const EASE = [0.22, 1, 0.36, 1] as const
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
 }
 
 const CARD_CLASSES =
@@ -46,13 +39,7 @@ function DosenCard({ dosen, animate }: { dosen: Dosen; animate: boolean }) {
   const hasDoi = !!doi && /^https?:\/\//i.test(doi)
 
   return (
-    <motion.div
-      variants={animate ? cardVariants : undefined}
-      initial={animate ? "hidden" : false}
-      whileInView={animate ? "visible" : undefined}
-      viewport={animate ? { once: true, margin: "-40px", amount: 0.1 } : undefined}
-      className={CARD_CLASSES}
-    >
+    <div className={`${CARD_CLASSES}${animate ? " card-enter" : ""}`}>
       <div className="flex gap-4">
         <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-2xl overflow-hidden border border-border bg-muted shadow-sm">
           <DosenAvatar dosen={dosen} />
@@ -83,7 +70,7 @@ function DosenCard({ dosen, animate }: { dosen: Dosen; animate: boolean }) {
           href={doi.startsWith("http") ? doi : `https://${doi}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors cursor-pointer"
+          className="w-full min-h-11 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 text-white text-sm font-bold transition-colors cursor-pointer"
         >
           <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
           <span className="truncate">Lihat DOI / Publikasi</span>
@@ -93,7 +80,7 @@ function DosenCard({ dosen, animate }: { dosen: Dosen; animate: boolean }) {
           DOI belum tersedia
         </p>
       )}
-    </motion.div>
+    </div>
   )
 }
 
@@ -172,7 +159,7 @@ export default function DosenGrid({ items }: DosenGridProps) {
                   className={cn(
                     "shrink-0 inline-flex min-h-11 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
                     isActive
-                      ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                      ? "bg-emerald-700 text-white border-emerald-700 shadow-sm"
                       : "bg-background text-muted-foreground border-border hover:border-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-300"
                   )}
                 >
@@ -180,7 +167,7 @@ export default function DosenGrid({ items }: DosenGridProps) {
                   <span
                     className={cn(
                       "text-xs font-bold rounded-full px-1.5 py-0.5",
-                      isActive ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+                      isActive ? "bg-white text-emerald-800" : "bg-muted text-muted-foreground"
                     )}
                   >
                     {chip.count}
@@ -237,7 +224,7 @@ export default function DosenGrid({ items }: DosenGridProps) {
               setQuery("")
               setActiveProdi("Semua")
             }}
-            className="inline-flex items-center gap-2 mt-5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="inline-flex items-center gap-2 mt-5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-bold px-5 py-2.5 min-h-11 rounded-xl transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <RotateCcw className="w-4 h-4" aria-hidden="true" />
             Tampilkan Semua Dosen

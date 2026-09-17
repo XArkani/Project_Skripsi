@@ -22,7 +22,7 @@ const pillars = [
 
 export default function FacultyIntro() {
   return (
-    <section className="section-y bg-muted">
+    <section className="section-y section-lazy bg-muted">
       <ScrollReveal className="page-gutter mx-auto grid w-full max-w-[1280px] items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-foreground">

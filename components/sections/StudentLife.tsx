@@ -36,7 +36,7 @@ export default function StudentLife({ items }: { items: UKM[] }) {
   const visible = items.slice(0, 3)
 
   return (
-    <section className="section-y bg-background">
+    <section className="section-y section-lazy bg-background">
       <Container>
         <ScrollReveal>
           <SectionHeading

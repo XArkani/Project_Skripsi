@@ -26,7 +26,7 @@ function dateParts(evt: Event) {
 
 const statusChip: Record<string, string> = {
   "Akan Datang": "bg-emerald-700",
-  "Sedang Berlangsung": "bg-amber-600",
+  "Sedang Berlangsung": "bg-amber-700",
   Selesai: "bg-slate-700",
 }
 
@@ -54,7 +54,7 @@ export default function EventPreview({ items }: { items: Event[] }) {
   const f = dateParts(featured)
 
   return (
-    <section className="section-y bg-background">
+    <section className="section-y section-lazy bg-background">
       <Container>
         <ScrollReveal>
           <SectionHeading

@@ -22,7 +22,7 @@ export default function NewsPreview({ items }: { items: News[] }) {
   if (!featured) return null
 
   return (
-    <section className="section-y bg-muted">
+    <section className="section-y section-lazy bg-muted">
       <Container>
         <ScrollReveal>
           <SectionHeading

@@ -77,7 +77,7 @@ export default function InstallPrompt() {
             await deferred.prompt();
             dismiss(true);
           }}
-          className="flex-1 rounded-md bg-[#008f5a] px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-[#00714c]"
+          className="flex-1 rounded-md bg-emerald-700 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-emerald-800"
         >
           Install
         </button>

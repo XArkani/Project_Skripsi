@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "./ThemeToggle"
@@ -90,7 +89,7 @@ export default function Header() {
       )}
     >
       <div className="page-gutter mx-auto flex h-(--header-h) w-full max-w-[1280px] items-center justify-between gap-4 max-[374px]:gap-2">
-        <Link href="/" className="group flex min-h-11 min-w-0 items-center gap-3 max-[374px]:gap-2" aria-label="Beranda Fakultas Teknik">
+        <Link href="/" className="group flex min-h-11 min-w-0 items-center gap-3 max-[374px]:gap-2">
           <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11">
             <Image
               src="/LOGO FAKULTAS TEKNIK.webp"
@@ -155,34 +154,28 @@ export default function Header() {
                     aria-hidden="true"
                   />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === item.id && (
-                    <motion.div
-                      id={`dropdown-${item.id}`}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.18, ease: "easeOut" }}
-                      className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-border bg-background p-1.5 shadow-[0_8px_24px_rgba(2,6,23,0.08)]"
-                    >
-                      {item.children.map((c) => (
-                        <Link
-                          key={c.href}
-                          href={c.href}
-                          onClick={() => setOpenDropdown(null)}
-                          className={cn(
-                            "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                            pathname.startsWith(c.href)
-                              ? "text-emerald-700 dark:text-emerald-300"
-                              : "text-foreground hover:bg-muted hover:text-emerald-700 dark:hover:text-emerald-300"
-                          )}
-                        >
-                          {c.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === item.id && (
+                  <div
+                    id={`dropdown-${item.id}`}
+                    className="dropdown-enter absolute left-0 top-full mt-2 w-56 rounded-xl border border-border bg-background p-1.5 shadow-[0_8px_24px_rgba(2,6,23,0.08)]"
+                  >
+                    {item.children.map((c) => (
+                      <Link
+                        key={c.href}
+                        href={c.href}
+                        onClick={() => setOpenDropdown(null)}
+                        className={cn(
+                          "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                          pathname.startsWith(c.href)
+                            ? "text-emerald-700 dark:text-emerald-300"
+                            : "text-foreground hover:bg-muted hover:text-emerald-700 dark:hover:text-emerald-300"
+                        )}
+                      >
+                        {c.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             )
           )}

@@ -5,6 +5,12 @@ const isProd = process.env.NODE_ENV === "production";
 const nextConfig: NextConfig = {
   cacheComponents: true,
 
+  experimental: {
+    // Inline CSS ke <head> (atomic CSS Tailwind) — menghapus 2 request CSS
+    // render-blocking di kunjungan pertama.
+    inlineCss: true,
+  },
+
   // Security: Disable the "X-Powered-By" header to prevent exposing the technology stack
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
@@ -74,6 +80,7 @@ const nextConfig: NextConfig = {
               "connect-src 'self' https://*.ufs.sh https://*.uploadthing.com",
               "frame-src https://www.google.com https://maps.google.com https://*.google.com",
               "child-src https://www.google.com https://maps.google.com https://*.google.com",
+              "worker-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

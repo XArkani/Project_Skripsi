@@ -9,7 +9,8 @@ import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { NavLinks } from "./nav-links";
 import { MobileSidebar } from "./mobile-sidebar";
 import PageContainer from "@/components/dashboard/page-container";
-import ScrollToTop from "@/components/shared/ScrollToTop";
+import ScrollToTopLazy from "@/components/shared/ScrollToTopLazy";
+import { Toaster } from "@/components/ui/sonner";
 
 async function SessionCheck({ children }: { children: React.ReactNode }) {
   const session = await auth.api.getSession({
@@ -36,7 +37,7 @@ async function SessionCheck({ children }: { children: React.ReactNode }) {
             />
           </span>
           <div className="min-w-0">
-            <p className="truncate text-sm font-bold leading-none tracking-tight text-emerald-800">
+            <p className="truncate text-sm font-bold leading-none tracking-tight text-emerald-800 dark:text-emerald-300">
               Fakultas Teknik
             </p>
             <p className="mt-1 truncate text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -64,7 +65,8 @@ async function SessionCheck({ children }: { children: React.ReactNode }) {
       <main className="flex-1 min-w-0 md:pl-64">
         <MobileSidebar email={session.user.email} />
         <PageContainer>{children}</PageContainer>
-        <ScrollToTop />
+        <ScrollToTopLazy />
+        <Toaster />
       </main>
     </div>
   );
