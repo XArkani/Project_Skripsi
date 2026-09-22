@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import type { Blueprint } from "@/lib/types"
@@ -6,6 +7,54 @@ import SectionHeading from "@/components/ui/section-heading"
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder"
 import MobileCarousel from "@/components/shared/MobileCarousel"
 import ScrollReveal from "@/components/shared/ScrollReveal"
+
+function isStockImage(src: string) {
+  try {
+    return new URL(src).hostname.includes("unsplash")
+  } catch {
+    return false
+  }
+}
+
+function FacilityMedia({
+  src,
+  alt,
+  sizes,
+}: {
+  src: string
+  alt: string
+  sizes: string
+}) {
+  if (src && !isStockImage(src)) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        className="object-cover object-center"
+        loading="lazy"
+      />
+    )
+  }
+  return <ImagePlaceholder label={alt || "Foto belum tersedia"} className="h-full w-full" />
+}
+
+function FacilityMediaCompact({ src, alt }: { src: string; alt: string }) {
+  if (src && !isStockImage(src)) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 84vw, (max-width: 1024px) 50vw, 25vw"
+        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    )
+  }
+  return <ImagePlaceholder label={alt || "Foto belum tersedia"} className="h-full w-full" compact />
+}
 
 export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
   const [featured, ...rest] = items
@@ -24,8 +73,12 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
         />
 
         <article className="mt-10 grid overflow-hidden rounded-[20px] border border-border bg-muted lg:grid-cols-2">
-          <div className="relative aspect-[4/3] min-h-[260px] sm:aspect-auto sm:min-h-[320px]">
-            <ImagePlaceholder label={featured.title} className="absolute inset-0 h-full w-full" />
+          <div className="relative aspect-[4/3] min-h-[260px] overflow-hidden sm:aspect-auto sm:min-h-[320px]">
+            <FacilityMedia
+              src={featured.image}
+              alt={featured.title}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
             <span className="absolute left-4 top-4 max-w-[calc(100%-2rem)] truncate rounded-full border border-white/20 bg-black/30 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-100 backdrop-blur-sm">
               {featured.category}
             </span>
@@ -64,8 +117,8 @@ export default function BlueprintPreview({ items }: { items: Blueprint[] }) {
                 href="/blueprint"
                 className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 max-md:w-[84vw] max-md:max-w-[340px] max-md:shrink-0 max-md:snap-start"
               >
-                <div className="relative aspect-[4/3]">
-                  <ImagePlaceholder label={item.category} className="h-full w-full" compact />
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <FacilityMediaCompact src={item.image} alt={item.title} />
                 </div>
                 <div className="p-4">
                   <p className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">

@@ -28,7 +28,15 @@ function isStockImage(src: string) {
 function DosenAvatar({ dosen }: { dosen: Dosen }) {
   if (dosen.image && !isStockImage(dosen.image)) {
     return (
-      <Image src={dosen.image} alt={`Foto ${dosen.name}`} fill sizes="96px" className="object-cover" loading="lazy" />
+      <Image
+        src={dosen.image}
+        alt={`Foto ${dosen.name}`}
+        fill
+        sizes="(max-width: 640px) 80px, 96px"
+        className="object-cover object-center"
+        style={{ objectPosition: "center 20%" }}
+        loading="lazy"
+      />
     )
   }
   return <ImagePlaceholder label="Foto belum tersedia" className="w-full h-full" />

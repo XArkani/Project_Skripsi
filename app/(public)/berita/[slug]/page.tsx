@@ -23,9 +23,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
+function isStockImage(src: string) {
+  try {
+    return new URL(src).hostname.includes("unsplash")
+  } catch {
+    return false
+  }
+}
+
 export default async function BeritaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   "use cache"
   const { slug } = await params
+  cacheTag("news")
   cacheTag(`news-${slug}`)
 
   const article = await getNewsBySlug(slug)
@@ -64,13 +73,13 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ s
         </div>
 
         <div className="rounded-2xl overflow-hidden mb-8 aspect-video relative">
-          {article.image ? (
+          {article.image && !isStockImage(article.image) ? (
             <Image
               src={article.image}
               alt={article.title}
               fill
               sizes="(min-width: 768px) 896px, 100vw"
-              className="object-cover"
+              className="object-cover object-center"
             />
           ) : (
             <ImagePlaceholder label="Gambar Berita" className="w-full h-full" />

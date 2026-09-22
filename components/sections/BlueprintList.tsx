@@ -31,7 +31,7 @@ function FacilityMedia({ src, alt }: { src: string; alt: string }) {
         alt={alt}
         fill
         sizes="(min-width: 768px) 50vw, 100vw"
-        className="object-cover group-hover:scale-105 transition-transform duration-500"
+        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
         loading="lazy"
       />
     )
@@ -182,7 +182,11 @@ export default function BlueprintList({ items }: BlueprintListProps) {
           {query !== "" && (
             <button
               type="button"
-              onClick={() => setQuery("")}
+              onClick={() => {
+                if (debounceRef.current) clearTimeout(debounceRef.current)
+                setQuery("")
+                updateUrl("", activeCategory)
+              }}
               aria-label="Bersihkan pencarian"
               className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
             >

@@ -1,10 +1,12 @@
 import { Suspense } from "react"
+import { cacheTag } from "next/cache"
 import { getStruktur } from "@/lib/faculty"
 import EmptyState from "@/components/shared/EmptyState"
 import StrukturChart from "@/components/sections/StrukturChart"
 
 async function StrukturContent() {
   "use cache"
+  cacheTag("struktur")
   const struktur = await getStruktur()
   if (struktur.length === 0) {
     return <EmptyState title="Belum ada data struktur" description="Belum ada data struktur organisasi yang tersedia saat ini." />

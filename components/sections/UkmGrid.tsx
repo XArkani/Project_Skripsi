@@ -150,7 +150,8 @@ function parseContact(contact: string): ContactLink[] {
   if (links.length === 0 && contact.trim()) {
     links.push({ type: "other", href: "", label: contact.trim() })
   }
-  return links
+  // Filter out empty href "other" to avoid rendering <a href="">
+  return links.filter((l) => l.href !== "" || l.type !== "other")
 }
 
 function isStockImage(src: string) {
@@ -238,6 +239,17 @@ function UkmCard({ ukm, animate }: CardProps) {
             <div className="flex flex-col gap-2">
               {links.map((link, i) => {
                 const Icon = CONTACT_ICONS[link.type]
+                if (!link.href) {
+                  return (
+                    <span
+                      key={`${link.label}-${i}`}
+                      className="w-full flex items-center justify-center gap-2 min-h-11 px-4 py-2.5 rounded-xl border border-border bg-muted text-sm font-bold text-muted-foreground"
+                    >
+                      <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      <span className="truncate">{link.label}</span>
+                    </span>
+                  )
+                }
                 return (
                   <a
                     key={`${link.href}-${i}`}

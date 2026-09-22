@@ -135,7 +135,7 @@ export default function HubungiPage() {
                     required
                     value={form.senderName}
                     onChange={(e) => setForm({ ...form, senderName: e.target.value })}
-                    placeholder="Contoh: Muhammad Yusuf"
+                    placeholder="Contoh: Muhammad Rifky Arkani"
                     className={inputClass}
                   />
                 </div>
@@ -149,7 +149,7 @@ export default function HubungiPage() {
                     required
                     value={form.senderEmail}
                     onChange={(e) => setForm({ ...form, senderEmail: e.target.value })}
-                    placeholder="Contoh: yusuf@gmail.com"
+                    placeholder="Contoh: Arkani@gmail.com"
                     className={inputClass}
                   />
                 </div>
@@ -179,7 +179,7 @@ export default function HubungiPage() {
                     required
                     value={form.subject}
                     onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                    placeholder="Contoh: PMB 2026"
+                    placeholder="Contoh: KKN 2026"
                     className={inputClass}
                   />
                 </div>

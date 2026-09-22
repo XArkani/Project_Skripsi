@@ -28,7 +28,7 @@ function NewsMedia({ src, alt }: { src: string; alt: string }) {
         alt={alt}
         fill
         sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-        className="object-cover group-hover:scale-105 transition-transform duration-500"
+        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
         loading="lazy"
       />
     )

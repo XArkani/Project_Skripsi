@@ -78,7 +78,7 @@ export default function EventPreview({ items }: { items: Event[] }) {
                     alt={featured.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
                 ) : (

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-const protectedRoutes = ["/dashboard"];
+const protectedRoutes = ["/dashboard", "/upload"];
 
 // Runtime CORS for /api/* — handles credentials-bearing requests correctly
 // (dynamic per-request origin, required when Access-Control-Allow-Credentials: true)
@@ -44,13 +44,23 @@ export async function proxy(req: NextRequest) {
     if (!session) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
+    const adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+    if (adminEmail && session.user.email.toLowerCase().trim() !== adminEmail) {
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    }
   }
 
   // Auth redirect: send logged-in users away from login page
   if (path === "/login") {
     const session = await auth.api.getSession({ headers: req.headers });
-    if (session) {
+    const adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+    const isAdmin = !!session && (!adminEmail || session.user.email.toLowerCase().trim() === adminEmail);
+    if (isAdmin) {
       return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+    }
+    if (session && !isAdmin) {
+      // Non-admin logged in but trying to access login — send to home
+      return NextResponse.redirect(new URL("/", req.nextUrl));
     }
   }
 

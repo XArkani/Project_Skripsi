@@ -1,7 +1,6 @@
 import { Agentation } from "agentation";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import Script from "next/script";
 import { CustomThemeProvider } from "@/components/shared/theme-provider";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -47,13 +46,17 @@ export default function RootLayout({
   return (
     <html lang="id" className={cn("font-sans", inter.variable)} suppressHydrationWarning>
       <body className="antialiased">
-        {/* Blocking theme script: sets the theme class before hydration to
-            prevent a flash of the wrong theme. Handled by Next.js infrastructure
-            (not rendered inside a React component tree), so it never triggers
-            the React 19 "script tag in component" console error. */}
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var t=localStorage.getItem("theme")||"system";var r=t==="system"?(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):t;document.documentElement.classList.add(r);document.documentElement.style.colorScheme=r;}catch(e){}})();`}
-        </Script>
+        {/* Blocking theme script: inline native script (not next/script) to set
+            theme class before hydration and prevent FOUC. Uses type trick to
+            avoid React 19 "script tag in component" warning in dev. */}
+        <script
+          id="theme-init"
+          suppressHydrationWarning
+          type={typeof window === "undefined" ? "text/javascript" : "text/plain"}
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme")||"system";var r=t==="system"?(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):t;document.documentElement.classList.add(r);document.documentElement.style.colorScheme=r;}catch(e){}})();`,
+          }}
+        />
         <CustomThemeProvider>
         <UiChromeProvider>
         <div

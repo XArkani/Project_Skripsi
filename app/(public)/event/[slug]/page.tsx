@@ -34,6 +34,7 @@ function isStockImage(src: string) {
 export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   "use cache"
   const { slug } = await params
+  cacheTag("event")
   cacheTag(`event-${slug}`)
 
   const evt = await getEventBySlug(slug)
@@ -42,7 +43,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
   const events = await getEvents()
   const related = events.filter((e) => e.slug !== evt.slug).slice(0, 2)
 
-  const badge = statusConfig[evt.status]
+  const badge = statusConfig[evt.status as keyof typeof statusConfig] ?? statusConfig["Selesai"]
   const isPast = evt.status === "Selesai"
 
   return (
@@ -58,7 +59,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
       <div className="bg-card rounded-3xl overflow-hidden border border-border/80 shadow-sm">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted sm:aspect-auto sm:h-96">
           {evt.image && !isStockImage(evt.image) ? (
-            <Image src={evt.image} alt={evt.title} fill sizes="(min-width: 768px) 896px, 100vw" className="object-cover" priority />
+            <Image src={evt.image} alt={evt.title} fill sizes="(min-width: 768px) 896px, 100vw" className="object-cover object-center" priority />
           ) : (
             <ImagePlaceholder label="Poster belum tersedia" className="w-full h-full" />
           )}
@@ -178,6 +179,6 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
 }
 
 function statusBadgeClass(status: string) {
-  const badge = statusConfig[status as keyof typeof statusConfig]
+  const badge = statusConfig[status as keyof typeof statusConfig] ?? statusConfig["Selesai"]
   return `text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider text-white ${badge.badge}`
 }

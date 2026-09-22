@@ -20,6 +20,10 @@ async function SessionCheck({ children }: { children: React.ReactNode }) {
   if (!session) {
     redirect("/login");
   }
+  const adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+  if (adminEmail && session.user.email.toLowerCase().trim() !== adminEmail) {
+    redirect("/login");
+  }
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-background md:flex-row">

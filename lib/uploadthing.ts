@@ -19,6 +19,10 @@ export const uploadRouter = {
         headers: await headers(),
       });
       if (!session) throw new UploadThingError("Unauthorized");
+      const adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+      if (adminEmail && session.user.email.toLowerCase().trim() !== adminEmail) {
+        throw new UploadThingError("Forbidden: admin only");
+      }
       return { userId: session.user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
@@ -37,6 +41,10 @@ export const uploadRouter = {
         headers: await headers(),
       });
       if (!session) throw new UploadThingError("Unauthorized");
+      const adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+      if (adminEmail && session.user.email.toLowerCase().trim() !== adminEmail) {
+        throw new UploadThingError("Forbidden: admin only");
+      }
       return { userId: session.user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {

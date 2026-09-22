@@ -30,6 +30,16 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "*.utfs.io",
+        pathname: "/f/*",
+      },
+      {
+        protocol: "https",
+        hostname: "utfs.io",
+        pathname: "/f/*",
+      },
+      {
+        protocol: "https",
         hostname: "images.unsplash.com",
         pathname: "/**",
       },
@@ -50,7 +60,7 @@ const nextConfig: NextConfig = {
         // Apply security headers to all routes
         source: "/(.*)",
         headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           {
@@ -75,9 +85,9 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' blob: data: https://*.ufs.sh https://images.unsplash.com",
+              "img-src 'self' blob: data: https://*.ufs.sh https://*.utfs.io https://utfs.io https://images.unsplash.com",
               "font-src 'self'",
-              "connect-src 'self' https://*.ufs.sh https://*.uploadthing.com",
+              "connect-src 'self' https://*.ufs.sh https://*.utfs.io https://utfs.io https://*.uploadthing.com",
               "frame-src https://www.google.com https://maps.google.com https://*.google.com",
               "child-src https://www.google.com https://maps.google.com https://*.google.com",
               "worker-src 'self'",

@@ -128,12 +128,16 @@ export async function createRecord(modelName: ModelName, _base: string, data: Re
     data.slug = await resolveSlug(modelName, String(data.slug ?? "") || title)
   }
   const normalized = normalizeEmptyStrings(modelName, sanitizePayload(modelName, data))
-  await createOnModel(modelName, normalized)
+  const created = await createOnModel(modelName, normalized)
   // updateTag = expire seketika (read-your-own-writes). Jangan pakai
   // revalidateTag di sini karena itu stale-while-revalidate (butuh 1x
   // refresh tambahan sebelum data baru terlihat).
   updateTag(modelTags[modelName])
   updateTag("home")
+  if (modelName === "event" || modelName === "news") {
+    const slug = (created as { slug: string }).slug
+    if (slug) updateTag(`${modelName}-${slug}`)
+  }
   refresh()
   return { success: true }
 }
@@ -178,9 +182,18 @@ export async function markMessageRead(id: string) {
 
 export async function deleteRecord(modelName: ModelName, id: string) {
   await checkAdmin()
+  let slugToInvalidate: string | null = null
+  if (modelName === "event" || modelName === "news") {
+    const existing =
+      modelName === "event"
+        ? await prisma.event.findUnique({ where: { id }, select: { slug: true } })
+        : await prisma.news.findUnique({ where: { id }, select: { slug: true } })
+    slugToInvalidate = existing?.slug ?? null
+  }
   await deleteOnModel(modelName, id)
   updateTag(modelTags[modelName])
   updateTag("home")
+  if (slugToInvalidate) updateTag(`${modelName}-${slugToInvalidate}`)
   refresh()
   return { success: true }
 }
