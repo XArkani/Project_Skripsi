@@ -94,8 +94,8 @@ export default function NewsList({ items }: NewsListProps) {
   const resetFilters = () => setQuery("")
 
   return (
-    <div className="space-y-6">
-      <div className="sticky top-(--header-h) z-20 mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm">
+    <div className="space-y-6 min-w-0">
+      <div className="sticky top-(--header-h) z-20 py-3 bg-background/95 backdrop-blur-sm">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input

@@ -148,8 +148,8 @@ export default function EventList({ events }: EventListProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="sticky top-(--header-h) z-20 mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0 py-3 bg-background/95 backdrop-blur-sm space-y-3">
+    <div className="space-y-6 min-w-0">
+      <div className="sticky top-(--header-h) z-20 py-3 bg-background/95 backdrop-blur-sm space-y-3">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <input
@@ -172,7 +172,7 @@ export default function EventList({ events }: EventListProps) {
           )}
         </div>
 
-        <HorizontalScrollHint rowClassName="flex items-center gap-2 overflow-x-auto overscroll-x-contain scrollbar-none mx-[calc(-1*var(--page-gutter))] px-(--page-gutter) sm:mx-0 sm:px-0">
+        <HorizontalScrollHint rowClassName="flex items-center gap-2 overflow-x-auto overscroll-x-contain scrollbar-none pr-4 py-1">
           {["Semua", ...EVENT_STATUSES].map((status) => {
             const isActive = activeStatus === status
             return (
