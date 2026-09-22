@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { MapPin, ExternalLink, Loader2 } from "lucide-react"
+import { CONTACT_INFO } from "@/lib/contact"
 
 export default function MapWithFallback() {
   const [failed, setFailed] = useState(false)
@@ -20,7 +21,7 @@ export default function MapWithFallback() {
           </p>
         </div>
         <a
-          href="https://www.google.com/maps/search/?api=1&query=Universitas+Hamzanwadi"
+          href={CONTACT_INFO.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-background text-emerald-900 font-bold text-xs px-4 py-2.5 rounded-lg shadow-md hover:bg-emerald-50 transition-colors cursor-pointer"
@@ -41,7 +42,8 @@ export default function MapWithFallback() {
         </div>
       )}
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.8344607736637!2d116.5317765!3d-8.6596489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcc4ee5abcb672f%3A0xe5a3c00c7104b281!2sUniversitas%20Hamzanwadi!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
+        src={CONTACT_INFO.mapsEmbedSrc}
+        title="Peta Fakultas Teknik Universitas Hamzanwadi"
         className="absolute inset-0 w-full h-full border-0"
         allowFullScreen
         loading="lazy"
