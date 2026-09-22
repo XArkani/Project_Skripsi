@@ -240,13 +240,29 @@
     @apply border-border outline-ring/50;
     caret-color: var(--color-emerald-700);
   }
-  body {
-    @apply bg-background text-foreground;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
   html {
     @apply font-sans;
+    width: 100%;
+    max-width: 100%;
     scroll-padding-top: calc(var(--header-h) + 16px);
     scrollbar-gutter: stable;
+  }
+  body {
+    @apply bg-background text-foreground;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+  }
+  img,
+  video,
+  svg {
+    max-width: 100%;
   }
   ::selection {
     background-color: var(--color-emerald-200);

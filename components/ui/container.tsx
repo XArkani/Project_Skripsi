@@ -12,7 +12,7 @@ export default function Container({
 }: ContainerProps) {
   return (
     <Comp
-      className={cn("page-gutter mx-auto w-full max-w-[1280px]", className)}
+      className={cn("page-gutter mx-auto w-full max-w-[1280px] min-w-0", className)}
       {...props}
     />
   )

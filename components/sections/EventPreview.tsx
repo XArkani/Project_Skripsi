@@ -65,13 +65,13 @@ export default function EventPreview({ items }: { items: Event[] }) {
         </ScrollReveal>
 
         <ScrollReveal delay={120}>
-          <div className="mt-10 grid gap-10 lg:grid-cols-5">
-          <article className="lg:col-span-3">
+          <div className="mt-10 grid gap-6 sm:gap-10 lg:grid-cols-5">
+          <article className="w-full min-w-0 overflow-hidden lg:col-span-3">
             <Link
               href={`/event/${featured.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_8px_24px_rgba(2,6,23,0.06)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-muted">
+              <div className="relative w-full min-w-0 aspect-[16/9] overflow-hidden bg-muted">
                 {featured.image && !isStockImage(featured.image) ? (
                   <Image
                     src={featured.image}
@@ -88,36 +88,36 @@ export default function EventPreview({ items }: { items: Event[] }) {
                   {featured.status}
                 </span>
               </div>
-              <div className="flex flex-1 flex-col gap-3 p-6 sm:p-7">
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <span className="flex items-center gap-2 rounded-lg border border-border bg-muted px-3 py-1.5">
+              <div className="flex flex-1 min-w-0 w-full flex-col gap-3 p-5 sm:p-7">
+                <div className="flex w-full min-w-0 items-center gap-3 text-muted-foreground">
+                  <span className="flex shrink-0 items-center gap-2 rounded-lg border border-border bg-muted px-3 py-1.5">
                     <span className="tnum text-lg font-bold leading-none text-foreground">{f.day || "?"}</span>
                     <span className="text-xs font-bold uppercase text-muted-foreground">{f.month}</span>
                   </span>
                 </div>
-                <h3 className="line-clamp-2 text-2xl font-bold leading-snug tracking-[-0.01em] text-foreground group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
+                <h3 className="line-clamp-2 w-full min-w-0 whitespace-normal break-words [overflow-wrap:anywhere] text-2xl font-bold leading-snug tracking-[-0.01em] text-foreground group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   {featured.title}
                 </h3>
-                <p className="line-clamp-2 leading-relaxed text-muted-foreground">{featured.description}</p>
-                <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Clock3 className="h-4 w-4 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
-                    {featured.time || "Waktu menyusul"}
+                <p className="line-clamp-2 w-full min-w-0 whitespace-normal break-words [overflow-wrap:anywhere] leading-relaxed text-muted-foreground">{featured.description}</p>
+                <div className="mt-2 flex w-full min-w-0 flex-wrap items-start gap-3 sm:gap-x-5 gap-y-2 text-sm text-muted-foreground">
+                  <span className="inline-flex min-w-0 items-center gap-1.5 whitespace-normal break-words [overflow-wrap:anywhere]">
+                    <Clock3 className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
+                    <span className="min-w-0 flex-1 whitespace-normal break-words">{featured.time || "Waktu menyusul"}</span>
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <MapPin className="h-4 w-4 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
-                    {featured.location || "Lokasi menyusul"}
+                  <span className="inline-flex min-w-0 flex-1 items-start gap-1.5 whitespace-normal break-words [overflow-wrap:anywhere]">
+                    <MapPin className="h-4 w-4 shrink-0 mt-0.5 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
+                    <span className="min-w-0 flex-1 whitespace-normal break-words">{featured.location || "Lokasi menyusul"}</span>
                   </span>
                 </div>
               </div>
             </Link>
           </article>
 
-          <div className="lg:col-span-2">
+          <div className="w-full min-w-0 lg:col-span-2">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
               Agenda Terdekat
             </p>
-            <div className="mt-4 divide-y divide-border border-y border-border">
+            <div className="mt-4 w-full min-w-0 divide-y divide-border border-y border-border">
               {agenda.length === 0 ? (
                 <p className="py-8 text-sm text-muted-foreground">Belum ada agenda berikutnya.</p>
               ) : (
@@ -127,7 +127,7 @@ export default function EventPreview({ items }: { items: Event[] }) {
                     <Link
                       key={evt.id}
                       href={`/event/${evt.slug}`}
-                      className="group flex items-center gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                      className="group flex w-full min-w-0 items-start gap-4 py-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                     >
                       <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl border border-border bg-muted">
                         <span className="text-center">
@@ -138,18 +138,18 @@ export default function EventPreview({ items }: { items: Event[] }) {
                         </span>
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="flex items-center gap-2">
+                        <span className="flex w-full min-w-0 items-center gap-2">
                           <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${statusDot[evt.status] ?? "bg-slate-400"}`} aria-hidden="true" />
-                          <span className="line-clamp-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                          <span className="min-w-0 flex-1 whitespace-normal break-words [overflow-wrap:anywhere] text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                             {evt.status}
                           </span>
                         </span>
-                        <span className="mt-0.5 block line-clamp-2 text-sm font-semibold leading-snug text-foreground group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
+                        <span className="mt-0.5 block w-full min-w-0 whitespace-normal break-words [overflow-wrap:anywhere] line-clamp-2 text-sm font-semibold leading-snug text-foreground group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                           {evt.title}
                         </span>
-                        <span className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-                          <MapPin className="h-3 w-3" aria-hidden="true" />
-                          <span className="truncate">{evt.location || "Lokasi menyusul"}</span>
+                        <span className="mt-1 flex w-full min-w-0 items-start gap-1 text-xs text-muted-foreground">
+                          <MapPin className="h-3 w-3 shrink-0 mt-0.5" aria-hidden="true" />
+                          <span className="min-w-0 flex-1 whitespace-normal break-words [overflow-wrap:anywhere] leading-relaxed">{evt.location || "Lokasi menyusul"}</span>
                         </span>
                       </span>
                     </Link>

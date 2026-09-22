@@ -67,13 +67,13 @@ function EventCard({ evt, animate }: CardProps) {
 
   return (
     <div
-      className={`${animate ? "card-enter " : ""}group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl`}
+      className={`${animate ? "card-enter " : ""}group bg-card overflow-hidden border border-border shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex flex-col rounded-2xl w-full min-w-0 max-w-full`}
     >
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted sm:aspect-auto sm:h-48">
+      <div className="relative aspect-[16/10] w-full min-w-0 max-w-full overflow-hidden bg-muted sm:aspect-auto sm:h-48">
         <EventMedia src={evt.image} alt={evt.title} />
         <span
           className={cn(
-            "absolute top-3 left-3 max-w-[calc(100%-1.5rem)] truncate text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm",
+            "absolute top-3 left-3 max-w-[calc(100%-1.5rem)] whitespace-normal break-words [overflow-wrap:anywhere] text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm",
             badge.badge
           )}
         >
@@ -85,23 +85,23 @@ function EventCard({ evt, animate }: CardProps) {
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        <h3 className="font-bold text-foreground leading-snug group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors line-clamp-2">
+      <div className="flex flex-1 min-w-0 w-full max-w-full flex-col gap-3 p-5">
+        <h3 className="w-full min-w-0 max-w-full whitespace-normal break-words [overflow-wrap:anywhere] font-bold text-foreground leading-snug group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors line-clamp-2">
           {evt.title}
         </h3>
 
-        <div className="text-sm text-muted-foreground space-y-2">
-          <p className="flex items-center gap-2">
-            <Clock className="w-4 h-4 shrink-0 text-emerald-600" aria-hidden="true" />
-            <span className="truncate">{evt.time || "Waktu menyusul"}</span>
+        <div className="w-full min-w-0 max-w-full text-sm text-muted-foreground space-y-2">
+          <p className="flex w-full min-w-0 max-w-full items-start gap-2">
+            <Clock className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" aria-hidden="true" />
+            <span className="min-w-0 flex-1 whitespace-normal break-words [overflow-wrap:anywhere]">{evt.time || "Waktu menyusul"}</span>
           </p>
-          <p className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 shrink-0 text-emerald-600" aria-hidden="true" />
-            <span className="truncate">{evt.location}</span>
+          <p className="flex w-full min-w-0 max-w-full items-start gap-2">
+            <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" aria-hidden="true" />
+            <span className="min-w-0 flex-1 whitespace-normal break-words [overflow-wrap:anywhere]">{evt.location}</span>
           </p>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{evt.description}</p>
+        <p className="w-full min-w-0 max-w-full whitespace-normal break-words [overflow-wrap:anywhere] text-sm text-muted-foreground leading-relaxed line-clamp-2">{evt.description}</p>
 
         <div className="mt-auto pt-3">
           <Link
@@ -251,7 +251,7 @@ export default function EventList({ events }: EventListProps) {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid w-full min-w-0 max-w-full grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
           {filteredEvents.map((evt) => (
             <EventCard key={evt.id} evt={evt} animate={!reduceMotion} />
           ))}

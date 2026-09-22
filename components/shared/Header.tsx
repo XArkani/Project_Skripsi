@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -54,6 +54,7 @@ export default function Header() {
   const [openDropdown, setOpenDropdown] = useState<null | "berita" | "informasi">(null)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -72,6 +73,18 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (!openDropdown) return
+      const target = e.target as Node
+      if (navRef.current && !navRef.current.contains(target)) {
+        setOpenDropdown(null)
+      }
+    }
+    document.addEventListener("mousedown", onClickOutside)
+    return () => document.removeEventListener("mousedown", onClickOutside)
+  }, [openDropdown])
+
+  useEffect(() => {
     // Menutup dropdown saat navigasi berpindah halaman (sync dengan perubahan eksternal route).
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpenDropdown(null)
@@ -88,7 +101,7 @@ export default function Header() {
         scrolled ? "border-border shadow-[0_1px_2px_rgba(2,6,23,0.04)]" : "border-transparent"
       )}
     >
-      <div className="page-gutter mx-auto flex h-(--header-h) w-full max-w-[1280px] items-center justify-between gap-4 max-[374px]:gap-2">
+      <div className="page-gutter mx-auto flex h-(--header-h) w-full max-w-[1280px] min-w-0 items-center justify-between gap-4">
         <Link href="/" className="group flex min-h-11 min-w-0 items-center gap-3 max-[374px]:gap-2">
           <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11">
             <Image
@@ -114,7 +127,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
+        <nav ref={navRef} className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
           {navItems.map((item) =>
             item.type === "link" ? (
               <Link
@@ -129,12 +142,7 @@ export default function Header() {
                 {item.label}
               </Link>
             ) : (
-              <div
-                key={item.id}
-                className="relative"
-                onMouseEnter={() => setOpenDropdown(item.id)}
-                onMouseLeave={() => setOpenDropdown((prev) => (prev === item.id ? null : prev))}
-              >
+              <div key={item.id} className="relative">
                 <button
                   type="button"
                   onClick={() => setOpenDropdown((prev) => (prev === item.id ? null : item.id))}
