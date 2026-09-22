@@ -1,3 +1,5 @@
+export const instant = false
+
 import { notFound } from "next/navigation"
 import { getModelList } from "@/lib/admin-data"
 import { resolveModel } from "@/lib/admin-field-configs"

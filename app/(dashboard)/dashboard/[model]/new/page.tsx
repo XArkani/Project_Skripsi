@@ -1,3 +1,5 @@
+export const instant = false
+
 import { notFound } from "next/navigation"
 import { fieldConfigMap, modelLabels, resolveModel } from "@/lib/admin-field-configs"
 import { CrudForm } from "@/components/admin/CrudForm"

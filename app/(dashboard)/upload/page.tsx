@@ -1,3 +1,5 @@
+export const instant = false
+
 import { ImageUpload } from "@/components/upload/ImageUpload"
 import { FileUpload } from "@/components/upload/FileUpload"
 import PageHeader from "@/components/dashboard/page-header"

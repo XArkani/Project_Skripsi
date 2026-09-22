@@ -1,3 +1,5 @@
+export const instant = false
+
 import { getMessages } from "@/lib/faculty"
 import { MessagesManager } from "@/components/admin/MessagesManager"
 import PageHeader from "@/components/dashboard/page-header"
