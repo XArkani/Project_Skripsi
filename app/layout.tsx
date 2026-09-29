@@ -4,9 +4,8 @@ import localFont from "next/font/local";
 import { CustomThemeProvider } from "@/components/shared/theme-provider";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import RegisterSW from "@/components/pwa/RegisterSW";
-import InstallPrompt from "@/components/pwa/InstallPrompt";
 import { UiChromeProvider } from "@/components/shared/ui-chrome";
+import PwaLazy from "@/components/pwa/PwaLazy";
 
 const inter = localFont({
   src: [{ path: "./fonts/inter-latin.woff2", weight: "100 900", style: "normal" }],
@@ -74,8 +73,7 @@ export default function RootLayout({
           FINISH: reviewed and documented with DESIGN.md before the run is called complete.
         </div>
         {children}
-        <RegisterSW />
-        <InstallPrompt />
+        <PwaLazy />
         </UiChromeProvider>
         {process.env.NODE_ENV === "development" && <Agentation />}
         </CustomThemeProvider>

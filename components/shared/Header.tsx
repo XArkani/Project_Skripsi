@@ -3,11 +3,24 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import dynamic from "next/dynamic"
 import { usePathname } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "./ThemeToggle"
-import MobileNavSheet from "./MobileNavSheet"
+
+// MobileNavSheet membawa radix-ui Dialog + 10 ikon lucide yang hanya
+// dibutuhkan saat menu mobile dibuka — di-split agar tidak ikut bundle
+// kritis header. Fallback menjaga ukuran tombol hamburger ( CLS aman ).
+const MobileNavSheet = dynamic(() => import("./MobileNavSheet"), {
+  ssr: false,
+  loading: () => (
+    <span
+      aria-hidden="true"
+      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-border bg-background lg:hidden"
+    />
+  ),
+})
 
 type NavItem =
   | { type: "link"; href: string; label: string }
