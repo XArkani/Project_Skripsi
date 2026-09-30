@@ -38,7 +38,9 @@ export async function getBlueprints(): Promise<Blueprint[]> {
 export async function getDosen(): Promise<Dosen[]> {
   "use cache"
   cacheTag("dosen")
-  const data = await prisma.dosen.findMany({ orderBy: { createdAt: "desc" } })
+  const data = await prisma.dosen.findMany({
+    orderBy: [{ sortOrder: { sort: "asc", nulls: "last" } }, { createdAt: "asc" }],
+  })
   return data as Dosen[]
 }
 

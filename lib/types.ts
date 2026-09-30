@@ -20,6 +20,7 @@ export interface Dosen {
   email: string | null
   image: string | null
   nuptk: string | null
+  sortOrder?: number | null
 }
 
 export interface UKM {

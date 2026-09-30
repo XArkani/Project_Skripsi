@@ -98,6 +98,7 @@ model dosen {
     email     String?
     image     String?
     nuptk     String?   @unique
+    sortOrder Int?
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
 }

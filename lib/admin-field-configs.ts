@@ -15,6 +15,7 @@ export const dosenFields: FieldConfig[] = [
   { name: "position", label: "Posisi", type: "text", group: "Informasi Utama" },
   { name: "nuptk", label: "NUPTK", type: "text", group: "Informasi Utama" },
   { name: "doi", label: "URL DOI Riset", type: "text", group: "Informasi Utama" },
+  { name: "sortOrder", label: "Urutan Tampil (1 = paling atas)", type: "number", group: "Informasi Utama" },
   { name: "image", label: "Foto", type: "image", group: "Gambar" },
 ]
 

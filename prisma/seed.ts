@@ -165,6 +165,7 @@ const dosenSamples = [
     email: "muhammad.djamaluddin@hamzanwadi.ac.id",
     nuptk: "7447751652130110",
     image: "",
+    sortOrder: 11,
   },
   {
     name: "Aris Sudianto, M.Kom.",
@@ -176,6 +177,7 @@ const dosenSamples = [
     email: "aris.sudianto@hamzanwadi.ac.id",
     nuptk: "7943764665110050",
     image: "",
+    sortOrder: 1,
   },
   {
     name: "Indra Gunawan, S.T.,M.Pd.,M.Kom.",
@@ -187,6 +189,7 @@ const dosenSamples = [
     email: "indra.gunawan@hamzanwadi.ac.id",
     nuptk: "8857762663130350",
     image: "",
+    sortOrder: 2,
   },
   {
     name: "Baiq Andriska Candra Permana, M.Kom",
@@ -198,6 +201,7 @@ const dosenSamples = [
     email: "baiq.andriska@hamzanwadi.ac.id",
     nuptk: "4141763664230240",
     image: "",
+    sortOrder: 5,
   },
 ]
 
@@ -210,6 +214,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=4EHs0TMAAAAJ&hl=id&oi=sra",
     nuptk: "7543763664130220",
     image: "",
+    sortOrder: 3,
   },
   {
     name: "Muhamad Sadali, M.Kom.",
@@ -219,6 +224,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=mlhSBPQAAAAJ&hl=id&oi=sra",
     nuptk: "7452749650130090",
     image: "",
+    sortOrder: 4,
   },
   {
     name: "Mahpuz, S.E., M.Kom.",
@@ -228,6 +234,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=zztbpcoAAAAJ&hl=id&oi=sra",
     nuptk: "9563751652131470",
     image: "",
+    sortOrder: 8,
   },
   {
     name: "Suhartini, S.E., M.Kom.",
@@ -237,6 +244,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=2hvDSxUAAAAJ&hl=id&oi=sra",
     nuptk: "4563757658237000",
     image: "",
+    sortOrder: 6,
   },
   {
     name: "Harianto, M.Kom.",
@@ -246,6 +254,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=XskmsVgAAAAJ&hl=id&oi=sra",
     nuptk: "4459768669130270",
     image: "",
+    sortOrder: 15,
   },
   {
     name: "Ida Wahidah, M.Sc.",
@@ -255,6 +264,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=NksVoDkAAAAJ&hl=id&oi=sra",
     nuptk: "7246771672230300",
     image: "",
+    sortOrder: 16,
   },
   {
     name: "Lalu Kertawijaya, M.Pd.",
@@ -264,6 +274,7 @@ const dosenBaru = [
     doi: "https://doi.org/10.29408/jt.v3i1.28863",
     nuptk: "6563759660130470",
     image: "",
+    sortOrder: 12,
   },
   {
     name: "Jumawal, M.Kom.",
@@ -273,6 +284,7 @@ const dosenBaru = [
     doi: "https://scholar.google.co.id/citations?hl=id&user=FGnR7UEAAAAJ",
     nuptk: "9546775676130140",
     image: "",
+    sortOrder: 14,
   },
   {
     name: "Zaenul Amri, S.Pd., M.Kom.",
@@ -282,6 +294,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=vkQlr-4AAAAJ&hl=id&oi=sra",
     nuptk: "2062773674130230",
     image: "",
+    sortOrder: 9,
   },
   {
     name: "Zulkipli, M.Kom.",
@@ -291,6 +304,47 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=Dn6PlUYAAAAJ&hl=id&oi=sra",
     nuptk: "7553767668130260",
     image: "",
+    sortOrder: 17,
+  },
+  {
+    name: "Hamzan Ahmadi, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://sinta.kemdiktisaintek.go.id/authors/profile/6063212",
+    nuptk: "5440760661200030",
+    image: "",
+    sortOrder: 7,
+  },
+  {
+    name: "Muhammad Wasil, S.E., M.Kom.",
+    prodi: "Informatika",
+    title: "S.E., M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://sinta.kemdiktisaintek.go.id/authors/profile/6662509",
+    nuptk: "253750651130123",
+    image: "",
+    sortOrder: 10,
+  },
+  {
+    name: "M. Nurul Wathani, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://sinta.kemdiktisaintek.go.id/authors/profile/6914862",
+    nuptk: "7433769670130812",
+    image: "",
+    sortOrder: 13,
+  },
+  {
+    name: "Hirmayanti, M.Kom.",
+    prodi: "Informatika",
+    title: "M.Kom.",
+    position: "Dosen Informatika",
+    doi: "https://sinta.kemdiktisaintek.go.id/authors/profile/7003640",
+    nuptk: "1033777678230280",
+    image: "",
+    sortOrder: 18,
   },
   {
     name: "Taufik Akbar, M.Kom.",
@@ -817,10 +871,25 @@ async function seedBlueprints() {
 }
 
 async function seedDosen() {
-  await prisma.dosen.createMany({ data: dosenSamples, skipDuplicates: true })
-  const result = await prisma.dosen.createMany({ data: dosenBaru, skipDuplicates: true })
+  const allDosen = [...dosenSamples, ...dosenBaru]
+  for (const item of allDosen) {
+    if (!item.nuptk) {
+      const exists = await prisma.dosen.findFirst({ where: { name: item.name } })
+      if (exists) {
+        await prisma.dosen.update({ where: { id: exists.id }, data: item })
+      } else {
+        await prisma.dosen.create({ data: item })
+      }
+      continue
+    }
+    await prisma.dosen.upsert({
+      where: { nuptk: item.nuptk },
+      update: { ...item },
+      create: { ...item },
+    })
+  }
   const total = await prisma.dosen.count()
-  console.log(`Dosen: ${result.count} baru ditambahkan, total ${total} (4 lama dipertahankan).`)
+  console.log(`Dosen: ${allDosen.length} diproses (upsert by nuptk, termasuk sortOrder 1-18 Informatika), total ${total}.`)
 }
 
 async function seedUkm() {

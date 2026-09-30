@@ -10,7 +10,9 @@ export async function getModelList(modelName: ModelName) {
     case "blueprint":
       return await prisma.blueprint.findMany({ orderBy: { createdAt: "asc" } })
     case "dosen":
-      return await prisma.dosen.findMany({ orderBy: { createdAt: "asc" } })
+      return await prisma.dosen.findMany({
+        orderBy: [{ sortOrder: { sort: "asc", nulls: "last" } }, { createdAt: "asc" }],
+      })
     case "ukm":
       return await prisma.ukm.findMany({ orderBy: { createdAt: "asc" } })
     case "event":

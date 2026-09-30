@@ -168,6 +168,7 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
       return {
         ...base,
         columns: [
+          { key: "sortOrder", label: "Urutan", sortable: true, className: "w-[90px] tabular-nums", render: (row) => <span className="tabular-nums text-muted-foreground">{text(row, "sortOrder") ?? "—"}</span> },
           { key: "name", label: "Dosen", sortable: true, className: "max-w-[320px]", render: (row) => <DosenCell row={row} /> },
           { key: "prodi", label: "Program Studi", render: (row) => <Chip>{text(row, "prodi") ?? "—"}</Chip> },
           { key: "position", label: "Jabatan", render: (row) => <span className="block max-w-[240px] truncate">{text(row, "position") ?? "—"}</span> },
@@ -182,6 +183,7 @@ export function getAdminTable(modelName: ModelName, rows: Row[]): AdminTableConf
         emptyDescription: "Dosen yang ditambahkan akan muncul di sini.",
         getItemLabel: (row) => getItemLabel(modelName, row),
         getDetailFields: (row) => [
+          detailField(row, "Urutan Tampil", "sortOrder"),
           detailField(row, "Nama", "name"),
           detailField(row, "Posisi", "position"),
           detailField(row, "Program Studi", "prodi"),

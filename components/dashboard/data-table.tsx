@@ -38,8 +38,8 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
 
   const [data, setData] = useState<Row[]>(rows)
   const [search, setSearch] = useState("")
-  const [sortKey, setSortKey] = useState<string | null>(null)
-  const [sortDir, setSortDir] = useState<SortDir>(null)
+  const [sortKey, setSortKey] = useState<string | null>(modelName === "dosen" ? "sortOrder" : null)
+  const [sortDir, setSortDir] = useState<SortDir>(modelName === "dosen" ? "asc" : null)
   const [filterValue, setFilterValue] = useState<string>("all")
   const [page, setPage] = useState(1)
   const [viewRow, setViewRow] = useState<Row | null>(null)
@@ -92,9 +92,23 @@ export default function DataTable({ modelName, rows, baseUrl, pageSize = 10 }: D
     }
     if (sortKey && sortDir) {
       list = [...list].sort((a, b) => {
-        const av = String(a[sortKey] ?? "")
-        const bv = String(b[sortKey] ?? "")
-        const cmp = av.localeCompare(bv, "id", { numeric: true, sensitivity: "base" })
+        const av = a[sortKey]
+        const bv = b[sortKey]
+        const aEmpty = av == null || av === ""
+        const bEmpty = bv == null || bv === ""
+        // Null/kosong selalu di bawah (nulls last) agar No. 1 tetap di atas.
+        if (aEmpty && bEmpty) return 0
+        if (aEmpty) return 1
+        if (bEmpty) return -1
+        // Bandingkan numerik jika keduanya angka (kolom Urutan), selain itu localeCompare.
+        const aNum = typeof av === "number" ? av : Number(av)
+        const bNum = typeof bv === "number" ? bv : Number(bv)
+        let cmp: number
+        if (!Number.isNaN(aNum) && !Number.isNaN(bNum) && String(av).trim() !== "" && String(bv).trim() !== "") {
+          cmp = aNum - bNum
+        } else {
+          cmp = String(av).localeCompare(String(bv), "id", { numeric: true, sensitivity: "base" })
+        }
         return sortDir === "asc" ? cmp : -cmp
       })
     }

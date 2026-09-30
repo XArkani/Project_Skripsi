@@ -41,6 +41,17 @@ function normalizeEmptyStrings(modelName: ModelName, data: Record<string, unknow
   const fields = fieldConfigMap[modelName] ?? []
   const next: Record<string, unknown> = { ...data }
   for (const f of fields) {
+    // Input number dikirim sebagai string dari form — ubah ke number/null agar valid untuk Prisma.
+    if (f.type === "number") {
+      const raw = next[f.name]
+      if (raw == null || raw === "") {
+        next[f.name] = null
+      } else {
+        const num = Number(raw)
+        next[f.name] = Number.isNaN(num) ? null : num
+      }
+      continue
+    }
     // Input tanggal yang dikosongkan terkirim sebagai "" — Prisma menolak
     // string kosong untuk DateTime, jadi ubah ke null (kolom nullable).
     if (f.type === "date" && next[f.name] === "") {
