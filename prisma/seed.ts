@@ -354,6 +354,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=YNj4dmUAAAAJ&hl=id&oi=sra",
     nuptk: "4961769670137010",
     image: "",
+    sortOrder: 22,
   },
   {
     name: "Hadian Mandala Putra, S.Si., M.Kom.",
@@ -363,6 +364,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=-LpXY9wAAAAJ&hl=id&oi=sra",
     nuptk: "3855771672130260",
     image: "",
+    sortOrder: 21,
   },
   {
     name: "Muhammad Qusyairi, M.Kom.",
@@ -372,6 +374,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=PFngjloAAAAJ&hl=id&oi=sra",
     nuptk: "7036773674130250",
     image: "",
+    sortOrder: 25,
   },
   {
     name: "Dr. Ramli Ahmad, S.T., M.Kom.",
@@ -381,6 +384,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=Z60xR8IAAAAJ&hl=id&oi=sra",
     nuptk: "1551759660130150",
     image: "",
+    sortOrder: 20,
   },
   {
     name: "Arnila Sandi, M.Kom.",
@@ -390,6 +394,7 @@ const dosenBaru = [
     doi: "https://doi.org/10.29408/jit.v7i2.26375",
     nuptk: "3150756657230180",
     image: "",
+    sortOrder: 26,
   },
   {
     name: "Intan Komala Dewi Patwari, S.Kom., M.Kom.",
@@ -399,6 +404,7 @@ const dosenBaru = [
     doi: "https://doi.org/10.29408/jprinter.v2i1.23849",
     nuptk: "2954765666237020",
     image: "",
+    sortOrder: 19,
   },
   {
     name: "M. Nuzuluddin, M.Pd.",
@@ -408,6 +414,7 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=aNxP-nEAAAAJ&hl=id&oi=sra",
     nuptk: "2560772673130200",
     image: "",
+    sortOrder: 24,
   },
   {
     name: "Ahwan Ahmadi, M.Kom.",
@@ -417,6 +424,27 @@ const dosenBaru = [
     doi: "https://scholar.google.com/citations?user=rXrFJrkAAAAJ&hl=id&oi=sra",
     nuptk: "653770671130302",
     image: "",
+    sortOrder: 23,
+  },
+  {
+    name: "Alimuddin, S.Pd., M.Kom.",
+    prodi: "Teknik Komputer",
+    title: "S.Pd., M.Kom.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://sinta.kemdiktisaintek.go.id/authors/profile/6978062",
+    nuptk: "5149754655130170",
+    image: "",
+    sortOrder: 27,
+  },
+  {
+    name: "Martua Hamonangan Nasution, M.Pd.",
+    prodi: "Teknik Komputer",
+    title: "M.Pd.",
+    position: "Dosen Teknik Komputer",
+    doi: "https://sinta.kemdiktisaintek.go.id/authors/profile/6977969",
+    nuptk: "3251746648200020",
+    image: "",
+    sortOrder: 28,
   },
   {
     name: "Muhammad Saiful, M.Kom.",
