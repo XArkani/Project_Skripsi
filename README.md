@@ -1,422 +1,253 @@
-# 🚀 CodeNight Starters
+# Portal Fakultas Teknik Universitas Hamzanwadi
 
-<img src="public/codenight-starter.png" alt="CodeNight Starter Thumbnail" width="800" style="display:block;margin-bottom:24px;" />
+![Beranda Fakultas Teknik Universitas Hamzanwadi](public/preview/homepage.png)
 
-> **Lightweight, production-ready Next.js 16 starter kit!** No bloat, no complicated config, ready to code!
+Portal informasi resmi Fakultas Teknik Universitas Hamzanwadi, dilengkapi panel admin untuk mengelola seluruh konten. Proyek ini dikembangkan sebagai implementasi skripsi, bukan sekadar hasil clone template. Halaman publik dan CMS dibangun di atas fondasi Next.js 16, Prisma 7, Better Auth, dan UploadThing.
 
-🌐 **Languages:** [English](README.md) | [Bahasa Indonesia](README.id.md)
+Pengunjung dapat membaca profil fakultas, menelusuri fasilitas dan laboratorium, mencari dosen, melihat agenda dan berita, membaca struktur organisasi, mencari FAQ, serta mengirim pesan. Administrator mengelola semua konten itu dari satu dashboard tanpa menyentuh kode.
 
-Using modern stack of choice with clean configuration and following the latest best practice standards. Ready to help you build fast, secure, and scalable full-stack web applications from the start. Happy coding! 🎉
+## Konteks Akademik
 
-## 📸 Preview
+Repo ini merupakan bagian dari penelitian skripsi untuk merancang dan membangun portal fakultas berbasis web. Fokus penelitiannya ada pada penerapan Next.js App Router, pemisahan data server dan client, cache berbasis tag, serta CMS satu admin yang cukup sederhana untuk dioperasikan staf fakultas.
 
-### Landing Page
+Spesifikasi, rencana implementasi, model data, dan daftar tugas tersedia di [`specs/001-faculty-website/`](specs/001-faculty-website/).
 
-![Landing Page Preview](public/preview/homepage.png)
+## Tujuan
 
-### Login Page
+- Memusatkan informasi fakultas yang sebelumnya tersebar di banyak kanal ke satu portal resmi.
+- Memberi administrator kendali penuh atas konten tanpa perlu bantuan pengembang untuk setiap perubahan.
+- Menjaga konsistensi data antara halaman publik dan dashboard melalui satu sumber data, yaitu PostgreSQL.
+- Menerapkan praktik pengembangan web modern sebagai studi kasus skripsi: type safety, server components, caching, autentikasi, dan keamanan dasar.
 
-![Login Page Preview](public/preview/login.png)
+## Fitur Utama
 
-### Dashboard
+### Portal publik
 
-![Dashboard Preview](public/preview/dashboard.png)
+- Beranda dengan ringkasan profil, statistik fakultas, fasilitas, dosen, agenda, berita, kehidupan mahasiswa, dan FAQ.
+- Blueprint Fakultas berisi daftar gedung, laboratorium, dan sarana penunjang dengan tata letak bergantian.
+- Direktori Dosen dengan pencarian dan filter program studi. Setiap kartu menampilkan jabatan, NUPTK, dan tautan publikasi atau DOI.
+- Halaman UKM berisi profil organisasi mahasiswa, kegiatan, dan kontak.
+- Agenda dan Event dengan pencarian, filter status (Akan Datang, Sedang Berlangsung, Selesai), dan halaman detail berbasis slug.
+- Berita dan Publikasi dengan pencarian, kartu artikel, serta halaman detail berisi konten lengkap dan tautan sumber.
+- Struktur Organisasi dalam bentuk hierarki pimpinan fakultas yang responsif.
+- FAQ dengan pencarian real-time dan accordion.
+- Hubungi Kami dengan validasi form, honeypot, pembatasan satu pesan per IP per lima menit, dan peta Google Maps dengan fallback alamat statis.
+- Tema terang dan gelap, navigasi sticky, tampilan responsif, serta dukungan PWA (install prompt dan halaman offline).
 
-### Upload Page
+### Panel admin
 
-![Upload Page Preview](public/preview/upload-page.png)
+- Login satu administrator melalui Better Auth dengan session cookie dan pembatasan email admin.
+- Dashboard berisi statistik konten, status event, aktivitas terbaru, dan pesan masuk.
+- CRUD untuk Blueprint, Dosen, UKM, Event, Berita, FAQ, dan Struktur Organisasi.
+- Pengelolaan pesan: daftar, filter sudah atau belum dibaca, detail, tandai dibaca, dan hapus.
+- Form generik yang dikonfigurasi per model, termasuk validasi field wajib, slug otomatis, urutan tampil dosen, dan unggah gambar.
+- Invalidasi cache per tag setelah data berubah, sehingga halaman publik langsung menampilkan data terbaru.
 
-## ✨ Highlights
+### Fondasi teknis
 
-- ⚡ **Next.js** - Fullstack React framework with App Router and server components
-- 🔐 **Better Auth** - Modern authentication framework
-- 🗄️ **Prisma** - Best ORM with Neon PostgreSQL adapter
-- 📤 **UploadThing** - File/image uploads with automatic CDN
-- 🎨 **Tailwind CSS** - CSS-first configuration that's faster
-- 🎭 **shadcn/ui** - Beautiful and accessible UI components
-- 📝 **TypeScript** - Full type-safety across the entire codebase
-- 🏃 **Bun** - Super fast package manager
+- `"use cache"` dan `cacheTag` pada fungsi baca di `lib/faculty.ts`, lalu `updateTag` dan `refresh()` setelah mutasi.
+- Pemisahan modul server dan client untuk menjaga Prisma serta `"use cache"` tetap di sisi server.
+- Security header di `next.config.ts`: CSP, HSTS di produksi, `X-Frame-Options`, `X-Content-Type-Options`, dan `Referrer-Policy`.
+- Proteksi route `/dashboard` dan `/upload` lewat `proxy.ts`, bukan `middleware.ts`.
+- Konfigurasi terpusat di `lib/`, dengan daftar environment variable yang dibutuhkan di `.env.example`.
+- SEO dasar: metadata, `sitemap.xml`, `robots.txt`, manifest PWA, dan `llms.txt`.
 
-## 📦 What's Included?
+## Tangkapan Layar
 
-This starter kit comes pre-configured with:
+| Beranda | Direktori Dosen |
+| --- | --- |
+| ![Beranda](public/preview/homepage.png) | ![Direktori Dosen](public/preview/dosen.png) |
 
-### Ready-to-use Pages
+| Berita dan Publikasi | Agenda dan Event |
+| --- | --- |
+| ![Berita dan Publikasi](public/preview/berita.png) | ![Agenda dan Event](public/preview/event.png) |
 
-- ✅ **Landing Page** (`/`) - Public page with quick start guide
-- ✅ **Login Page** (`/login`) - Login form with validation and error handling
-- ✅ **Dashboard** (`/dashboard`) - Protected route with session check
-- ✅ **Upload Demo** - Pre-built image and file upload components
+| FAQ | Hubungi Kami |
+| --- | --- |
+| ![FAQ](public/preview/faq.png) | ![Hubungi Kami](public/preview/hubungi.png) |
 
-### Authentication Features
+| Dashboard Admin | Login Admin |
+| --- | --- |
+| ![Dashboard Admin](public/preview/dashboard.png) | ![Login Admin](public/preview/login.png) |
 
-- ✅ Email & password authentication with Better Auth native hashing
-- ✅ Multiple concurrent sessions (multiSession plugin)
-- ✅ Cross-origin support with CORS headers
-- ✅ Session management with cookie cache
-- ✅ Protected routes with proxy.ts (Next.js 16)
-- ✅ Auto redirect for authenticated/unauthenticated users
-- ✅ Database seed script for admin user
+## Teknologi
 
-### Database & ORM
+| Teknologi | Versi | Peran dalam proyek |
+| --- | --- | --- |
+| Next.js | 16.2 | App Router, Server Components, `use cache`, route handlers |
+| React | 19.2 | Antarmuka halaman publik dan dashboard |
+| TypeScript | 5 | Type safety di seluruh kode |
+| Prisma | 7.8 | ORM dan migrasi database |
+| Neon PostgreSQL | - | Database serverless untuk data fakultas |
+| Better Auth | 1.6 | Autentikasi email dan password untuk admin |
+| UploadThing | 7.7 | Unggah gambar dan penyimpanan CDN |
+| Tailwind CSS | 4 | Styling dan token desain |
+| shadcn/ui, Radix UI | 4.13, 1.4 | Komponen antarmuka yang aksesibel |
+| Framer Motion | 12 | Animasi dan transisi halaman |
+| Bun | Terbaru | Package manager dan runtime skrip |
 
-- ✅ Prisma schema following Better Auth best practice
-- ✅ User, Session, Account, and Verification models
-- ✅ PrismaNeon adapter for Neon PostgreSQL
-- ✅ Migrations and seeding pre-configured
+Font memakai Inter melalui `next/font/local` agar tidak bergantung pada request font eksternal. Arah desain dan token warna dicatat di [`DESIGN.md`](DESIGN.md).
 
-### File Upload
+## Struktur Proyek
 
-- ✅ UploadThing integration with route handlers
-- ✅ Image upload (max 4MB) with preview
-- ✅ File upload (max 16MB) for various types
-- ✅ Client components with progress feedback
+```text
+app/
+├── (public)/              # Halaman publik tanpa login
+│   ├── page.tsx           # Beranda
+│   ├── blueprint/         # Fasilitas dan laboratorium
+│   ├── dosen/             # Direktori dosen
+│   ├── ukm/               # Unit kegiatan mahasiswa
+│   ├── event/             # Agenda dan detail event
+│   ├── berita/            # Berita dan detail berita
+│   ├── struktur/          # Struktur organisasi
+│   ├── faq/               # Tanya jawab
+│   └── hubungi/           # Form kontak dan peta
+├── (auth)/login/          # Login administrator
+├── (dashboard)/           # Area admin yang dilindungi
+│   ├── dashboard/         # Statistik dan CRUD per model
+│   └── upload/            # Halaman demo unggah
+├── api/                   # Endpoint Better Auth dan UploadThing
+├── layout.tsx             # Layout root, tema, dan PWA
+└── globals.css            # Tailwind dan token desain
 
-## 📁 Folder Structure
+components/
+├── admin/                 # Komponen CMS
+├── dashboard/             # Tabel, pagination, dialog, state
+├── sections/              # Section halaman publik
+├── shared/                # Header, footer, navigasi, tema
+├── ui/                    # Primitif shadcn/ui
+└── upload/                # Komponen unggah gambar dan file
 
-```
-codenight-starter/
-├── app/                          # Next.js App Router
-│   ├── (public)/                 # Public routes (no login required)
-│   │   ├── layout.tsx            # Layout for public pages
-│   │   ├── page.tsx              # Landing page
-│   │   └── login/                # Login page
-│   │       └── page.tsx
-│   ├── (dashboard)/              # Protected routes (login required)
-│   │   ├── layout.tsx            # Layout with sidebar, header & auth check
-│   │   ├── logout-button.tsx     # Logout button component
-│   │   ├── mobile-sidebar.tsx    # Mobile responsive sidebar
-│   │   ├── nav-links.tsx         # Sidebar navigation links
-│   │   ├── dashboard/            # Dashboard page
-│   │   │   └── page.tsx
-│   │   └── upload/               # Upload page
-│   │       └── page.tsx
-│   ├── api/                      # API Routes
-│   │   ├── auth/[...all]/        # Better Auth endpoints
-│   │   │   └── route.ts
-│   │   └── uploadthing/          # UploadThing endpoints
-│   │       └── route.ts
-│   ├── layout.tsx                # Root layout
-│   └── globals.css               # Tailwind CSS v4 config
-│
-├── components/                   # Reusable components
-│   ├── ui/                       # shadcn/ui components
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── input.tsx
-│   │   ├── label.tsx
-│   │   └── ...                   # And many more
-│   └── upload/                   # Upload components
-│       ├── ImageUpload.tsx       # Image upload dropzone
-│       └── FileUpload.tsx        # File upload dropzone
-│
-├── lib/                          # Core utilities and configs
-│   ├── auth.ts                   # Better Auth config (server)
-│   ├── auth-client.ts            # Better Auth client (browser)
-│   ├── env.ts                    # Environment validation
-│   ├── prisma.ts                 # Prisma client singleton
-│   ├── uploadthing.ts            # UploadThing router config
-│   ├── uploadthing-client.ts     # UploadThing client helpers
-│   └── utils.ts                  # Utility functions
-│
-├── prisma/                       # Prisma files
-│   ├── schema.prisma             # Database schema
-│   └── seed.ts                   # Database seeding script
-│
-├── generated/                    # Prisma generated client (auto-generated)
-│
-├── proxy.ts                      # Route protection (Next.js 16)
-├── prisma.config.ts              # Prisma v7 config
-├── next.config.ts                # Next.js config
-├── tailwind.config.ts            # Tailwind v4 config
-├── tsconfig.json                 # TypeScript config
-├── eslint.config.mjs             # ESLint flat config
-└── .env.example                  # Template environment variables
+lib/
+├── auth.ts                # Konfigurasi Better Auth
+├── prisma.ts              # Prisma client dengan Neon adapter
+├── faculty.ts             # Query publik dengan cache tag
+├── admin-actions.ts       # Server action CRUD admin
+├── actions.ts             # Form kontak dan aksi berita
+├── admin-field-configs.ts # Konfigurasi field per model
+└── env.ts                 # Validasi environment variable
+
+prisma/
+├── schema.prisma          # Model database
+└── seed.ts                # Data awal dan akun admin
 ```
 
-## 🎯 Main Folders Explained
+Tidak ada direktori `src/`. Kode aplikasi berada di root repo agar sesuai dengan konvensi Next.js 16 yang dipakai proyek ini.
 
-### `app/`
+## Menjalankan Secara Lokal
 
-Main Next.js App Router folder. Divided into route groups:
+### Prasyarat
 
-- **(public)** - Routes accessible without login
-- **(dashboard)** - Routes requiring authentication
-- **api/** - API endpoints for auth and uploads
+- Bun sudah terpasang. Jika belum, lihat [bun.sh](https://bun.sh).
+- Database Neon PostgreSQL. Proyek memakai `@prisma/adapter-neon`, jadi connection string harus berasal dari Neon.
+- Akun UploadThing untuk token unggah gambar.
+- Git.
 
-### `components/`
-
-Reusable React components:
-
-- **ui/** - shadcn/ui components with radix-nova style
-- **upload/** - Special components for file/image uploads
-
-### `lib/`
-
-Core logic and configuration:
-
-- **auth.ts** - Better Auth configuration with native hashing and multiSession
-- **prisma.ts** - Singleton Prisma client with Neon adapter
-- **uploadthing.ts** - File router for upload handling
-- **env.ts** - Environment variables validation
-
-### `prisma/`
-
-Database schema and seeding:
-
-- **schema.prisma** - Database models (user, session, account, verification)
-- **seed.ts** - Script to create default admin user
-
-## 🚀 Setup Guide
-
-### 0️⃣ Install Bun (if not already installed)
-
-This starter uses **Bun** as the package manager. Install it first:
-
-**On macOS/Linux:**
+### 1. Clone dan instal dependensi
 
 ```bash
-curl -fsSL https://bun.sh/install | bash
-```
-
-**On Windows (PowerShell):**
-
-```powershell
-powershell -c "irm bun.sh/install.ps1 | iex"
-```
-
-**Or using npm:**
-
-```bash
-npm install -g bun
-```
-
-Verify installation:
-
-```bash
-bun --version
-```
-
-### 1️⃣ Clone & Install
-
-```bash
-git clone https://github.com/oyanmuhammad/codenight-starter my-app
-cd my-app
+git clone https://github.com/XArkani/Project_Skripsi.git
+cd Project_Skripsi
 bun install
 ```
 
-### 2️⃣ Setup Environment Variables
+### 2. Siapkan environment variable
 
-Copy `.env.example` to `.env` and fill in your credentials:
+Salin template yang tersedia:
 
 ```bash
 cp .env.example .env
 ```
 
-**Fill in the `.env` file:**
+Di PowerShell:
 
-```env
-# Database - Neon PostgreSQL connection string
-DATABASE_URL=postgresql://user:password@host/database
-
-# Admin User - For database seeding
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=your-secure-password
-
-# Better Auth - Generate with: openssl rand -base64 32
-BETTER_AUTH_SECRET=your-super-secret-key-here
-BETTER_AUTH_URL=http://localhost:3000
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-
-# UploadThing - Get from https://uploadthing.com/dashboard
-UPLOADTHING_TOKEN=your-uploadthing-token
+```powershell
+Copy-Item .env.example .env
 ```
 
-**How to get credentials:**
+Isi `.env` sesuai daftar berikut.
 
-- **DATABASE_URL**: Create database at [Neon](https://neon.tech) (free)
-- **BETTER_AUTH_SECRET**: Generate with `openssl rand -base64 32`
-- **UPLOADTHING_TOKEN**: Sign up at [UploadThing](https://uploadthing.com) and create a new app
+| Variabel | Keterangan |
+| --- | --- |
+| `DATABASE_URL` | Connection string Neon PostgreSQL |
+| `ADMIN_EMAIL` | Email akun administrator tunggal |
+| `ADMIN_PASSWORD` | Password akun administrator |
+| `BETTER_AUTH_SECRET` | Kunci rahasia Better Auth, buat dengan `openssl rand -base64 32` |
+| `BETTER_AUTH_URL` | URL aplikasi, misalnya `http://localhost:3000` |
+| `NEXT_PUBLIC_APP_URL` | URL publik aplikasi, nilainya sama dengan `BETTER_AUTH_URL` di lokal |
+| `UPLOADTHING_TOKEN` | Token dari dashboard UploadThing |
 
-### 3️⃣ Setup Database
+### 3. Siapkan database
 
 ```bash
-# Generate Prisma Client
-bun run db:generate
-
-# Run migrations (create tables in database)
 bun run db:migrate
-
-# Seed database with admin user
 bun run db:seed
 ```
 
-### 4️⃣ Run Development Server
+`db:migrate` menjalankan `prisma migrate dev` dan membuat tabel. `db:seed` membuat akun admin dari `ADMIN_EMAIL` dan `ADMIN_PASSWORD`, lalu mengisi data contoh fakultas.
+
+Perhatian: seed mereset tabel `blueprint`, `ukm`, `faq`, dan `struktur`. Tabel `dosen`, `event`, dan `news` di-upsert agar tidak menghasilkan duplikat. Jangan jalankan seed di database produksi yang sudah berisi konten asli tanpa memeriksa `prisma/seed.ts` terlebih dahulu.
+
+### 4. Jalankan server
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) - your app is running! 🎉
+Buka [http://localhost:3000](http://localhost:3000).
 
-### 5️⃣ Login
+### 5. Masuk ke panel admin
 
-- Open [http://localhost:3000/login](http://localhost:3000/login)
-- Login with email & password you set in `.env`
-- Auto redirect to dashboard
+- Buka [http://localhost:3000/login](http://localhost:3000/login).
+- Masuk dengan `ADMIN_EMAIL` dan `ADMIN_PASSWORD` dari `.env`.
+- Setelah login, Anda diarahkan ke `/dashboard`.
 
-## 🛠️ Available Scripts
+## Perintah yang Tersedia
 
-```bash
-bun run dev          # Run development server
-bun run build        # Build for production
-bun run start        # Run production server
-bun run lint         # Run ESLint
-bun run typecheck    # Run TypeScript type checking
+| Perintah | Fungsi |
+| --- | --- |
+| `bun run dev` | Menjalankan server pengembangan |
+| `bun run build` | Menjalankan `prisma generate` lalu build produksi |
+| `bun run start` | Menjalankan hasil build produksi |
+| `bun run lint` | Menjalankan ESLint |
+| `bun run typecheck` | Memeriksa tipe dengan `tsc --noEmit` |
+| `bun run db:generate` | Membuat Prisma Client |
+| `bun run db:migrate` | Membuat dan menerapkan migrasi |
+| `bun run db:seed` | Mengisi data awal dan akun admin |
+| `bun run db:studio` | Membuka Prisma Studio |
 
-bun run db:generate  # Generate Prisma Client
-bun run db:migrate   # Run database migrations
-bun run db:seed      # Seed database with admin user
-bun run db:studio    # Open Prisma Studio (database GUI)
-```
+## Catatan Pengembangan
 
-## 🎨 Customization
-
-### Change Theme Colors
-
-Edit `app/globals.css` to change the color scheme:
-
-```css
-@layer theme {
-  :root {
-    --color-background: 0 0% 100%;
-    --color-foreground: 240 10% 3.9%;
-    /* Change other colors here */
-  }
-}
-```
-
-### Add Database Model
-
-1. Edit `prisma/schema.prisma`
-2. Run `bun run db:migrate`
-3. Prisma will automatically generate TypeScript types
-
-### Add New Upload Route
-
-Edit `lib/uploadthing.ts` and add a new route:
-
-```ts
-export const uploadRouter = {
-  // Existing routes
-  imageUploader: f({ image: { maxFileSize: "4MB" } })...
-
-  // New route
-  videoUploader: f({ video: { maxFileSize: "64MB" } })
-    .middleware(async () => {
-      const session = await auth.api.getSession({ headers: await headers() });
-      if (!session) throw new UploadThingError("Unauthorized");
-      return { userId: session.user.id };
-    })
-    .onUploadComplete(async ({ metadata, file }) => {
-      return { uploadedBy: metadata.userId, url: file.ufsUrl };
-    }),
-};
-```
-
-## 🔐 Security
-
-This starter is configured with security best practices:
-
-- ✅ **Better Auth native hashing** (Argon2/scrypt, built-in)
-- ✅ **CSRF protection** via Better Auth
-- ✅ **Session cookies** with HttpOnly flag
-- ✅ **Environment validation** at runtime
-- ✅ **Type-safe** database queries
-- ✅ **Protected routes** with proxy.ts
-
-## 📚 Tech Stack Details
-
-| Technology   | Version | Purpose                            |
-| ------------ | ------- | ---------------------------------- |
-| Next.js      | 16.x.x  | React framework with App Router    |
-| React        | 19.x.x  | Modern UI library                  |
-| TypeScript   | 5.x     | Type safety                        |
-| Prisma       | 7.x.x   | Database ORM                       |
-| Better Auth  | 1.x.x   | Authentication with native hashing |
-| UploadThing  | 7.x.x   | File uploads & CDN                 |
-| Tailwind CSS | 4.x     | Utility-first CSS                  |
-| shadcn/ui    | 4.x.x   | UI components                      |
-| Bun          | Latest  | Package manager & runtime          |
-
-## 🔥 Why This Starter?
-
-- **Lightweight**: Only libraries that are truly needed
-- **Modern**: All libraries at their latest versions (2026)
-- **No Bloat**: Without unnecessary configuration
-- **Best Practices**: Following official docs from each library
-- **Type-Safe**: 100% TypeScript with strict mode
-- **Production Ready**: Ready to deploy on Vercel/Netlify
-- **Developer Experience**: Auto-reload, error overlay, type hints
-- **Documented**: Every file is well-explained
-
-## 🚨 Troubleshooting
-
-### Error: `Prisma Client not generated`
+Perubahan skema database harus selalu diikuti migrasi dan generate:
 
 ```bash
-bun run db:generate
+bunx prisma migrate dev --name nama-perubahan
+bunx prisma generate
 ```
 
-### Error: `Environment variable not found`
+Menjalankan `prisma generate` tanpa migrasi tidak mengubah struktur tabel dan bisa menyebabkan error "column does not exist" saat runtime.
 
-Make sure all env vars from `.env.example` are filled in `.env`
+Modul yang memakai Prisma, `"use cache"`, atau `"use server"` hanya boleh diimpor dari Server Component. File dengan `"use client"` tidak boleh mengimpor `lib/faculty.ts`, `lib/prisma.ts`, atau `lib/actions.ts` secara langsung.
 
-### Error: Upload failed
+Setelah mengubah halaman yang mengambil data, jalankan `bun run build`. Pelanggaran batas Server dan Client Component serta akses data tanpa Suspense biasanya baru muncul saat build, bukan saat `typecheck` atau `lint`.
 
-- Check `UPLOADTHING_TOKEN` is correct
-- Make sure file size doesn't exceed the limit
+## Batasan
 
-### Error: Login redirect loop
+- Hanya ada satu administrator. Tidak ada registrasi publik, peran bertingkat, atau manajemen pengguna.
+- Tidak ada sistem pembayaran, forum, komentar, notifikasi real-time, atau multi-bahasa. Antarmuka sepenuhnya berbahasa Indonesia.
+- Belum ada automated test. Kualitas dijaga melalui `bun run lint`, `bun run typecheck`, dan `bun run build`.
+- Data di `prisma/seed.ts` adalah contoh untuk pengembangan. Ganti dengan data resmi fakultas sebelum dipakai di produksi.
+- Dukungan PWA terbatas pada manifest, service worker, dan halaman offline dasar.
 
-- Clear browser cookies
-- Check `BETTER_AUTH_URL` and `NEXT_PUBLIC_APP_URL` are the same
+## Kredit dan Lisensi
 
-## 🛠️ Troubleshooting: Cross-Origin Dev Error
+Proyek ini dimulai dari template [CodeNight Starters](https://github.com/oyanmuhammad/codenight-starter) karya Oyan Liberta, lalu dikembangkan menjadi portal fakultas dan CMS untuk kebutuhan skripsi. Atribusi lisensi asli tetap disimpan di [`LICENSE`](LICENSE).
 
-### Blocked cross-origin request from 192.168.x.x or localhost
+Kode proyek mengikuti lisensi MIT yang sama dengan template tersebut.
 
-If you see errors like:
+## Kontak
 
-> Blocked cross-origin request from 192.168.x.x to /\_next/\* resource. To allow this, configure "allowedDevOrigins" in next.config
-
-**Solution:**
-
-- Open `next.config.ts` and make sure `allowedDevOrigins` includes:
-  - `your LAN IP`
-  - For your local LAN IP, for example `192.168.1.12`, check the `network` section when running `bun run dev` in the terminal to find your local LAN IP address.
-- Restart your dev server after editing config.
-
-**Example config:**
-
-```typescript
-allowedDevOrigins: [
-  "192.168.1.12", // Local LAN IP obtained from the network when running the dev server
-];
-```
-
-This ensures your local devices and LAN IPs can access the Next.js dev server without CORS errors.
-
-## 📄 License
-
-MIT - Free to use for any project!
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are very welcome!
-
----
-
-**Happy Coding!** 🎉
-
-Built with ❤️ for the developer community. Hope this starter kit helps you build amazing web applications with Next.js 16 and the latest modern stack! 🚀
+Fakultas Teknik Universitas Hamzanwadi  
+Jl. Prof. Muhammad Yamin No. 35, Selong, Lombok Timur, Nusa Tenggara Barat 83611  
+Email: [ft@hamzanwadi.ac.id](mailto:ft@hamzanwadi.ac.id)  
+Telepon: +62 (0376) 22954
