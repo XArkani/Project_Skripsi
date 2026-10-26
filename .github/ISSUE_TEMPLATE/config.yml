@@ -1,10 +1,10 @@
 blank_issues_enabled: false
 
 contact_links:
-  - name: 💬 Questions & Discussions
-    url: https://github.com/oyanmuhammad/codenight-starter/discussions
-    about: Please ask questions or start discussions here.
+  - name: Questions & Discussions
+    url: https://github.com/XArkani/Project_Skripsi/issues
+    about: Ask questions or report problems here.
 
-  - name: 📖 Documentation
-    url: https://github.com/oyanmuhammad/codenight-starter
-    about: Read the documentation before opening an issue.
+  - name: Documentation
+    url: https://github.com/XArkani/Project_Skripsi#readme
+    about: Read the project documentation before opening an issue.
