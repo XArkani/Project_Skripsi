@@ -6,6 +6,8 @@ Portal informasi resmi Fakultas Teknik Universitas Hamzanwadi, dilengkapi panel 
 
 Pengunjung dapat membaca profil fakultas, menelusuri fasilitas dan laboratorium, mencari dosen, melihat agenda dan berita, membaca struktur organisasi, mencari FAQ, serta mengirim pesan. Administrator mengelola semua konten itu dari satu dashboard tanpa menyentuh kode.
 
+**Demo langsung:** [portal-fakultas-teknik.vercel.app](https://portal-fakultas-teknik.vercel.app)
+
 ## Konteks Akademik
 
 Repo ini merupakan bagian dari penelitian skripsi untuk merancang dan membangun portal fakultas berbasis web. Fokus penelitiannya ada pada penerapan Next.js App Router, pemisahan data server dan client, cache berbasis tag, serta CMS satu admin yang cukup sederhana untuk dioperasikan staf fakultas.
